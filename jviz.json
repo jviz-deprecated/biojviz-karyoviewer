@@ -1,0 +1,26 @@
+{
+  "name": "karyoviewer",
+  "description": "A Karyotype Viewer module",
+  "version": "0.0.1",
+  "author": { "id": "jmjuanes", "name": "Jose Miguel Juanes", "email": "josemijuanes@gmail.com" },
+  "directory": "./build",
+  "repository": "https://github.com/jviz/module-karyoviewer",
+  "dependencies": { "jviz": "dev" },
+  "build": [ "build:js", "build:scss" ],
+  "install": [ ],
+  "tasks":
+  {
+    "build:js":
+    [
+      { "name": "src", "args": [ "./js/karyoviewer.js", "./js/**.js" ] },
+      { "name": "concat", "args": "karyoviewer.js" },
+      { "name": "dest", "args": "./" }
+    ],
+    "build:scss":
+    [
+      { "name": "src", "args": "./scss/**.scss" },
+      { "name": "sass" },
+      { "name": "dest", "args": "./" }
+    ]
+  }
+}
