@@ -130,20 +130,23 @@ jviz.modules.karyoviewer.prototype.regionsDraw = function()
       //Check the regions triangle
       if(this._regions.triangle.visible === false){ continue; }
 
+      //Get the triangle configuration
+      var triangle = this._regions.triangle;
+
       //Initialize the triangle array
-      var triangle = [];
+      var triangle_points = [];
 
       //Add the first point
-      triangle.push([ region.posx - this._regions.triangle.width, region.posy  - this._regions.triangle.height ]);
+      triangle_points.push([ region.posx - triangle.margin - triangle.width, region.posy - triangle.height ]);
 
       //Add the middle point
-      triangle.push([ region.posx, region.posy ]);
+      triangle_points.push([ region.posx - triangle.margin, region.posy ]);
 
       //Add the first point
-      triangle.push([ region.posx - this._regions.triangle.width, region.posy + this._regions.triangle.height ]);
+      triangle_points.push([ region.posx - triangle.margin - triangle.width, region.posy + triangle.height ]);
 
       //Add the line
-      canvas.Line(triangle);
+      canvas.Line(triangle_points);
 
       //Fill the triangle
       canvas.Fill({ color: region.color, opacity: this._regions.triangle.opacity });
@@ -154,6 +157,8 @@ jviz.modules.karyoviewer.prototype.regionsDraw = function()
 
     //Check for no regions
     if(regions.length === 0){ continue; }
+
+    //
   }
 
   //Exit
