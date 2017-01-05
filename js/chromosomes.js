@@ -135,10 +135,7 @@ jviz.modules.karyoviewer.prototype.chromosomesResize = function()
 //Draw the chromosomes
 jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
 {
-  //Get the canvas draw zone
-  var draw = this._canvas.el.draw();
-
-  //Get the middle layer
+  //Get the chromosome layer
   var canvas = this._canvas.el.layer(this._chromosome.layer);
 
   //Draw all the chromosomes
