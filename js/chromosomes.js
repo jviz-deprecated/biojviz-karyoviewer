@@ -11,7 +11,10 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
   this._chromosome.list = [];
 
   //Reset the centromere list
-  this._centromere.list = [];
+  this._chromosome.centromere.list = [];
+
+  //Reset the chromosomes text list
+  this._chromosome.text.list = [];
 
   //Check the list length
   if(list.length === 0){ return this.draw(); }
@@ -27,9 +30,6 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
   {
     //Initialize the new chromosomes object
     var obj_chr = { posx : 0, posy : 0 };
-
-    //Save the chromosome name
-    obj_chr.name = list[i].name;
 
     //Calculate the chromosome width
     obj_chr.width = this._chromosome.width;
@@ -59,11 +59,14 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
       obj_cent.height = Math.abs(obj_cent.end - obj_cent.start);
 
       //Save the centromere object
-      this._centromere.list[i] = obj_cent;
+      this._chromosome.centromere.list[i] = obj_cent;
 
       //Set that has centromere
       obj_chr.centromere = true;
     }
+
+    //Save the chromosomes text
+    this._chromosome.text.list.push({ text: list[i].name + '', posx: 0, posy: 0 });
 
     //Save the chromosome object
     this._chromosome.list[i] = obj_chr;
@@ -72,7 +75,60 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
     this._chromosome.names[list[i].name] = i;
   }
 
+  //Save the chromosome max length
+  this._chromosome.max = max_length;
+
+  //Resize the chromosomes
+  this.chromosomesResize();
+
   //Continue
+  return this;
+};
+
+//Resize the chromosomes
+jviz.modules.karyoviewer.prototype.chromosomesResize = function()
+{
+  //Get the draw info
+  var draw = this._canvas.el.draw();
+
+  //Get the number of chromosomes
+  var chr_num = this._chromosome.list.length;
+
+  //Get the chromosomes margin
+  this._chromosome.margin = (draw.width - chr_num * this._chromosome.width) / (chr_num - 1);
+
+  //Draw all the chromosomes
+  for(var i = 0; i < this._chromosome.list.length; i++)
+  {
+    //Get the chromosome
+    var chr = this._chromosome.list[i];
+
+    //Calculate the chromosome position x
+    this._chromosome.list[i].posx = draw.margin.left + (i + 0) * this._chromosome.margin + i * chr.width;
+
+    //Calculate the chromosome position y
+    this._chromosome.list[i].posy = draw.margin.top + draw.height - chr.height;
+
+    //Get the text position x
+    this._chromosome.text.list[i].posx = chr.posx + this._chromosome.width / 2;
+
+    //Get the text position y
+    this._chromosome.text.list[i].posy = draw.margin.top + draw.height + this._chromosome.text.margin;
+
+    //Check for centromere
+    if(chr.centromere === false){ continue; }
+
+    //Get the centromere object
+    var cent = this._chromosome.centromere.list[i];
+
+    //Calculate the centromere position x
+    this._chromosome.centromere.list[i].posx = this._chromosome.list[i].posx;
+
+    //Centromere position y
+    this._chromosome.centromere.list[i].posy = draw.margin.top + draw.height - chr.height + cent.start;
+  }
+
+  //Exit
   return this;
 };
 
@@ -81,12 +137,6 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
 {
   //Get the canvas draw zone
   var draw = this._canvas.el.draw();
-
-  //Get the number of chromosomes
-  var chr_num = this._chromosome.list.length;
-
-  //Get the chromosomes margin
-  this._chromosome.margin = (draw.width - chr_num * this._chromosome.width) / (chr_num - 1);
 
   //Get the middle layer
   var canvas = this._canvas.el.layer(this._chromosome.layer);
@@ -97,71 +147,65 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
     //Get the chromosome
     var chr = this._chromosome.list[i];
 
-    //Calculate the chromosome position x
-    chr.posx = draw.margin.left + (i + 0) * this._chromosome.margin + i * chr.width;
-
-    //Calculate the chromosome position y
-    chr.posy = draw.margin.top + draw.height - chr.height;
-
     //Draw the chromosome
     canvas.Rect({ x: chr.posx, y: chr.posy, width: chr.width, height: chr.height, radius: this._chromosome.radius });
 
     //Set the chromosome fill
-    canvas.Fill({ color: this._chromosome.fill.color, opacity: this._chromosome.fill.opacity });
+    canvas.Fill({ color: this._chromosome.color, opacity: this._chromosome.opacity });
 
-    //Add the chromosome name
-    this._chromosome.text.text = chr.name + '';
+    //Get the text object
+    var text = this._chromosome.text.list[i];
 
-    //Get the text position x
-    this._chromosome.text.x = chr.posx + this._chromosome.width / 2;
+    //Get the text font
+    var text_font = this._chromosome.text.font;
 
-    //Get the text position y
-    this._chromosome.text.y = draw.margin.top + draw.height + this._chromosome.text.margin;
+    //Get the text size
+    var text_size = this._chromosome.text.size;
+
+    //Get the text color
+    var text_color = this._chromosome.color;
+
+    //Get the text align
+    var text_align = this._chromosome.text.align;
 
     //Draw the chromosome title
-    canvas.Text(this._chromosome.text);
+    canvas.Text({ text: text.text, x: text.posx, y: text.posy, font: text_font, size: text_size, color: text_color, align: text_align });
 
     //Check if has centromere
     if(chr.centromere !== true){ continue; }
 
     //Get the centromere object
-    var cent = this._centromere.list[i];
-
-    //Calculate the centromere position x
-    cent.posx = chr.posx;
-
-    //Centromere position y
-    cent.posy = draw.margin.top + draw.height - chr.height + cent.start;
+    var cent = this._chromosome.centromere.list[i];
 
     //Clear the centromere region
     canvas.Clear({ x: cent.posx, y: cent.posy, width: cent.width, height: cent.height });
 
     //Centromere points
-    var centp = [];
+    var cent_points = [];
 
     //Add the top point
-    centp.push([cent.posx, cent.posy]);
+    cent_points.push([cent.posx, cent.posy]);
 
     //Add the middle point
-    centp.push([cent.posx + cent.width / 2, cent.posy + cent.height / 2]);
+    cent_points.push([cent.posx + cent.width / 2, cent.posy + cent.height / 2]);
 
     //Add the end point
-    centp.push([cent.posx, cent.posy + cent.height]);
+    cent_points.push([cent.posx, cent.posy + cent.height]);
 
     //Add the end right
-    centp.push([cent.posx + cent.width, cent.posy + cent.height]);
+    cent_points.push([cent.posx + cent.width, cent.posy + cent.height]);
 
     //Add the middle right
-    centp.push([cent.posx + cent.width / 2, cent.posy + cent.height / 2]);
+    cent_points.push([cent.posx + cent.width / 2, cent.posy + cent.height / 2]);
 
     //Add the top right
-    centp.push([cent.posx + cent.width, cent.posy]);
+    cent_points.push([cent.posx + cent.width, cent.posy]);
 
     //Draw the lines
-    canvas.Line(centp);
+    canvas.Line(cent_points);
 
     //Fill the centromere
-    canvas.Fill({ color: this._centromere.fill.color, opacity: this._centromere.fill.opacity });
+    canvas.Fill({ color: this._chromosome.color, opacity: this._chromosome.centromere.opacity });
   }
 
   //Continue
