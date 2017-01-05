@@ -17,6 +17,25 @@ jviz.modules.karyoviewer.prototype.events = function()
   return this;
 };
 
+//Resize event
+jviz.modules.karyoviewer.prototype.resize = function()
+{
+  //Resize the canvas
+  this._canvas.el.resize();
+
+  //Resize the chromosomes data
+  this.chromosomesResize();
+
+  //Resize the regions data
+  this.regionsResize();
+
+  //Draw again the data
+  this.draw();
+
+  //Exit
+  return;
+};
+
 //Register events
 jviz.modules.karyoviewer.prototype.on = function(name, listener)
 {
