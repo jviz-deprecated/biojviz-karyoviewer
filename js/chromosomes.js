@@ -67,6 +67,9 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
 
     //Save the chromosome object
     this._chromosome.list[i] = obj_chr;
+
+    //Add the chromosome name
+    this._chromosome.names[list[i].name] = i;
   }
 
   //Continue
