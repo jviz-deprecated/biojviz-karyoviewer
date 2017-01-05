@@ -126,10 +126,34 @@ jviz.modules.karyoviewer.prototype.regionsDraw = function()
 
       //Region fill
       canvas.Fill({ color: region.color, opacity: this._regions.opacity });
+
+      //Check the regions triangle
+      if(this._regions.triangle.visible === false){ continue; }
+
+      //Initialize the triangle array
+      var triangle = [];
+
+      //Add the first point
+      triangle.push([ region.posx - this._regions.triangle.width, region.posy  - this._regions.triangle.height ]);
+
+      //Add the middle point
+      triangle.push([ region.posx, region.posy ]);
+
+      //Add the first point
+      triangle.push([ region.posx - this._regions.triangle.width, region.posy + this._regions.triangle.height ]);
+
+      //Add the line
+      canvas.Line(triangle);
+
+      //Fill the triangle
+      canvas.Fill({ color: region.color, opacity: this._regions.triangle.opacity });
     }
 
     //Check for drawing the label
     if(this._regions.label.visible === false){ continue; }
+
+    //Check for no regions
+    if(regions.length === 0){ continue; }
   }
 
   //Exit
