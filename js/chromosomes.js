@@ -31,6 +31,9 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
     //Initialize the new chromosomes object
     var obj_chr = { posx : 0, posy : 0 };
 
+    //Save the chromosome name
+    obj_chr.name = list[i].name;
+
     //Calculate the chromosome width
     obj_chr.width = this._chromosome.width;
 
@@ -66,7 +69,7 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
     }
 
     //Save the chromosomes text
-    this._chromosome.text.list.push({ text: list[i].name + '', posx: 0, posy: 0 });
+    this._chromosome.text.list.push({ posx: 0, posy: 0 });
 
     //Save the chromosome object
     this._chromosome.list[i] = obj_chr;
@@ -166,7 +169,7 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
     var text_align = this._chromosome.text.align;
 
     //Draw the chromosome title
-    canvas.Text({ text: text.text, x: text.posx, y: text.posy, font: text_font, size: text_size, color: text_color, align: text_align });
+    canvas.Text({ text: chr.name, x: text.posx, y: text.posy, font: text_font, size: text_size, color: text_color, align: text_align });
 
     //Check if has centromere
     if(chr.centromere !== true){ continue; }
