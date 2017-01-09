@@ -22,7 +22,8 @@ jviz.modules.karyoviewer = function(opt)
 
   //Orientation
   this._orientation = {};
-  this._orientation.actual = 'portrait'; //Actual orientation name
+  this._orientation.actual = ''; //Actual orientation name
+  this._orientation.default = 'portrait'; //Default orientation
   this._orientation.values = [ 'portrait', 'landscape' ]; //Orientation values
 
   //Panel object
