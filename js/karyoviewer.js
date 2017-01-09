@@ -19,9 +19,9 @@ jviz.modules.karyoviewer = function(opt)
   //Check for unknown orientation
   this._orientation = (['portrait', 'landscape'].indexOf(this._orientation) === -1) ? 'portrait' : this._orientation;
 
-  //Save the default size
-  this._width = (typeof opt.width !== 'undefined') ? opt.width : '100%'; //Default width
-  this._height = (typeof opt.height !== 'undefined') ? opt.height : 120; //Default height
+  //Default size
+  this._width = 0; //Default width
+  this._height = 0; //Default height
 
   //Margins
   this._margin = { top: 30, bottom: 30, left: 40, right: 40 };
@@ -41,9 +41,8 @@ jviz.modules.karyoviewer = function(opt)
   this._canvas.id = this._id + '-canvas'; //Canvas ID
   this._canvas.parent = this._id; //Parent canvas ID
   this._canvas.width = '100%'; //Canvas width
-  this._canvas.height = this._height; //Canvas height
+  this._canvas.height = 0; //Canvas height
   this._canvas.layers = 3; //Number of layers
-  this._canvas.margin = this._margin; //Canvas margin
   this._canvas.el = null; //Canvas element
 
   //Chromosome info
@@ -116,6 +115,9 @@ jviz.modules.karyoviewer = function(opt)
   this._hover.opacity = 1.0; //Hover background color opacity
   this._hover.radius = 10; //Hover radius
   this._hover.layer = 0; //Hover layer
+
+  //Parse the orientation
+  this.orientation(opt.orientation);
 
   //Build the karyotype element
   this.build();
