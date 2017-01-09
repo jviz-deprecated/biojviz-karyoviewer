@@ -17,6 +17,9 @@ jviz.modules.karyoviewer.prototype.build = function()
   //Build the canvas layer
   this._canvas.el = new jviz.components.canvas(this._canvas);
 
+  //Add the canvas margin
+  this._canvas.el.margin(this._margin);
+
   //Return this
   return this;
 };
