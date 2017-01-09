@@ -13,18 +13,17 @@ jviz.modules.karyoviewer = function(opt)
   //Parent element
   this._parent = opt.parent;
 
-  //Orientation
-  this._orientation = (typeof opt.orientation === 'string') ? opt.orientation.toLowerCase() : 'portrait';
-
-  //Check for unknown orientation
-  this._orientation = (['portrait', 'landscape'].indexOf(this._orientation) === -1) ? 'portrait' : this._orientation;
-
   //Default size
   this._width = 0; //Default width
   this._height = 0; //Default height
 
   //Margins
   this._margin = { top: 30, bottom: 30, left: 40, right: 40 };
+
+  //Orientation
+  this._orientation = {};
+  this._orientation.actual = 'portrait'; //Actual orientation name
+  this._orientation.values = [ 'portrait', 'landscape' ]; //Orientation values
 
   //Panel object
   this._panel = {};
@@ -117,7 +116,7 @@ jviz.modules.karyoviewer = function(opt)
   this._hover.layer = 0; //Hover layer
 
   //Check for undefined orientation
-  if(typeof opt.orientation !== 'string'){ opt.orientation = 'portrait'; } 
+  if(typeof opt.orientation !== 'string'){ opt.orientation = 'portrait'; }
 
   //Parse the orientation
   this.orientation(opt.orientation);
