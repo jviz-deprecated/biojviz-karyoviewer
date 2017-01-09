@@ -48,7 +48,6 @@ jviz.modules.karyoviewer = function(opt)
   //Chromosome info
   this._chromosome = {};
   this._chromosome.width = 15; //Chromosome default width
-  this._chromosome.height = 50; //Chromosome default height
   this._chromosome.layer = 1; //Chromosome layer
   this._chromosome.list = []; //Chromosomes list
   this._chromosome.names = {}; //Chromosome names
@@ -58,6 +57,11 @@ jviz.modules.karyoviewer = function(opt)
   this._chromosome.color = jviz.colors.blue2.hex; //Chromosome color
   this._chromosome.opacity = 0.6; //Chromosome opacity
   this._chromosome.resized = false; //Chromosome data is resized
+
+  //Chromosome height
+  this._chromosome.height = {};
+  this._chromosome.height.portrait = 70; //Chromosome height on portrait orientation
+  this._chromosome.height.landscape = 50; //Chromosome height on landscape orientation
 
   //Chromosome radius
   this._chromosome.radius = {};
