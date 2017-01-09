@@ -116,6 +116,9 @@ jviz.modules.karyoviewer = function(opt)
   this._hover.radius = 10; //Hover radius
   this._hover.layer = 0; //Hover layer
 
+  //Check for undefined orientation
+  if(typeof opt.orientation !== 'string'){ opt.orientation = 'portrait'; } 
+
   //Parse the orientation
   this.orientation(opt.orientation);
 
