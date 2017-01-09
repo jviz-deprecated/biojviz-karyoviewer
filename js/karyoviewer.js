@@ -18,7 +18,7 @@ jviz.modules.karyoviewer = function(opt)
   this._height = 0; //Default height
 
   //Margins
-  this._margin = { top: 30, bottom: 30, left: 40, right: 40 };
+  //this._margin = { top: 30, bottom: 30, left: 40, right: 40 };
 
   //Orientation
   this._orientation = {};
