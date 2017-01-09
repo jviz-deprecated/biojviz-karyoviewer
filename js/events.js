@@ -1,3 +1,13 @@
+//Register events
+jviz.modules.karyoviewer.prototype.on = function(name, listener)
+{
+  //Register the event
+  this._events.add(name, listener);
+
+  //Continue
+  return this;
+};
+
 //Add the events
 jviz.modules.karyoviewer.prototype.events = function()
 {
@@ -10,38 +20,12 @@ jviz.modules.karyoviewer.prototype.events = function()
   //Add the mouse down event
   jviz.commons.mouse.down(id, function(e, x, y){ return self.eventClick(x,y); });
 
+  //Add the mouse move event
+  //Add the mouse up event
+
   //Add the resize event
-  jviz.dom.resize(function(){ return self.resize(); });
+  jviz.dom.resize(function(){ return self.resize().draw(); });
 
   //Return this
-  return this;
-};
-
-//Resize event
-jviz.modules.karyoviewer.prototype.resize = function()
-{
-  //Resize the canvas
-  this._canvas.el.resize();
-
-  //Resize the chromosomes data
-  this.chromosomesResize();
-
-  //Resize the regions data
-  this.regionsResize();
-
-  //Draw again the data
-  this.draw();
-
-  //Exit
-  return;
-};
-
-//Register events
-jviz.modules.karyoviewer.prototype.on = function(name, listener)
-{
-  //Register the event
-  this._events.add(name, listener);
-
-  //Continue
   return this;
 };
