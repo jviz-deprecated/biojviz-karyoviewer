@@ -83,7 +83,6 @@ jviz.modules.karyoviewer = function(opt)
   this._chromosomes.list = []; //Chromosomes list
   this._chromosomes.names = {}; //Chromosome names
   this._chromosomes.max = 0; //Chromosome max length
-  this._chromosomes.margin = 0; //Chromosome margin
   this._chromosomes.num = 0; //Number of chromosomes
   this._chromosomes.color = jviz.colors.blue2.hex; //Chromosome color
   this._chromosomes.opacity = 0.6; //Chromosome opacity
