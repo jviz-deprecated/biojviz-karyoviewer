@@ -96,6 +96,21 @@ jviz.modules.karyoviewer = function(opt)
   //Chromosome name
   this._chromosomes.name = {};
   this._chromosomes.name.list = []; //List of chromosomes names
+  this._chromosomes.name.visible = true; //Chromosome name is visible
+  this._chromosomes.name.margin = 5; //Chromosomes name margin
+
+  //Chromosome name circle
+  this._chromosomes.name.circle = {};
+  this._chromosomes.name.circle.width = 15; //Name circle width
+  this._chromosomes.name.circle.opacity = 1.0; //Name circle opacity
+
+  //Chromosome name text
+  this._chromosomes.name.text = {};
+  this._chromosomes.name.text.font = jviz.font.default; //Chromosome name text font
+  this._chromosomes.name.text.color = jviz.colors.white.hex; //chromosome name text color
+  this._chromosomes.name.text.size = '11px'; //Chromosome name text size
+  this._chromosomes.name.text.align = 'center'; //Chromosome name text align
+  this._chromosomes.name.text.margin = 5; //Chromosome name text margin
 
   //Chromosome text info
   this._chromosomes.text = {};
