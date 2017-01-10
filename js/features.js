@@ -90,6 +90,9 @@ jviz.modules.karyoviewer.prototype.regionsResize = function()
     }
   }
 
+  //Update the label rectangle width
+  this._regions.label.rectangle.width = 
+
   //Continue
   return this;
 };
