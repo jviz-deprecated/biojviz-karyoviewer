@@ -17,7 +17,7 @@ jviz.modules.karyoviewer.prototype.resize = function()
   //this._height = this._canvas.el.height();
 
   //Set to resize the chromosomes data
-  this._chromosome.resized = false;
+  this._chromosomes.resized = false;
 
   //Set to resize the features data
   this._features.resized = false;
