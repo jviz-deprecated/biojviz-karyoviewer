@@ -112,14 +112,6 @@ jviz.modules.karyoviewer = function(opt)
   this._chromosomes.name.text.align = 'center'; //Chromosome name text align
   this._chromosomes.name.text.margin = 5; //Chromosome name text margin
 
-  //Chromosome text info
-  this._chromosomes.text = {};
-  this._chromosomes.text.list = []; //Chromosomes text
-  this._chromosomes.text.font = jviz.font.default; //Text font
-  this._chromosomes.text.size = '11px'; //Text size
-  this._chromosomes.text.align = 'center'; //Chromosomes text align
-  this._chromosomes.text.margin = 5; //Chromosomes text margin top
-
   //Centromere
   this._chromosomes.centromere = {};
   this._chromosomes.centromere.list = []; //List of centromere positions
