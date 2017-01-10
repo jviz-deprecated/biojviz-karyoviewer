@@ -93,6 +93,10 @@ jviz.modules.karyoviewer = function(opt)
   this._chromosomes.radius.portrait = 6; //Chromosome radius for portrait
   this._chromosomes.radius.landscape = 20; //Chromosome radius for landscape
 
+  //Chromosome name
+  this._chromosomes.name = {};
+  this._chromosomes.name.list = []; //List of chromosomes names
+
   //Chromosome text info
   this._chromosomes.text = {};
   this._chromosomes.text.list = []; //Chromosomes text
