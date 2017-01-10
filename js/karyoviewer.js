@@ -47,7 +47,7 @@ jviz.modules.karyoviewer = function(opt)
   //Default values for landscape
   this._block.default.landscape = {};
   this._block.default.landscape.draw_width = 0; //Default landscape draw width
-  this._block.default.landscape.draw_height = 50; //Default landscape draw height
+  this._block.default.landscape.draw_height = 20; //Default landscape draw height
   this._block.default.landscape.margin_top = 30; //Default landscape margin top
   this._block.default.landscape.margin_bottom = 30; //Default landscape margin bottom
   this._block.default.landscape.margin_left = 40; //Default landscape margin left
@@ -78,7 +78,7 @@ jviz.modules.karyoviewer = function(opt)
   //Chromosomes info
   this._chromosomes = {};
   this._chromosomes.width = 15; //Chromosome default width
-  this._chromosomes.height = 50; //Chromosome default height
+  this._chromosomes.height = 20; //Chromosome default height
   this._chromosomes.layer = 1; //Chromosome layer
   this._chromosomes.list = []; //Chromosomes list
   this._chromosomes.names = {}; //Chromosome names
@@ -91,7 +91,7 @@ jviz.modules.karyoviewer = function(opt)
   //Chromosome radius
   this._chromosomes.radius = {};
   this._chromosomes.radius.portrait = 6; //Chromosome radius for portrait
-  this._chromosomes.radius.landscape = 20; //Chromosome radius for landscape
+  this._chromosomes.radius.landscape = 10; //Chromosome radius for landscape
 
   //Chromosome name
   this._chromosomes.name = {};
