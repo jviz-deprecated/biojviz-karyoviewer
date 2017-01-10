@@ -1,44 +1,41 @@
 //Add a chromosomes list
-jviz.modules.karyoviewer.prototype.chromosomes = function(list)
+jviz.modules.karyoviewer.prototype.chromosomes = function(list, isExample)
 {
   //Check the list
   if(typeof list === 'undefined'){ return this; }
+
+  //Check the is exemple option
+  if(typeof isExample !== 'booelan'){ var isExample = false; }
 
   //Check for array
   if(jviz.is.array(list) === false){ list = [ list ]; }
 
   //Initialize the chromosomes list
-  this._chromosome.list = [];
+  this._chromosomes.list = [];
 
   //Reset the centromere list
-  this._chromosome.centromere.list = [];
+  this._chromosomes.centromere.list = [];
 
-  //Reset the chromosomes text list
-  this._chromosome.text.list = [];
+  //Reset the chromosomes name list
+  this._chromosomes.name.list = [];
 
   //Check the list length
   if(list.length === 0){ return this.draw(); }
 
   //Find the max value
-  var max_length = jviz.array.maxKey(list, 'length');
-
-  //Get the canvas draw
-  var draw = this._canvas.el.draw();
+  this._chromosomes.max = jviz.array.maxKey(list, 'length');
 
   //Read all the chromosomes on the list
   for(var i = 0; i < list.length; i++)
   {
     //Initialize the new chromosomes object
-    var obj_chr = { posx : 0, posy : 0 };
+    var obj_chr = { posx : 0, posy : 0, width: 0, height: 0 };
 
     //Save the chromosome name
-    obj_chr.name = list[i].name;
+    obj_chr.name = list[i].name.toString();
 
-    //Calculate the chromosome width
-    obj_chr.width = this._chromosome.width;
-
-    //Calculate the chromosome height
-    obj_chr.height = draw.height * (list[i].length / max_length);
+    //Save the chromosome length
+    obj_chr.length = list[i].length;
 
     //Set if has centromere
     obj_chr.centromere = false;
@@ -47,42 +44,48 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
     if(typeof list[i].centromere_start !== 'undefined' && typeof list[i].centromere_end !== 'undefined')
     {
       //Initialize the centromere object
-      var obj_cent = { posx: 0, posy: 0 };
-
-      //Centromere width
-      obj_cent.width = this._chromosome.width;
+      var obj_cent = { posx: 0, posy: 0, width: 0, height: 0 };
 
       //Centromere start
-      obj_cent.start = draw.height * (list[i].centromere_start / max_length);
+      //obj_cent.start = draw.height * (list[i].centromere_start / max_length);
 
       //Centromere end
-      obj_cent.end = draw.height * (list[i].centromere_end / max_length);
+      //obj_cent.end = draw.height * (list[i].centromere_end / max_length);
 
       //Centromere height
-      obj_cent.height = Math.abs(obj_cent.end - obj_cent.start);
+      //obj_cent.height = Math.abs(obj_cent.end - obj_cent.start);
+
+      //Centromere start position
+      obj_cent.start = parseInt(list[i].centromere_start);
+
+      //Centromere end position
+      obj_cent.end = parseInt(list[i].centromere_end);
 
       //Save the centromere object
-      this._chromosome.centromere.list[i] = obj_cent;
+      this._chromosomes.centromere.list[i] = obj_cent;
 
       //Set that has centromere
       obj_chr.centromere = true;
     }
 
     //Save the chromosomes text
-    this._chromosome.text.list.push({ posx: 0, posy: 0 });
+    //this._chromosomes.text.list.push({ posx: 0, posy: 0 });
 
     //Save the chromosome object
-    this._chromosome.list[i] = obj_chr;
+    this._chromosomes.list[i] = obj_chr;
 
     //Add the chromosome name
-    this._chromosome.names[list[i].name] = i;
+    //this._chromosomes.names[list[i].name] = i;
   }
 
-  //Save the chromosome max length
-  this._chromosome.max = max_length;
+  //Save the number of chromosomes
+  this._chromosomes.num = list.length;
 
-  //Resize the chromosomes
-  this.chromosomesResize();
+  //Set chromosomes data is not resized
+  this._chromosomes.resized = false;
+
+  //Set blocks object not resized
+  this._block.resized = false;
 
   //Continue
   return this;
@@ -92,44 +95,82 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list)
 jviz.modules.karyoviewer.prototype.chromosomesResize = function()
 {
   //Get the draw info
-  var draw = this._canvas.el.draw();
+  var draw = this._block.draw;
 
-  //Get the number of chromosomes
-  var chr_num = this._chromosome.list.length;
-
-  //Get the chromosomes margin
-  this._chromosome.margin = (draw.width - chr_num * this._chromosome.width) / (chr_num - 1);
+  //Get margins
+  var margin = this._block.margin;
 
   //Draw all the chromosomes
-  for(var i = 0; i < this._chromosome.list.length; i++)
+  for(var i = 0; i < this._chromosomes.list.length; i++)
   {
     //Get the chromosome
-    var chr = this._chromosome.list[i];
+    var chr = this._chromosomes.list[i];
 
-    //Calculate the chromosome position x
-    this._chromosome.list[i].posx = draw.margin.left + (i + 0) * this._chromosome.margin + i * chr.width;
+    //Check for landscape orientation
+    if(this.isLandscape() === true)
+    {
+      //Calculate the chromosome width for landspace orientation
+      chr.width = draw.width * (chr.length / this._chromosomes.max);
 
-    //Calculate the chromosome position y
-    this._chromosome.list[i].posy = draw.margin.top + draw.height - chr.height;
+      //Calculate hte chromosome height for landscape orientation
+      chr.height = this._chromosomes.height;
+
+      //Calculate the chromosome position x for landscape orientation
+      chr.posx = margin.left;
+
+      //Calculate the chromosome position y for landscape orientation
+      chr.posy = margin.top + i * this._block.height;
+
+      //Get the chromosome radius
+      chr.radius = this._chromosomes.radius.landscape;
+    }
+
+    //Calculate for portrait
+    else
+    {
+      //Calculate the chromosome width for portrait orientation
+      chr.width = this._chromosomes.width;
+
+      //Calculate the chromosome height for portrait orientation
+      chr.height = draw.height * (chr.length / this._chromosomes.max);
+
+      //Calculate the chromosome position x for portrait orientation
+      chr.posx = margin.left + i * this._block.width;
+
+      //Calculate the chromosome position y for portrait orientation
+      chr.posy = margin.top + draw.height - chr.height;
+
+      //Get the chromosome radius
+      chr.radius = this._chromosomes.radius.portrait;
+    }
+
+    //Save the chromosome values
+    this._chromosomes.list[i] = chr;
+
+    /*
 
     //Get the text position x
-    this._chromosome.text.list[i].posx = chr.posx + this._chromosome.width / 2;
+    this._chromosomes.text.list[i].posx = chr.posx + this._chromosomes.width / 2;
 
     //Get the text position y
-    this._chromosome.text.list[i].posy = draw.margin.top + draw.height + this._chromosome.text.margin;
+    this._chromosomes.text.list[i].posy = draw.margin.top + draw.height + this._chromosomes.text.margin;
 
     //Check for centromere
     if(chr.centromere === false){ continue; }
 
     //Get the centromere object
-    var cent = this._chromosome.centromere.list[i];
+    var cent = this._chromosomes.centromere.list[i];
 
     //Calculate the centromere position x
-    this._chromosome.centromere.list[i].posx = this._chromosome.list[i].posx;
+    this._chromosomes.centromere.list[i].posx = this._chromosomes.list[i].posx;
 
     //Centromere position y
-    this._chromosome.centromere.list[i].posy = draw.margin.top + draw.height - chr.height + cent.start;
+    this._chromosomes.centromere.list[i].posy = draw.margin.top + draw.height - chr.height + cent.start;
+    */
   }
+
+  //Set chromosomes data resized
+  this._chromosomes.resized = true;
 
   //Exit
   return this;
@@ -139,34 +180,35 @@ jviz.modules.karyoviewer.prototype.chromosomesResize = function()
 jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
 {
   //Get the chromosome layer
-  var canvas = this._canvas.el.layer(this._chromosome.layer);
+  var canvas = this._canvas.el.layer(this._chromosomes.layer);
 
   //Draw all the chromosomes
-  for(var i = 0; i < this._chromosome.list.length; i++)
+  for(var i = 0; i < this._chromosomes.list.length; i++)
   {
-    //Get the chromosome
-    var chr = this._chromosome.list[i];
+    //Get the chromosome info
+    var chr = this._chromosomes.list[i];
 
     //Draw the chromosome
-    canvas.Rect({ x: chr.posx, y: chr.posy, width: chr.width, height: chr.height, radius: this._chromosome.radius });
+    canvas.Rect({ x: chr.posx, y: chr.posy, width: chr.width, height: chr.height, radius: chr.radius });
 
     //Set the chromosome fill
-    canvas.Fill({ color: this._chromosome.color, opacity: this._chromosome.opacity });
+    canvas.Fill({ color: this._chromosomes.color, opacity: this._chromosomes.opacity });
+    /*
 
     //Get the text object
-    var text = this._chromosome.text.list[i];
+    var text = this._chromosomes.text.list[i];
 
     //Get the text font
-    var text_font = this._chromosome.text.font;
+    var text_font = this._chromosomes.text.font;
 
     //Get the text size
-    var text_size = this._chromosome.text.size;
+    var text_size = this._chromosomes.text.size;
 
     //Get the text color
-    var text_color = this._chromosome.color;
+    var text_color = this._chromosomes.color;
 
     //Get the text align
-    var text_align = this._chromosome.text.align;
+    var text_align = this._chromosomes.text.align;
 
     //Draw the chromosome title
     canvas.Text({ text: chr.name, x: text.posx, y: text.posy, font: text_font, size: text_size, color: text_color, align: text_align });
@@ -175,7 +217,7 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
     if(chr.centromere !== true){ continue; }
 
     //Get the centromere object
-    var cent = this._chromosome.centromere.list[i];
+    var cent = this._chromosomes.centromere.list[i];
 
     //Clear the centromere region
     canvas.Clear({ x: cent.posx, y: cent.posy, width: cent.width, height: cent.height });
@@ -205,7 +247,8 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
     canvas.Line(cent_points);
 
     //Fill the centromere
-    canvas.Fill({ color: this._chromosome.color, opacity: this._chromosome.centromere.opacity });
+    canvas.Fill({ color: this._chromosomes.color, opacity: this._chromosomes.centromere.opacity });
+    */
   }
 
   //Continue
