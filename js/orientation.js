@@ -6,10 +6,24 @@ jviz.modules.karyoviewer.prototype.orientation = function(value)
 
   //convert to lower case
   value = value.toLowerCase();
-  
+
   //Save the orientation
   this._orientation.actual = (this._orientation.values.indexOf(value) === -1) ? this._orientation.default : value;
 
   //Continue
   return this;
+};
+
+//Check if is landscape
+jviz.modules.karyoviewer.prototype.isLandscape = function()
+{
+  //Check if the actual orientation is landscape
+  return this._orientation.actual === 'landscape';
+};
+
+//Check if orientation is protrait
+jviz.modules.karyoviewer.prototype.isPortrait = function()
+{
+  //Check if actual orientation is portrait
+  return this._orientation.actual === 'portrait';
 };
