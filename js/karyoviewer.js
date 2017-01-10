@@ -26,6 +26,33 @@ jviz.modules.karyoviewer = function(opt)
   this._orientation.default = 'portrait'; //Default orientation
   this._orientation.values = [ 'portrait', 'landscape' ]; //Orientation values
 
+  //Block configuration
+  this._block = {};
+  this._block.width = 0; //Block width
+  this._block.height = 0; //Block height
+  this._block.draw = { width: 0, height: 0 }; //Block draw zone
+  this._block.margin = { top: 30, bottom: 30, left: 0, right: 0 }; //Block margins
+  this._block.resized = false; //Block is resized
+
+  //Block default values
+  this._block.default = {};
+
+  //Default values for protrait
+  this._block.default.portrait = {};
+  this._block.default.portrait.draw_width = 15; //Default portrait draw width
+  this._block.default.portrait.draw_height = 70; //Default portrait draw height
+  this._block.default.portrait.margin_top = 30; //Default portrait margin top
+  this._block.default.portrait.margin_bottom = 30; //Default portrait margin bottom
+
+  //Default values for landscape
+  this._block.default.landscape = {};
+  this._block.default.landscape.draw_width = 0; //Default landscape draw width
+  this._block.default.landscape.draw_height = 50; //Default landscape draw height
+  this._block.default.landscape.margin_top = 30; //Default landscape margin top
+  this._block.default.landscape.margin_bottom = 30; //Default landscape margin bottom
+  this._block.default.landscape.margin_left = 40; //Default landscape margin left
+  this._block.default.landscape.margin_right = 40; //Default landscape margin right
+
   //Panel object
   this._panel = {};
   this._panel.el = null; //Panel element
