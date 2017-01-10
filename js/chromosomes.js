@@ -62,14 +62,11 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list, isExample)
       obj_chr.centromere = true;
     }
 
-    //Save the chromosomes text
-    //this._chromosomes.text.list.push({ posx: 0, posy: 0 });
+    //Save the chromosome name object
+    this._chromosomes.name.list[i] = { posx: 0, posy: 0 };
 
     //Save the chromosome object
     this._chromosomes.list[i] = obj_chr;
-
-    //Add the chromosome name
-    //this._chromosomes.names[list[i].name] = i;
   }
 
   //Save the number of chromosomes
@@ -141,11 +138,31 @@ jviz.modules.karyoviewer.prototype.chromosomesResize = function()
     //Save the chromosome values
     this._chromosomes.list[i] = chr;
 
-    //Get the text position x
-    //this._chromosomes.text.list[i].posx = chr.posx + this._chromosomes.width / 2;
+    //Get the chromosome name object
+    var name = this._chromosomes.name.list[i];
 
-    //Get the text position y
-    //this._chromosomes.text.list[i].posy = draw.margin.top + draw.height + this._chromosomes.text.margin;
+    //Calculate for landscape
+    if(this.isLandscape() === true)
+    {
+      //Calculate the name position x for landscape
+      name.posx = margin.left / 2;
+
+      //Calculate the name position y for landscape
+      name.posy = chr.posy + chr.height / 2 - this._chromosomes.name.margin;
+    }
+
+    //Calculate for portrait
+    else
+    {
+      //Calculate the name position x for portrait
+      name.posx = chr.posx + chr.width / 2;
+
+      //Calculate the name position y for portrait
+      name.posy = margin.top + draw.height + margin.bottom / 2 - this._chromosomes.name.margin;
+    }
+
+    //Save the name object
+    this._chromosomes.name.list[i] = name;
 
     //Check for centromere
     if(chr.centromere === false){ continue; }
@@ -252,27 +269,12 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
 
     //Set the chromosome fill
     canvas.Fill({ color: this._chromosomes.color, opacity: this._chromosomes.opacity });
-    /*
 
-    //Get the text object
-    var text = this._chromosomes.text.list[i];
+    //Get the chromosome name info
+    var name = this._chromosomes.name.list[i];
 
-    //Get the text font
-    var text_font = this._chromosomes.text.font;
-
-    //Get the text size
-    var text_size = this._chromosomes.text.size;
-
-    //Get the text color
-    var text_color = this._chromosomes.color;
-
-    //Get the text align
-    var text_align = this._chromosomes.text.align;
-
-    //Draw the chromosome title
-    canvas.Text({ text: chr.name, x: text.posx, y: text.posy, font: text_font, size: text_size, color: text_color, align: text_align });
-
-    */
+    //Draw the name text
+    canvas.Text(jviz.object.extend(this._chromosomes.name.text, { text: chr.name, x: name.posx, y: name.posy }));
 
     //Check if has centromere
     if(chr.centromere !== true){ continue; }
