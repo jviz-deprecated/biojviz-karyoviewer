@@ -45,41 +45,40 @@ jviz.modules.karyoviewer = function(opt)
   this._canvas.layers = 3; //Number of layers
   this._canvas.el = null; //Canvas element
 
-  //Chromosome info
-  this._chromosome = {};
-  this._chromosome.width = 15; //Chromosome default width
-  this._chromosome.layer = 1; //Chromosome layer
-  this._chromosome.list = []; //Chromosomes list
-  this._chromosome.names = {}; //Chromosome names
-  this._chromosome.max = 0; //Chromosome max length
-  this._chromosome.margin = 0; //Chromosome margin
-  this._chromosome.num = 0; //Number of chromosomes
-  this._chromosome.color = jviz.colors.blue2.hex; //Chromosome color
-  this._chromosome.opacity = 0.6; //Chromosome opacity
-  this._chromosome.resized = false; //Chromosome data is resized
+  //Check the chromosomes object
+  if(typeof opt.chromosomes !== 'object'){ opt.chromosomes = {}; }
 
-  //Chromosome height
-  this._chromosome.height = {};
-  this._chromosome.height.portrait = 70; //Chromosome height on portrait orientation
-  this._chromosome.height.landscape = 50; //Chromosome height on landscape orientation
+  //Chromosomes info
+  this._chromosomes = {};
+  this._chromosomes.width = 15; //Chromosome default width
+  this._chromosomes.height = 50; //Chromosome default height
+  this._chromosomes.layer = 1; //Chromosome layer
+  this._chromosomes.list = []; //Chromosomes list
+  this._chromosomes.names = {}; //Chromosome names
+  this._chromosomes.max = 0; //Chromosome max length
+  this._chromosomes.margin = 0; //Chromosome margin
+  this._chromosomes.num = 0; //Number of chromosomes
+  this._chromosomes.color = jviz.colors.blue2.hex; //Chromosome color
+  this._chromosomes.opacity = 0.6; //Chromosome opacity
+  this._chromosomes.resized = false; //Chromosome data is resized
 
   //Chromosome radius
-  this._chromosome.radius = {};
-  this._chromosome.radius.portrait = 6; //Chromosome radius for portrait
-  this._chromosome.radius.landscape = 20; //Chromosome radius for landscape
+  this._chromosomes.radius = {};
+  this._chromosomes.radius.portrait = 6; //Chromosome radius for portrait
+  this._chromosomes.radius.landscape = 20; //Chromosome radius for landscape
 
   //Chromosome text info
-  this._chromosome.text = {};
-  this._chromosome.text.list = []; //Chromosomes text
-  this._chromosome.text.font = jviz.font.default; //Text font
-  this._chromosome.text.size = '11px'; //Text size
-  this._chromosome.text.align = 'center'; //Chromosomes text align
-  this._chromosome.text.margin = 5; //Chromosomes text margin top
+  this._chromosomes.text = {};
+  this._chromosomes.text.list = []; //Chromosomes text
+  this._chromosomes.text.font = jviz.font.default; //Text font
+  this._chromosomes.text.size = '11px'; //Text size
+  this._chromosomes.text.align = 'center'; //Chromosomes text align
+  this._chromosomes.text.margin = 5; //Chromosomes text margin top
 
   //Centromere
-  this._chromosome.centromere = {};
-  this._chromosome.centromere.list = []; //List of centromere positions
-  this._chromosome.centromere.opacity = 0.9; //Centromere opacity
+  this._chromosomes.centromere = {};
+  this._chromosomes.centromere.list = []; //List of centromere positions
+  this._chromosomes.centromere.opacity = 0.9; //Centromere opacity
 
   //Check the features object
   if(typeof opt.features === 'undefined'){ opt.features = {}; }
