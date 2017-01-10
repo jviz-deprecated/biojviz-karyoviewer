@@ -4,9 +4,6 @@ jviz.modules.karyoviewer.prototype.resize = function()
   //Set the canvas width
   //this._canvas.el.width(this._width);
 
-  //Set the canvas height
-  this._canvas.el.height(this._height);
-
   //Resize the canvas
   this._canvas.el.resize();
 
@@ -15,6 +12,9 @@ jviz.modules.karyoviewer.prototype.resize = function()
 
   //Save the full height
   //this._height = this._canvas.el.height();
+
+  //Set to resize the block object
+  this._block.resized = false;
 
   //Set to resize the chromosomes data
   this._chromosomes.resized = false;
