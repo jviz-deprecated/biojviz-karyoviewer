@@ -10,6 +10,9 @@ jviz.modules.karyoviewer.prototype.orientation = function(value)
   //Save the orientation
   this._orientation.actual = (this._orientation.values.indexOf(value) === -1) ? this._orientation.default : value;
 
+  //Resize the canvas
+  this.resize();
+
   //Continue
   return this;
 };
