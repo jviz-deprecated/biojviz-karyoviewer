@@ -145,30 +145,34 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     //Get the features counter object
     var counter = this._features.counter.list[chr.name];
 
+    //Add the rectangle width
+    counter.rectangle.width = this._features.counter.rectangle.width;
+
+    //Add the rectangle height
+    counter.rectangle.height = this._features.counter.rectangle.height;
+
+    //Add the rectangle radius
+    counter.rectangle.radius = this._features.counter.rectangle.radius;
+
     //Check for landscape
     if(this.isLandscape() === true)
     {
-      //Add the rectangle width
-      counter.rectangle.width = this._features.counter.rectangle.width;
-
-      //Add the rectangle height
-      counter.rectangle.height = this._features.counter.rectangle.height;
-
-      //Add hte rectangle position x
+      //Add hte rectangle position x for landscape
       counter.rectangle.x = chr.posx + chr.width + this._features.counter.triangle.height + this._features.counter.margin;
 
-      //Add the rectangle position y
+      //Add the rectangle position y for landscape
       counter.rectangle.y = chr.posy + chr.height / 2 - this._features.counter.rectangle.height / 2;
     }
 
     //Check for portrait
     else
     {
+      //Add the rectangle position x for portrait
+      counter.rectangle.x = chr.posx + chr.width / 2 - this._features.counter.rectangle.width / 2;
 
+      //Add the rectangle position y for portrait
+      counter.rectangle.y = chr.posy  - this._features.counter.triangle.height - this._features.counter.rectangle.height;
     }
-
-    //Add the rectangle radius
-    counter.rectangle.radius = this._features.counter.rectangle.radius;
 
     //Save the counter object
     this._features.counter.list[chr.name] = counter;
