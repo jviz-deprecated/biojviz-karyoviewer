@@ -37,3 +37,10 @@ jviz.modules.karyoviewer.prototype.isPortrait = function()
   //Check if actual orientation is portrait
   return this._orientation.actual === 'portrait';
 };
+
+//Set portrait orientation
+jviz.modules.karyoviewer.prototype.setPortrait = function()
+{
+  //Set portrait orientation
+  return this.orientation('portrait');
+};
