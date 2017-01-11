@@ -50,8 +50,8 @@ jviz.modules.karyoviewer = function(opt)
   this._block.default.landscape.draw_height = 20; //Default landscape draw height
   this._block.default.landscape.margin_top = 30; //Default landscape margin top
   this._block.default.landscape.margin_bottom = 30; //Default landscape margin bottom
-  this._block.default.landscape.margin_left = 40; //Default landscape margin left
-  this._block.default.landscape.margin_right = 40; //Default landscape margin right
+  this._block.default.landscape.margin_left = 50; //Default landscape margin left
+  this._block.default.landscape.margin_right = 50; //Default landscape margin right
 
   //Panel object
   this._panel = {};
@@ -129,10 +129,12 @@ jviz.modules.karyoviewer = function(opt)
   this._features.counter.list = {}; //Features counter
   this._features.counter.opacity = 1.0; //Features counter opacity
   this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
+  this._features.counter.margin = 5; //Counter margin
 
   //Features counter rectangle
   this._features.counter.rectangle = {};
-  this._features.counter.rectangle.height = 26; //Counter rectangle height
+  this._features.counter.rectangle.width = 26; //Counter rectangle width
+  this._features.counter.rectangle.height = 22; //Counter rectangle height
   this._features.counter.rectangle.radius = 5; //Counter rectangle radius
 
   //Features counter text
@@ -146,7 +148,6 @@ jviz.modules.karyoviewer = function(opt)
   this._features.counter.triangle = {};
   this._features.counter.triangle.width = 6; //Features counter triangle width
   this._features.counter.triangle.height = 4; //Features counter triangle height
-  this._features.counter.triangle.margin = 1; //Features counter triangle margin
 
   //Features label
   this._features.label = {};
