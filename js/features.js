@@ -53,14 +53,14 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     obj_feature.color = (typeof feature.color === 'string') ? feature.color : this._features.color;
 
     //Check if chromosome exists
-    if(typeof this._features.chromosome[feature.chromosome] === 'undefined')
+    if(typeof this._features.chromosomes[feature.chromosome] === 'undefined')
     {
       //Add this chromosome
-      this._features.list[feature.chromosome] = [];
+      this._features.chromosomes[feature.chromosome] = [];
     }
 
     //Add the index to the chromosome list
-    this._features.list[feature.chromosome].push(i);
+    this._features.chromosomes[feature.chromosome].push(i);
 
     //Add to the list
     this._features.list.push(obj_feature);
