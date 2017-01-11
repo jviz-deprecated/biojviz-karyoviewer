@@ -297,3 +297,8 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
 };
 
 //Get a chromosome by index
+jviz.modules.karyoviewer.prototype.chromosomesByIndex = function(index)
+{
+  //Get the chromosome information by index
+  return this._chromosomes.list[index];
+};
