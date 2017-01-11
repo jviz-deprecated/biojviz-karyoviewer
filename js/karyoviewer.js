@@ -143,6 +143,7 @@ jviz.modules.karyoviewer = function(opt)
   this._features.counter.text.size = '11px'; //Counter text size
   this._features.counter.text.align = 'center'; //Counter text align
   this._features.counter.text.color = jviz.colors.white.hex; //Counter text color
+  this._features.counter.text.margin = 5; //Counter text margin
 
   //Features counter triangle
   this._features.counter.triangle = {};
