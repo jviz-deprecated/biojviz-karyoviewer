@@ -261,7 +261,7 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     counter_rect.radius = this._features.counter.rectangle.radius;
 
     //Draw the rectangle
-    canvas.Rect(conter_rect);
+    canvas.Rect(counter_rect);
 
     //Add the rectangle fill
     canvas.Fill({ color: this._features.color, opacity: this._features.counter.opacity });
