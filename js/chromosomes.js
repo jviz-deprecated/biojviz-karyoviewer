@@ -2,7 +2,7 @@
 jviz.modules.karyoviewer.prototype.chromosomes = function(list, isExample)
 {
   //Check the list
-  if(typeof list === 'undefined'){ return this; }
+  if(typeof list === 'undefined'){ return this._chromosomes.list; }
 
   //Check the is exemple option
   if(typeof isExample !== 'booelan'){ var isExample = false; }
@@ -295,3 +295,5 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
   //Continue
   return this;
 };
+
+//Get a chromosome by index
