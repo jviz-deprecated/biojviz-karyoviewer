@@ -133,7 +133,7 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
       }
 
       //Save the feature object
-      this._features.list[index] = feature;
+      this._features.list[j] = feature;
     }
 
     //Get the features counter object
