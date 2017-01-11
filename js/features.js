@@ -145,15 +145,6 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     //Get the features counter object
     var counter = this._features.counter.list[chr.name];
 
-    //Add the rectangle width
-    counter.rectangle.width = this._features.counter.rectangle.width;
-
-    //Add the rectangle height
-    counter.rectangle.height = this._features.counter.rectangle.height;
-
-    //Add the rectangle radius
-    counter.rectangle.radius = this._features.counter.rectangle.radius;
-
     //Check for landscape
     if(this.isLandscape() === true)
     {
@@ -173,6 +164,12 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
       //Add the rectangle position y for portrait
       counter.rectangle.posy = chr.posy  - this._features.counter.triangle.height - this._features.counter.rectangle.height;
     }
+
+    //Add the text position x
+    counter.text.posx = counter.rectangle.posx + this._features.counter.rectangle.width / 2;
+
+    //Add the text position y
+    counter.text.posy = counter.rectangle.posy + this._features.counter.rectangle.height / 2 - this._features.counter.text.margin;
 
     //Save the counter object
     this._features.counter.list[chr.name] = counter;
@@ -251,14 +248,41 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     //Get the features cunter object
     var counter = this._features.counter.list[chr.name];
 
-    //Get the counter rectangle
-    var crect = counter.rectangle;
+    //Initialize the rectangle object
+    var counter_rect = { x: counter.rectangle.posx, y: counter.rectangle.posy };
+
+    //Add the counter rectangle width
+    counter_rect.width = this._features.counter.rectangle.width;
+
+    //Add the counter rectangle height
+    counter_rect.height = this._features.counter.rectangle.height;
+
+    //Add the rectangle radius
+    counter_rect.radius = this._features.counter.rectangle.radius;
 
     //Draw the rectangle
-    canvas.Rect({ x: crect.posx, y: crect.posy, width: crect.width, height: crect.height, radius: this._features.counter.rectangle.radius });
+    canvas.Rect(conter_rect);
 
     //Add the rectangle fill
     canvas.Fill({ color: this._features.color, opacity: this._features.counter.opacity });
+
+    //Initialize the text object
+    var counter_text = { text: features.length + '', x: counter.text.posx, y: counter.text.posy };
+
+    //Add the text color
+    counter_Text.color = this._features.counter.text.color;
+
+    //Add the text font
+    counter_text.font = this._features.counter.text.font;
+
+    //Add the text size
+    counter_text.size = this._features.counter.text.size;
+
+    //Add the text align
+    counter_text.align = this._features.counter.text.align;
+
+    //Draw the text
+    canvas.Text(counter_text);
   }
 
   //Exit
