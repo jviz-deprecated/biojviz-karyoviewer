@@ -13,6 +13,9 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list, isExample)
   //Initialize the chromosomes list
   this._chromosomes.list = [];
 
+  //Reset the chromosomes index
+  this._chromosomes.index = {};
+
   //Reset the centromere list
   this._chromosomes.centromere.list = [];
 
@@ -67,6 +70,9 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list, isExample)
 
     //Save the chromosome object
     this._chromosomes.list[i] = obj_chr;
+
+    //Add the chromosome index
+    this._chromosomes.index[obj_chr.name] = i;
   }
 
   //Save the number of chromosomes
