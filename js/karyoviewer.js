@@ -126,15 +126,27 @@ jviz.modules.karyoviewer = function(opt)
 
   //Features counter
   this._features.counter = {};
+  this._features.counter.list = {}; //Features counter
+  this._features.counter.opacity = 1.0; //Features counter opacity
   this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
 
-  //Features triangle
-  this._features.triangle = {};
-  this._features.triangle.width = 6; //Features triangle width
-  this._features.triangle.height = 4; //Features triangle height
-  this._features.triangle.margin = 1; //Features triangle mrgin
-  this._features.triangle.opacity = 0.6; //Features triangle opacity
-  this._features.triangle.visible = (typeof opt.features.triangle === 'boolean') ? opt.features.triangle : true; //Triangle visible
+  //Features counter rectangle
+  this._features.counter.rectangle = {};
+  this._features.counter.rectangle.height = 26; //Counter rectangle height
+  this._features.counter.rectangle.radius = 5; //Counter rectangle radius
+
+  //Features counter text
+  this._features.counter.text = {};
+  this._features.counter.text.font = jviz.font.default; //Counter font family
+  this._features.counter.text.size = '11px'; //Counter text size
+  this._features.counter.text.align = 'center'; //Counter text align
+  this._features.counter.text.color = jviz.colors.white.hex; //Counter text color
+
+  //Features counter triangle
+  this._features.counter.triangle = {};
+  this._features.counter.triangle.width = 6; //Features counter triangle width
+  this._features.counter.triangle.height = 4; //Features counter triangle height
+  this._features.counter.triangle.margin = 1; //Features counter triangle margin
 
   //Features label
   this._features.label = {};
