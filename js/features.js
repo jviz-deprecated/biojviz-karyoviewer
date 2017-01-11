@@ -153,6 +153,15 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
 
       //Add the rectangle position y for landscape
       counter.rectangle.posy = chr.posy + chr.height / 2 - this._features.counter.rectangle.height / 2;
+
+      //Add the triange first point
+      counter.triangle.push([ counter.rectangle.posx, counter.rectangle.posy + this._features.counter.rectangle.height / 2 - this._features.counter.triangle.width / 2 ]);
+
+      //Add the triangle second point
+      counter.triangle.push([ counter.rectangle.posx - this._features.counter.triangle.height, counter.rectangle.posy + this._features.counter.rectangle.height / 2 ]);
+
+      //Add the last triangle point
+      counter.triangle.push([ counter.rectangle.posx, counter.rectangle.posy + this._features.counter.rectangle.height / 2 + this._features.counter.triangle.width / 2 ]);
     }
 
     //Check for portrait
@@ -162,7 +171,16 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
       counter.rectangle.posx = chr.posx + chr.width / 2 - this._features.counter.rectangle.width / 2;
 
       //Add the rectangle position y for portrait
-      counter.rectangle.posy = chr.posy  - this._features.counter.triangle.height - this._features.counter.rectangle.height;
+      counter.rectangle.posy = chr.posy  - this._features.counter.triangle.height - this._features.counter.rectangle.height - this._features.counter.margin;
+
+      //Add the triangle first position
+      counter.triangle.push([ counter.rectangle.posx + this._features.counter.rectangle.width / 2 - this._features.counter.triangle.width / 2, counter.rectangle.posy + this._features.counter.rectangle.height ]);
+
+      //Add the second triangle point
+      counter.triangle.push([ counter.rectangle.posx + this._features.counter.rectangle.width / 2, counter.rectangle.posy + this._features.counter.rectangle.height + this._features.counter.triangle.height ]);
+
+      //Add the last point
+      counter.triangle.push([ counter.rectangle.posx + this._features.counter.rectangle.width / 2 + this._features.counter.triangle.width / 2, counter.rectangle.posy + this._features.counter.rectangle.height ]);
     }
 
     //Add the text position x
@@ -283,6 +301,12 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
 
     //Draw the text
     canvas.Text(counter_text);
+
+    //Draw the triangle points
+    canvas.Line(counter.triangle);
+
+    //Add the triangle fill
+    canvas.Fill({ color: this._features.color, opacity: this._features.counter.opacity });
   }
 
   //Exit
