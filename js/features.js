@@ -1,169 +1,222 @@
-//Add the regions list
-jviz.modules.karyoviewer.prototype.regions = function(list)
+//Add the features list
+jviz.modules.karyoviewer.prototype.features = function(list)
 {
-  //Check the regions list
+  //Check the features list
   if(typeof list === 'undefined'){ return this; }
-
-  //Check for no chromosomes data
-  if(this._chromosome.list.length === 0){ return console.error('No chromosomes data'); }
 
   //Check for array
   if(jviz.is.array(list) === false){ list = [ list ]; }
 
-  //Get the draw zone
-  var draw = this._canvas.el.draw();
+  //Reset the features list
+  this._features.list = [];
 
-  //Reset the regions list
-  this._regions.list = {};
+  //Reset the features list by chromosomes
+  this._features.chromosomes = {};
 
-  //Read all the regions
+  //Read all the features
   for(var i = 0; i < list.length; i++)
   {
-    //Get the region
-    var region = list[i];
+    //Get the feature
+    var feature = list[i];
 
-    //Check the chromosome
-    if(typeof this._regions.list[region.chromosome] === 'undefined')
+    //Initialize the new feature object
+    var obj_feature = { posx: 0, posy: 0, width: 0, height: 0 };
+
+    //Save the feature chromosome
+    obj_feature.chromosome = feature.chromosome;
+
+    //Save the feature start point
+    obj_feature.start = parseInt(feature.start);
+
+    //Save the feature end point
+    obj_feature.end = (typeof feature.end === 'undefined') ? obj_feature.start : parseInt(feature.end);
+
+    //Save the feature length
+    obj_feature.length = Math.abs(obj.end - obj.start) + 1;
+
+    //Save the feature index
+    obj_feature.index = i;
+
+    //Save the feature start position
+    //obj.start = draw.height * (feature.start / this._chromosomes.max);
+
+    //Save the feature end position
+    //obj.end = draw.height * (feature.end / this._chromosomes.max);
+
+    //feature width
+    //obj.width = this._chromosomes.width;
+
+    //feature height
+    //obj.height = Math.max(Math.abs(obj.end - obj.start), 1);
+
+    //Add the feature color
+    obj_feature.color = (typeof feature.color === 'string') ? feature.color : this._features.color;
+
+    //Check if chromosome exists
+    if(typeof this._features.chromosome[feature.chromosome] === 'undefined')
     {
       //Add this chromosome
-      this._regions.list[region.chromosome] = [];
+      this._features.list[feature.chromosome] = [];
     }
 
-    //Initialize the new region object
-    var obj = { posx: 0, posy: 0 };
-
-    //Save the region start position
-    obj.start = draw.height * (region.start / this._chromosome.max);
-
-    //Save the region end position
-    obj.end = draw.height * (region.end / this._chromosome.max);
-
-    //Region width
-    obj.width = this._chromosome.width;
-
-    //Region height
-    obj.height = Math.max(Math.abs(obj.end - obj.start), 1);
-
-    //Add the region color
-    obj.color = (typeof region.color === 'string') ? region.color : this._regions.color;
+    //Add the index to the chromosome list
+    this._features.list[feature.chromosome].push(i);
 
     //Add to the list
-    this._regions.list[region.chromosome].push(obj);
+    this._features.list.push(obj_feature);
   }
 
-  //Resize the regions
-  this.regionsResize();
+  //Set to resize the features
+  this._features.resized = false;
 
   //Continue
   return this;
 };
 
-//Resize the regions data
-jviz.modules.karyoviewer.prototype.regionsResize = function()
+//Resize the features data
+jviz.modules.karyoviewer.prototype.featuresResize = function()
 {
-  //Get the draw zone
-  var draw = this._canvas.el.draw();
+  //Get the draw info
+  var draw = this._block.draw;
+
+  //Get margins
+  var margin = this._block.margin;
 
   //Read all the chromosomes
-  for(var i = 0; i < this._chromosome.list.length; i++)
+  for(var i = 0; i < this._chromosomes.list.length; i++)
   {
     //Get the chromosome
-    var chr = this._chromosome.list[i];
+    var chr = this._chromosomes.list[i];
 
-    //Check regions on this chromosome
-    if(typeof this._regions.list[chr.name] === 'undefined'){ continue; }
+    //Check features on this chromosome
+    if(typeof this._features.chromosomes[chr.name] === 'undefined'){ continue; }
 
-    //Get the regions list
-    var regions = this._regions.list[chr.name];
+    //Get the features list
+    var features = this._features.chromosomes[chr.name];
 
-    //Red all regions
-    for(var j = 0; j < regions.length; j++)
+    //Red all features
+    for(var j in features)
     {
-      //Get this region
-      var region = regions[j];
+      //Get the feature object
+      var feature = this._features.list[j];
 
-      //Save the region position x
-      this._regions.list[chr.name][j].posx = chr.posx;
+      //Check for landscape
+      if(this.isLandscape() === true)
+      {
+        //Save the feature width
+        feature.width = Math.max(draw.width * feature.length / this._chromosomes.max, 1);
 
-      //Save the region position y
-      this._regions.list[chr.name][j].posy = draw.margin.top + draw.height - chr.height + region.start;
+        //Save the feature height
+        feature.height = this._chromosomes.height;
+
+        //Save the feature position x
+        feature.posx = chr.posx + draw.width * Math.min(feature.start, feature.end) / this._chromosomes.max;
+
+        //Save the feature position y
+        feature.posy = chr.posy;
+      }
+
+      //Check for portrait
+      else
+      {
+        //Save the feature width for portrait
+        feature.width = this._chromosomes.width;
+
+        //Save the feature height for portrait
+        feature.height = Math.max(draw.height * feature.length / this._chromosomes.max, 1);
+
+        //Save the feature position x for portrait
+        feature.posx = chr.posx;
+
+        //Save the feature position y for portrait
+        feature.posy = chr.posy + draw.height * Math.min(feature.start, feature.end) / this._chromosomes.max;
+      }
+
+      //Save the feature object
+      this._features.list[index] = feature;
     }
+
+    //Get the features counter object
   }
 
-  //Update the label rectangle width
-  this._regions.label.rectangle.width = 
+  //Set features resized
+  this._features.resized = true;
 
   //Continue
   return this;
 };
 
-//Draw the regions
-jviz.modules.karyoviewer.prototype.regionsDraw = function()
+//Draw the features
+jviz.modules.karyoviewer.prototype.featuresDraw = function()
 {
   //Get the canvas
-  var canvas = this._canvas.el.layer(this._regions.layer);
-
-  //Clear the canvas
-  canvas.Clear();
+  var canvas = this._canvas.el.layer(this._features.layer);
 
   //Read all the chromosomes
-  for(var i = 0; i < this._chromosome.list.length; i++)
+  for(var i = 0; i < this._chromosomes.list.length; i++)
   {
     //Get the chromosome
-    var chr = this._chromosome.list[i];
+    var chr = this._chromosomes.list[i];
 
-    //Check regions on this chromosome
-    if(typeof this._regions.list[chr.name] === 'undefined'){ continue; }
+    //Check features on this chromosome
+    if(typeof this._features.chromosomes[chr.name] === 'undefined'){ continue; }
 
-    //Get the regions list
-    var regions = this._regions.list[chr.name];
+    //Get the features list
+    var features = this._features.list[chr.name];
 
-    //Red all regions
-    for(var j = 0; j < regions.length; j++)
+    //Red all features
+    for(var j in features)
     {
-      //Get this region
-      var region = regions[j];
+      //Get this feature
+      var feature = this._features.list[j];
 
-      //Draw the region
-      canvas.Rect({ x: region.posx, y: region.posy, width: region.width, height: region.height });
+      //Draw the feature
+      canvas.Rect({ x: feature.posx, y: feature.posy, width: feature.width, height: feature.height });
 
-      //Region fill
-      canvas.Fill({ color: region.color, opacity: this._regions.opacity });
+      //feature fill
+      canvas.Fill({ color: feature.color, opacity: this._features.opacity });
+      /*
 
-      //Check the regions triangle
-      if(this._regions.triangle.visible === false){ continue; }
+      //Check the features triangle
+      if(this._features.triangle.visible === false){ continue; }
 
       //Get the triangle configuration
-      var triangle = this._regions.triangle;
+      var triangle = this._features.triangle;
 
       //Initialize the triangle array
       var triangle_points = [];
 
       //Add the first point
-      triangle_points.push([ region.posx - triangle.margin - triangle.width, region.posy - triangle.height ]);
+      triangle_points.push([ feature.posx - triangle.margin - triangle.width, feature.posy - triangle.height ]);
 
       //Add the middle point
-      triangle_points.push([ region.posx - triangle.margin, region.posy ]);
+      triangle_points.push([ feature.posx - triangle.margin, feature.posy ]);
 
       //Add the first point
-      triangle_points.push([ region.posx - triangle.margin - triangle.width, region.posy + triangle.height ]);
+      triangle_points.push([ feature.posx - triangle.margin - triangle.width, feature.posy + triangle.height ]);
 
       //Add the line
       canvas.Line(triangle_points);
 
       //Fill the triangle
-      canvas.Fill({ color: region.color, opacity: this._regions.triangle.opacity });
+      canvas.Fill({ color: feature.color, opacity: this._features.triangle.opacity });
+      */
     }
 
     //Check for drawing the label
-    if(this._regions.label.visible === false){ continue; }
+    //if(this._features.label.visible === false){ continue; }
 
-    //Check for no regions
-    if(regions.length === 0){ continue; }
-
-    //
+    //Check for no features
+    if(features.length === 0){ continue; }
   }
 
   //Exit
   return this;
+};
+
+//Get features by chromosome name
+jviz.modules.karyoviewer.prototype.featuresByChromosome = function(name)
+{
+  //Check for no features on this chromosome
+  if(typeof this._features.chromosomes[name] === 'undefined'){ return []; }
 };
