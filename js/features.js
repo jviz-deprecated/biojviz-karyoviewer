@@ -270,7 +270,7 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     var counter_text = { text: features.length + '', x: counter.text.posx, y: counter.text.posy };
 
     //Add the text color
-    counter_Text.color = this._features.counter.text.color;
+    counter_text.color = this._features.counter.text.color;
 
     //Add the text font
     counter_text.font = this._features.counter.text.font;
