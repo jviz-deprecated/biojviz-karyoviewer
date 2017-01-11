@@ -133,7 +133,7 @@ jviz.modules.karyoviewer = function(opt)
 
   //Features counter rectangle
   this._features.counter.rectangle = {};
-  this._features.counter.rectangle.width = 26; //Counter rectangle width
+  this._features.counter.rectangle.width = 30; //Counter rectangle width
   this._features.counter.rectangle.height = 22; //Counter rectangle height
   this._features.counter.rectangle.radius = 5; //Counter rectangle radius
 
