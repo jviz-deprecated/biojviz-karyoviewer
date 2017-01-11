@@ -297,8 +297,25 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
 };
 
 //Get a chromosome by index
-jviz.modules.karyoviewer.prototype.chromosomesByIndex = function(index)
+jviz.modules.karyoviewer.prototype.chromosomeByIndex = function(index)
 {
   //Get the chromosome information by index
   return this._chromosomes.list[index];
+};
+
+//Get a chromosome by name
+jviz.modules.karyoviewer.prototype.chromosomeByName = function(name)
+{
+  //Read all the chromosomes
+  for(var i = 0; i < this._chromosomes.list.length; i++)
+  {
+    //Check the chromosome name
+    if(this._chromosomes.list[i].name !== name){ continue; }
+
+    //Return the chromosome object
+    return this._chromosomes.list[i];
+  }
+
+  //Default, return null
+  return null;
 };
