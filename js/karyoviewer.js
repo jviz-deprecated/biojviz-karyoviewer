@@ -62,7 +62,7 @@ jviz.modules.karyoviewer = function(opt)
   this._panel.detail = (typeof opt.detail === 'string') ? opt.detail : ''; //Panel detail
   this._panel.detail = ''; //Panel detail
   this._panel.visible = (typeof opt.panel === 'boolean') ? opt.panel : true; //Panel is visible
-  this._panel.foot = false; //Disable foot 
+  this._panel.foot = false; //Disable foot
 
   //Canvas object
   this._canvas = {};
@@ -82,6 +82,7 @@ jviz.modules.karyoviewer = function(opt)
   this._chromosomes.height = 20; //Chromosome default height
   this._chromosomes.layer = 1; //Chromosome layer
   this._chromosomes.list = []; //Chromosomes list
+  this._chromosomes.index = {}; //Chromosomes index
   this._chromosomes.names = {}; //Chromosome names
   this._chromosomes.max = 0; //Chromosome max length
   this._chromosomes.num = 0; //Number of chromosomes
