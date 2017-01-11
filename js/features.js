@@ -162,7 +162,7 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     if(typeof this._features.chromosomes[chr.name] === 'undefined'){ continue; }
 
     //Get the features list
-    var features = this._features.list[chr.name];
+    var features = this._features.chromosomes[chr.name];
 
     //Red all features
     for(var j in features)
