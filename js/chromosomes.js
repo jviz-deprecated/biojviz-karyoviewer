@@ -312,16 +312,12 @@ jviz.modules.karyoviewer.prototype.chromosomeByIndex = function(index)
 //Get a chromosome by name
 jviz.modules.karyoviewer.prototype.chromosomeByName = function(name)
 {
-  //Read all the chromosomes
-  for(var i = 0; i < this._chromosomes.list.length; i++)
-  {
-    //Check the chromosome name
-    if(this._chromosomes.list[i].name !== name){ continue; }
+  //Get the chromosome index
+  var index = this._chromosomes.index[name];
 
-    //Return the chromosome object
-    return this._chromosomes.list[i];
-  }
+  //Check for undefined index
+  if(typeof index === 'undefined'){ return null; }
 
-  //Default, return null
-  return null;
+  //Return the chromosome object
+  return this.chromosomeByIndex(index);
 };
