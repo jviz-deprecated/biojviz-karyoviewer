@@ -158,20 +158,20 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     if(this.isLandscape() === true)
     {
       //Add hte rectangle position x for landscape
-      counter.rectangle.x = chr.posx + chr.width + this._features.counter.triangle.height + this._features.counter.margin;
+      counter.rectangle.posx = chr.posx + chr.width + this._features.counter.triangle.height + this._features.counter.margin;
 
       //Add the rectangle position y for landscape
-      counter.rectangle.y = chr.posy + chr.height / 2 - this._features.counter.rectangle.height / 2;
+      counter.rectangle.posy = chr.posy + chr.height / 2 - this._features.counter.rectangle.height / 2;
     }
 
     //Check for portrait
     else
     {
       //Add the rectangle position x for portrait
-      counter.rectangle.x = chr.posx + chr.width / 2 - this._features.counter.rectangle.width / 2;
+      counter.rectangle.posx = chr.posx + chr.width / 2 - this._features.counter.rectangle.width / 2;
 
       //Add the rectangle position y for portrait
-      counter.rectangle.y = chr.posy  - this._features.counter.triangle.height - this._features.counter.rectangle.height;
+      counter.rectangle.posy = chr.posy  - this._features.counter.triangle.height - this._features.counter.rectangle.height;
     }
 
     //Save the counter object
@@ -251,8 +251,11 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     //Get the features cunter object
     var counter = this._features.counter.list[chr.name];
 
+    //Get the counter rectangle
+    var crect = counter.rectangle;
+
     //Draw the rectangle
-    canvas.Rect(counter.rectangle);
+    canvas.Rect({ x: crect.posx, y: crect.posy, width: crect.width, height: crect.height, radius: this._features.counter.rectangle.radius });
 
     //Add the rectangle fill
     canvas.Fill({ color: this._features.color, opacity: this._features.counter.opacity });
