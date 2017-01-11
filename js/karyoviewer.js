@@ -129,7 +129,7 @@ jviz.modules.karyoviewer = function(opt)
   this._features.counter.list = {}; //Features counter
   this._features.counter.opacity = 1.0; //Features counter opacity
   this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
-  this._features.counter.margin = 5; //Counter margin
+  this._features.counter.margin = 3; //Counter margin
 
   //Features counter rectangle
   this._features.counter.rectangle = {};
