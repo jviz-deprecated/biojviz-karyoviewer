@@ -131,25 +131,6 @@ jviz.modules.karyoviewer = function(opt)
   this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
   this._features.counter.margin = 3; //Counter margin
 
-  //Features counter rectangle
-  this._features.counter.rectangle = {};
-  this._features.counter.rectangle.width = 30; //Counter rectangle width
-  this._features.counter.rectangle.height = 22; //Counter rectangle height
-  this._features.counter.rectangle.radius = 5; //Counter rectangle radius
-
-  //Features counter text
-  this._features.counter.text = {};
-  this._features.counter.text.font = jviz.font.default; //Counter font family
-  this._features.counter.text.size = '12px'; //Counter text size
-  this._features.counter.text.align = 'center'; //Counter text align
-  this._features.counter.text.color = jviz.colors.white.hex; //Counter text color
-  this._features.counter.text.margin = 7; //Counter text margin
-
-  //Features counter triangle
-  this._features.counter.triangle = {};
-  this._features.counter.triangle.width = 6; //Features counter triangle width
-  this._features.counter.triangle.height = 4; //Features counter triangle height
-
   //Features label
   this._features.label = {};
   this._features.label.opacity = 1.0; //Features label opacity
