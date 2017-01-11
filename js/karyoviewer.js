@@ -62,6 +62,7 @@ jviz.modules.karyoviewer = function(opt)
   this._panel.detail = (typeof opt.detail === 'string') ? opt.detail : ''; //Panel detail
   this._panel.detail = ''; //Panel detail
   this._panel.visible = (typeof opt.panel === 'boolean') ? opt.panel : true; //Panel is visible
+  this._panel.foot = false; //Disable foot 
 
   //Canvas object
   this._canvas = {};
@@ -120,6 +121,10 @@ jviz.modules.karyoviewer = function(opt)
   this._features.color = (typeof opt.features.color === 'string') ? opt.features.color : jviz.colors.red.hex; //Features default color
   this._features.opacity = 0.8; //Features opacity
   this._features.resized = false; //Features data is resized
+
+  //Features counter
+  this._features.counter = {};
+  this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
 
   //Features triangle
   this._features.triangle = {};
