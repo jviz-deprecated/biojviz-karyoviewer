@@ -13,6 +13,9 @@ jviz.modules.karyoviewer.prototype.features = function(list)
   //Reset the features list by chromosomes
   this._features.chromosomes = {};
 
+  //Reset the features counter list
+  this._features.counter.list = {};
+
   //Read all the features
   for(var i = 0; i < list.length; i++)
   {
@@ -55,8 +58,11 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     //Check if chromosome exists
     if(typeof this._features.chromosomes[feature.chromosome] === 'undefined')
     {
-      //Add this chromosome
+      //Initialize this chromosome
       this._features.chromosomes[feature.chromosome] = [];
+
+      //Add the features counter
+      this._features.counter.list[feature.chromosome] = { rectangle: {}, triangle: [], text: {} };
     }
 
     //Add the index to the chromosome list
@@ -137,6 +143,35 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     }
 
     //Get the features counter object
+    var counter = this._features.counter.list[chr.name];
+
+    //Check for landscape
+    if(this.isLandscape() === true)
+    {
+      //Add the rectangle width
+      counter.rectangle.width = this._features.counter.rectangle.width;
+
+      //Add the rectangle height
+      counter.rectangle.height = this._features.counter.rectangle.height;
+
+      //Add hte rectangle position x
+      counter.rectangle.x = chr.posx + chr.width + this._features.counter.triangle.height + this._features.counter.margin;
+
+      //Add the rectangle position y
+      counter.rectangle.y = chr.posy + chr.height / 2 - this._features.counter.rectangle.height / 2;
+    }
+
+    //Check for portrait
+    else
+    {
+
+    }
+
+    //Add the rectangle radius
+    counter.rectangle.radius = this._features.counter.rectangle.radius;
+
+    //Save the counter object
+    this._features.counter.list[chr.name] = counter;
   }
 
   //Set features resized
@@ -203,11 +238,20 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
       */
     }
 
-    //Check for drawing the label
-    //if(this._features.label.visible === false){ continue; }
+    //Check for drawing the features counter
+    if(this._features.counter.visible === false){ continue; }
 
     //Check for no features
     if(features.length === 0){ continue; }
+
+    //Get the features cunter object
+    var counter = this._features.counter.list[chr.name];
+
+    //Draw the rectangle
+    canvas.Rect(counter.rectangle);
+
+    //Add the rectangle fill
+    canvas.Fill({ color: this._features.color, opacity: this._features.counter.opacity });
   }
 
   //Exit
