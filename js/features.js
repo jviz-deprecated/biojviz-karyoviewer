@@ -32,7 +32,7 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     obj_feature.end = (typeof feature.end === 'undefined') ? obj_feature.start : parseInt(feature.end);
 
     //Save the feature length
-    obj_feature.length = Math.abs(obj.end - obj.start) + 1;
+    obj_feature.length = Math.abs(obj_feature.end - obj_feature.start) + 1;
 
     //Save the feature index
     obj_feature.index = i;
