@@ -149,7 +149,7 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     if(this.isLandscape() === true)
     {
       //Calculate the position x
-      counter.posx = chr.posx + chr.width;
+      counter.posx = chr.posx + chr.width + this._features.counter.margin;
 
       //Calculate the position y
       counter.posy = chr.posy + chr.height / 2;
@@ -165,7 +165,7 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
       counter.posx = chr.posx + chr.width / 2;
 
       //Calculate the tooltip position y
-      counter.posy = chr.posy;
+      counter.posy = chr.posy - this._features.counter.margin;
 
       //Set the tooltip position
       counter.position = 'top';
