@@ -62,7 +62,7 @@ jviz.modules.karyoviewer.prototype.features = function(list)
       this._features.chromosomes[feature.chromosome] = [];
 
       //Add the features counter
-      this._features.counter.list[feature.chromosome] = { rectangle: {}, triangle: [], text: {} };
+      this._features.counter.list[feature.chromosome] = new jviz.canvas.tooltip({ color: this._features.color });
     }
 
     //Add the index to the chromosome list
@@ -142,55 +142,43 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
       this._features.list[j] = feature;
     }
 
-    //Get the features counter object
-    var counter = this._features.counter.list[chr.name];
+    //Initialize the counter positions object
+    var counter = { posx: 0, posy: 0, position: 'top' };
 
     //Check for landscape
     if(this.isLandscape() === true)
     {
-      //Add hte rectangle position x for landscape
-      counter.rectangle.posx = chr.posx + chr.width + this._features.counter.triangle.height + this._features.counter.margin;
+      //Calculate the position x
+      counter.posx = chr.posx + chr.width;
 
-      //Add the rectangle position y for landscape
-      counter.rectangle.posy = chr.posy + chr.height / 2 - this._features.counter.rectangle.height / 2;
+      //Calculate the position y
+      counter.posy = chr.posy + chr.height / 2;
 
-      //Add the triange first point
-      counter.triangle.push([ counter.rectangle.posx, counter.rectangle.posy + this._features.counter.rectangle.height / 2 - this._features.counter.triangle.width / 2 ]);
-
-      //Add the triangle second point
-      counter.triangle.push([ counter.rectangle.posx - this._features.counter.triangle.height, counter.rectangle.posy + this._features.counter.rectangle.height / 2 ]);
-
-      //Add the last triangle point
-      counter.triangle.push([ counter.rectangle.posx, counter.rectangle.posy + this._features.counter.rectangle.height / 2 + this._features.counter.triangle.width / 2 ]);
+      //Set the tooltip position
+      counter.position = 'right';
     }
 
     //Check for portrait
     else
     {
-      //Add the rectangle position x for portrait
-      counter.rectangle.posx = chr.posx + chr.width / 2 - this._features.counter.rectangle.width / 2;
+      //Calculate the tooltip position x
+      counter.posx = chr.posx + chr.width / 2;
 
-      //Add the rectangle position y for portrait
-      counter.rectangle.posy = chr.posy  - this._features.counter.triangle.height - this._features.counter.rectangle.height - this._features.counter.margin;
+      //Calculate the tooltip position y
+      counter.posy = chr.posy;
 
-      //Add the triangle first position
-      counter.triangle.push([ counter.rectangle.posx + this._features.counter.rectangle.width / 2 - this._features.counter.triangle.width / 2, counter.rectangle.posy + this._features.counter.rectangle.height ]);
-
-      //Add the second triangle point
-      counter.triangle.push([ counter.rectangle.posx + this._features.counter.rectangle.width / 2, counter.rectangle.posy + this._features.counter.rectangle.height + this._features.counter.triangle.height ]);
-
-      //Add the last point
-      counter.triangle.push([ counter.rectangle.posx + this._features.counter.rectangle.width / 2 + this._features.counter.triangle.width / 2, counter.rectangle.posy + this._features.counter.rectangle.height ]);
+      //Set the tooltip position
+      counter.position = 'top';
     }
 
-    //Add the text position x
-    counter.text.posx = counter.rectangle.posx + this._features.counter.rectangle.width / 2;
+    //Move the counter object
+    this._features.counter.list[chr.name].move(counter);
 
-    //Add the text position y
-    counter.text.posy = counter.rectangle.posy + this._features.counter.rectangle.height / 2 - this._features.counter.text.margin;
+    //Set the tooltip position
+    this._features.counter.list[chr.name].position(counter.position);
 
-    //Save the counter object
-    this._features.counter.list[chr.name] = counter;
+    //Set the number of features
+    this._features.counter.list[chr.name].text(features.length + '');
   }
 
   //Set features resized
@@ -263,50 +251,8 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     //Check for no features
     if(features.length === 0){ continue; }
 
-    //Get the features cunter object
-    var counter = this._features.counter.list[chr.name];
-
-    //Initialize the rectangle object
-    var counter_rect = { x: counter.rectangle.posx, y: counter.rectangle.posy };
-
-    //Add the counter rectangle width
-    counter_rect.width = this._features.counter.rectangle.width;
-
-    //Add the counter rectangle height
-    counter_rect.height = this._features.counter.rectangle.height;
-
-    //Add the rectangle radius
-    counter_rect.radius = this._features.counter.rectangle.radius;
-
-    //Draw the rectangle
-    canvas.Rect(counter_rect);
-
-    //Add the rectangle fill
-    canvas.Fill({ color: this._features.color, opacity: this._features.counter.opacity });
-
-    //Initialize the text object
-    var counter_text = { text: features.length + '', x: counter.text.posx, y: counter.text.posy };
-
-    //Add the text color
-    counter_text.color = this._features.counter.text.color;
-
-    //Add the text font
-    counter_text.font = this._features.counter.text.font;
-
-    //Add the text size
-    counter_text.size = this._features.counter.text.size;
-
-    //Add the text align
-    counter_text.align = this._features.counter.text.align;
-
-    //Draw the text
-    canvas.Text(counter_text);
-
-    //Draw the triangle points
-    canvas.Line(counter.triangle);
-
-    //Add the triangle fill
-    canvas.Fill({ color: this._features.color, opacity: this._features.counter.opacity });
+    //Draw the counter tooltip
+    this._features.counter.list[chr.name].draw(canvas);
   }
 
   //Exit
