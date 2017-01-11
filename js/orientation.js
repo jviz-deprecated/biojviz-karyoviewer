@@ -24,6 +24,13 @@ jviz.modules.karyoviewer.prototype.isLandscape = function()
   return this._orientation.actual === 'landscape';
 };
 
+//Set landscape orientation
+jviz.modules.karyoviewer.prototype.setLandscape = function()
+{
+  //Set landscape orientation
+  return this.orientation('landscape');
+};
+
 //Check if orientation is protrait
 jviz.modules.karyoviewer.prototype.isPortrait = function()
 {
