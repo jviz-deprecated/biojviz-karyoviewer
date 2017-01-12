@@ -66,6 +66,9 @@ jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
   //Check the feature name
   if(this._features.name.actual === feature.name){ return; }
 
+  //Clear the canvas
+  canvas.Clear();
+
   //Update the actual feature
   this._features.name.actual = feature.name;
 
