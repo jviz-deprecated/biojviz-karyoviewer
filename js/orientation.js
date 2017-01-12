@@ -22,7 +22,7 @@ jviz.modules.karyoviewer.prototype.orientation = function(value)
   else
   {
     //Set the feature name tooltip position
-    this._feature.name.tooltip.position('right');
+    this._features.name.tooltip.position('right');
   }
 
   //Continue
