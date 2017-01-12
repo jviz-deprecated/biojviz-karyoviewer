@@ -13,6 +13,18 @@ jviz.modules.karyoviewer.prototype.orientation = function(value)
   //Resize the canvas
   this.resize();
 
+  //Check the orientation
+  if(this.isLandscape() === true)
+  {
+    //Set the feature name tooltip position
+    this._features.name.tooltip.position('bottom');
+  }
+  else
+  {
+    //Set the feature name tooltip position
+    this._feature.name.tooltip.position('right');
+  }
+
   //Continue
   return this;
 };
