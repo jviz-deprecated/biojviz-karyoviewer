@@ -70,7 +70,7 @@ jviz.modules.karyoviewer = function(opt)
   this._canvas.parent = this._id; //Parent canvas ID
   this._canvas.width = '100%'; //Canvas width
   this._canvas.height = 0; //Canvas height
-  this._canvas.layers = 3; //Number of layers
+  this._canvas.layers = 4; //Number of layers
   this._canvas.el = null; //Canvas element
 
   //Check the chromosomes object
@@ -131,16 +131,11 @@ jviz.modules.karyoviewer = function(opt)
   this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
   this._features.counter.margin = 3; //Counter margin
 
-  //Features label
-  this._features.label = {};
-  this._features.label.opacity = 1.0; //Features label opacity
-  this._features.label.visible = (typeof opt.features.label === 'boolean') ? opt.features.label : true; //Label visible
-
-  //Features label rectangle
-  this._features.label.rectangle = {};
-  this._features.label.rectangle.width = 0; //Features label rectangle width
-  this._features.label.rectangle.height = 0; //Features label rectangle height
-  this._features.label.rectangle.radius = 5; //Features label rectangle radius
+  //Features name
+  this._features.name = {};
+  this._features.name.layer = 3; //Features name layer
+  this._features.name.length = 0; //Features name max length
+  this._features.name.tooltip = null; //Features name tooltip element
 
   //Chromosomes hover
   this._hover = {};
