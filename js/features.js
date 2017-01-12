@@ -271,10 +271,10 @@ jviz.modules.karyoviewer.prototype.featuresByPosition = function(x, y)
     if(y < features[i].posy){ break; }
 
     //Check the feature x coordinate
-    if(feautres[i].posx + features[i].width < x){ continue; }
+    if(features[i].posx + features[i].width < x){ continue; }
 
     //Check the feature y coordinate
-    if(feautres[i].posy + features[i].height < y){ continue; }
+    if(features[i].posy + features[i].height < y){ continue; }
 
     //Save the feature
     out.push(features[i]);
