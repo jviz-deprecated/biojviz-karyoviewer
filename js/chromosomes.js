@@ -40,6 +40,9 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list, isExample)
     //Save the chromosome length
     obj_chr.length = list[i].length;
 
+    //Save the chromosome index
+    obj_chr.index = i;
+
     //Set if has centromere
     obj_chr.centromere = false;
 
@@ -307,7 +310,7 @@ jviz.modules.karyoviewer.prototype.chromosomeByIndex = function(index)
 {
   //Check the index
   if(index < 0 || index >= this._chromosomes.list.length){ return false; }
-  
+
   //Get the chromosome information by index
   return this._chromosomes.list[index];
 };
