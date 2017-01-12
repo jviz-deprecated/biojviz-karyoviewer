@@ -268,16 +268,16 @@ jviz.modules.karyoviewer.prototype.featuresByPosition = function(x, y, margin)
   for(var i = 0; i < features.length; i++)
   {
     //Check the feature x coordinate
-    if(x - margin < features[i].posx){ break; }
+    if(x + margin < features[i].posx){ break; }
 
     //Check the feature y coordinate
-    if(y - margin < features[i].posy){ break; }
+    if(y + margin < features[i].posy){ break; }
 
     //Check the feature x coordinate
-    if(features[i].posx + features[i].width < x + margin){ continue; }
+    if(features[i].posx + features[i].width < x - margin){ continue; }
 
     //Check the feature y coordinate
-    if(features[i].posy + features[i].height < y + margin){ continue; }
+    if(features[i].posy + features[i].height < y - margin){ continue; }
 
     //Save the feature
     out.push(features[i]);
