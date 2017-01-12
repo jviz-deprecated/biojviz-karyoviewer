@@ -305,6 +305,9 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
 //Get a chromosome by index
 jviz.modules.karyoviewer.prototype.chromosomeByIndex = function(index)
 {
+  //Check the index
+  if(index < 0 || index >= this._chromosomes.list.length){ return false; }
+  
   //Get the chromosome information by index
   return this._chromosomes.list[index];
 };
@@ -316,8 +319,34 @@ jviz.modules.karyoviewer.prototype.chromosomeByName = function(name)
   var index = this._chromosomes.index[name];
 
   //Check for undefined index
-  if(typeof index === 'undefined'){ return null; }
+  if(typeof index === 'undefined'){ return false; }
 
   //Return the chromosome object
   return this.chromosomeByIndex(index);
+};
+
+//Get a chromosome by position
+jviz.modules.karyoviewer.prototype.chromosomeByPosition = function(x, y)
+{
+  //Read all the chromosomes
+  for(var i = 0; i < this._chromosomes.list.length; i++)
+  {
+    //Check the x coordinate
+    if(x < this._chromosomes.list[i].posx){ return false; }
+
+    //Check the y coordinate
+    if(y < this._chromosomes.list[i].posy){ return false; }
+
+    //Check the x coordinate
+    if(this._chromosomes.list[i].posx + this._chromosomes.list[i].width < x){ continue; }
+
+    //Check the y coordinate
+    if(this._chromosomes.list[i].posy + this._chromosomes.list[i].height < y){ continue; }
+
+    //Return the chromosome
+    return this._chromosomes.list[i];
+  }
+
+  //Default, return false
+  return false;
 };
