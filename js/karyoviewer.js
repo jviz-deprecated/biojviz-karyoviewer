@@ -134,7 +134,8 @@ jviz.modules.karyoviewer = function(opt)
   this._features.name = {};
   this._features.name.layer = 3; //Features name layer
   this._features.name.length = 0; //Features name max length
-  this._features.name.tooltip = null; //Features name tooltip element
+  this._features.name.tooltip = new jviz.canvas.tooltip({ text: '' }); //Features name tooltip element
+  this._features.name.actual = ''; //Actual feature
 
   //Chromosomes hover
   this._hover = {};
