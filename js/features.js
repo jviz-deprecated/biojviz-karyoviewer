@@ -75,8 +75,8 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     this._features.list[feature.chromosome].push(obj_feature);
   }
 
-  //Initialize the features name tooltip
-  this._features.name.tooltip = new jviz.canvas.tooltip({ text: jviz.string.spaces(this._features.name.length) });
+  //Update the tooltip text
+  this._features.name.tooltip.text(jviz.string.spaces(this._features.name.length);
 
   //Set to resize the features
   this._features.resized = false;
@@ -241,4 +241,45 @@ jviz.modules.karyoviewer.prototype.featuresByChromosome = function(name)
 
   //Return the features  for this chromosome
   return this._features.list[name];
+};
+
+//Get features by position
+jviz.modules.karyoviewer.prototype.featuresByPosition = function(x, y)
+{
+  //Get the chromosome
+  var chr = this.chromosomeByPosition(x, y);
+
+  //Check for no chromosome
+  if(chr === false){ return []; }
+
+  //Get the features on this chromosome
+  var features = this.featuresByChromosome(chr.name);
+
+  //Check the features length
+  if(features.length === 0){ return []; }
+
+  //Output features
+  var out = [];
+
+  //Read all the features
+  for(var i = 0; i < features.length; i++)
+  {
+    //Check the feature x coordinate
+    if(x < features[i].posx){ break; }
+
+    //Check the feature y coordinate
+    if(y < features[i].posy){ break; }
+
+    //Check the feature x coordinate
+    if(feautres[i].posx + features[i].width < x){ continue; }
+
+    //Check the feature y coordinate
+    if(feautres[i].posy + features[i].height < y){ continue; }
+
+    //Save the feature
+    out.push(features[i]);
+  }
+
+  //Return the features list
+  return out;
 };
