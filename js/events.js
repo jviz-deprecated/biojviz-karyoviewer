@@ -46,7 +46,7 @@ jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
   var canvas = this._canvas.el.layer(this._features.name.layer);
 
   //Get the features by position
-  var features = this.featuresByPosition(x, y);
+  var features = this.featuresByPosition(x, y, this._features.name.margin);
 
   //Check the features list
   if(features.length === 0)
