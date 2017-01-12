@@ -76,7 +76,7 @@ jviz.modules.karyoviewer.prototype.features = function(list)
   }
 
   //Update the tooltip text
-  this._features.name.tooltip.text(jviz.string.spaces(this._features.name.length);
+  this._features.name.tooltip.text(jviz.string.spaces(this._features.name.length));
 
   //Set to resize the features
   this._features.resized = false;
