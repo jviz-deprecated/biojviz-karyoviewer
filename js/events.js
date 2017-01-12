@@ -42,7 +42,53 @@ jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
 //Move event
 jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
 {
+  //Get the canvas layer
+  var canvas = this._canvas.el.layer(this._features.name.layer);
 
+  //Get the features by position
+  var features = this.featuresByPosition(x, y);
+
+  //Check the features list
+  if(features.length === 0)
+  {
+    //Remove the actual feature
+    this._features.name.actual = '';
+
+    //Clear the canvas and exit
+    return canvas.Clear();
+  }
+
+  //CHANGE WHEN WE HAVE THE ZOOM FUNCTION
+  //***********************************
+  //Get the first feature
+  var feature = features[0];
+
+  //Check the feature name
+  if(this._features.name.actual === feature.name){ return; }
+
+  //Update the actual feature
+  this._features.name.actual = feature.name;
+
+  //Check the orientation
+  if(this.isLandscape() === true)
+  {
+    //Move the tooltip
+    this._features.name.tooltip.move({ posx: feature.posx + feature.width / 2, posy: feature.posy + feature.height });
+  }
+  else
+  {
+    //Move the tooltip
+    this._features.name.tooltip.move({ posx: feature.posx + feature.width, posy: feature.posy + feature.height / 2 });
+  }
+
+  //Set the tooltip text
+  this._features.name.tooltip.text(feature.name, false);
+
+  //Draw the tooltip
+  this._Features.name.tooltip.draw(canvas);
+
+  //Exit
+  return;
 };
 
 //Up event
