@@ -244,8 +244,11 @@ jviz.modules.karyoviewer.prototype.featuresByChromosome = function(name)
 };
 
 //Get features by position
-jviz.modules.karyoviewer.prototype.featuresByPosition = function(x, y)
+jviz.modules.karyoviewer.prototype.featuresByPosition = function(x, y, margin)
 {
+  //Check the margin
+  if(typeof margin !== 'number'){ var margin = 0; }
+
   //Get the chromosome
   var chr = this.chromosomeByPosition(x, y);
 
@@ -265,16 +268,16 @@ jviz.modules.karyoviewer.prototype.featuresByPosition = function(x, y)
   for(var i = 0; i < features.length; i++)
   {
     //Check the feature x coordinate
-    if(x < features[i].posx){ break; }
+    if(x - margin < features[i].posx){ break; }
 
     //Check the feature y coordinate
-    if(y < features[i].posy){ break; }
+    if(y - margin < features[i].posy){ break; }
 
     //Check the feature x coordinate
-    if(features[i].posx + features[i].width < x){ continue; }
+    if(features[i].posx + features[i].width < x + margin){ continue; }
 
     //Check the feature y coordinate
-    if(features[i].posy + features[i].height < y){ continue; }
+    if(features[i].posy + features[i].height < y + margin){ continue; }
 
     //Save the feature
     out.push(features[i]);
