@@ -181,7 +181,7 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     this._features.counter.list[chr.name].position(counter.position);
 
     //Set the number of features
-    this._features.counter.list[chr.name].text(features.length + '');
+    this._features.counter.list[chr.name].text(this._features.list[chr.name].length + '');
   }
 
   //Set features resized
