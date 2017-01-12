@@ -16,6 +16,9 @@ jviz.modules.karyoviewer.prototype.features = function(list)
   //Reset the features counter list
   this._features.counter.list = {};
 
+  //Initialize the features names max length
+  this._features.name.length = 0;
+
   //Read all the features
   for(var i = 0; i < list.length; i++)
   {
@@ -24,6 +27,9 @@ jviz.modules.karyoviewer.prototype.features = function(list)
 
     //Initialize the new feature object
     var obj_feature = { posx: 0, posy: 0, width: 0, height: 0 };
+
+    //Save the feature name
+    obj_feature.name = feature.name;
 
     //Save the feature chromosome
     obj_feature.chromosome = feature.chromosome;
@@ -55,6 +61,9 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     //Add the feature color
     obj_feature.color = (typeof feature.color === 'string') ? feature.color : this._features.color;
 
+    //Check the feature name size
+    if(feature.name.length > this._features.name.length){ this._features.name.length = feature.name.length; }
+
     //Check if chromosome exists
     if(typeof this._features.chromosomes[feature.chromosome] === 'undefined')
     {
@@ -71,6 +80,9 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     //Add to the list
     this._features.list.push(obj_feature);
   }
+
+  //Initialize the features name tooltip
+  this._features.name.tooltip = new jviz.canvas.tooltip({ text: jviz.string.spaces(this._features.name.length) });
 
   //Set to resize the features
   this._features.resized = false;
@@ -217,32 +229,6 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
 
       //feature fill
       canvas.Fill({ color: feature.color, opacity: this._features.opacity });
-      /*
-
-      //Check the features triangle
-      if(this._features.triangle.visible === false){ continue; }
-
-      //Get the triangle configuration
-      var triangle = this._features.triangle;
-
-      //Initialize the triangle array
-      var triangle_points = [];
-
-      //Add the first point
-      triangle_points.push([ feature.posx - triangle.margin - triangle.width, feature.posy - triangle.height ]);
-
-      //Add the middle point
-      triangle_points.push([ feature.posx - triangle.margin, feature.posy ]);
-
-      //Add the first point
-      triangle_points.push([ feature.posx - triangle.margin - triangle.width, feature.posy + triangle.height ]);
-
-      //Add the line
-      canvas.Line(triangle_points);
-
-      //Fill the triangle
-      canvas.Fill({ color: feature.color, opacity: this._features.triangle.opacity });
-      */
     }
 
     //Check for drawing the features counter
