@@ -85,7 +85,7 @@ jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
   this._features.name.tooltip.text(feature.name, false);
 
   //Draw the tooltip
-  this._Features.name.tooltip.draw(canvas);
+  this._features.name.tooltip.draw(canvas);
 
   //Exit
   return;
