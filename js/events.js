@@ -85,7 +85,7 @@ jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
   this._features.name.tooltip.text(feature.name, false);
 
   //Set the tooltip color
-  this._Features.name.tooltip.color(feature.color);
+  this._features.name.tooltip.color(feature.color);
 
   //Draw the tooltip
   this._features.name.tooltip.draw(canvas);
