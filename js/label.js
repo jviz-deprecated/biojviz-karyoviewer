@@ -25,10 +25,10 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
 
     //Clear the canvas
     canvas.Clear();
-
-    //Set label as inactive
-    this._label.active = false;
   }
+
+  //Set label as inactive
+  this._label.active = false;
 
   //Get the features by position
   this._label.features = this.featuresByPosition(x, y, this._label.offset);
@@ -80,6 +80,9 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
 
   //Draw the tooltip
   this._label.tooltip.el.draw(canvas);
+
+  //Set label active as true
+  this._label.active = true;
 
   //Exit
   return;
