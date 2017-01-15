@@ -16,13 +16,13 @@ jviz.modules.karyoviewer.prototype.orientation = function(value)
   //Check the orientation
   if(this.isLandscape() === true)
   {
-    //Set the feature name tooltip position
-    this._features.name.tooltip.position('bottom');
+    //Set the label tooltip position
+    this._label.tooltip.el.position('bottom');
   }
   else
   {
-    //Set the feature name tooltip position
-    this._features.name.tooltip.position('right');
+    //Set the label tooltip position
+    this._label.tooltip.el.position('right');
   }
 
   //Continue
