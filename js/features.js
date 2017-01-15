@@ -13,9 +13,6 @@ jviz.modules.karyoviewer.prototype.features = function(list)
   //Reset the features counter list
   this._features.counter.list = {};
 
-  //Initialize the features names max length
-  this._features.name.length = 0;
-
   //Read all the features
   for(var i = 0; i < list.length; i++)
   {
@@ -58,9 +55,6 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     //Add the feature color
     obj_feature.color = (typeof feature.color === 'string') ? feature.color : this._features.color;
 
-    //Check the feature name size
-    if(feature.name.length > this._features.name.length){ this._features.name.length = feature.name.length; }
-
     //Check if chromosome exists
     if(typeof this._features.list[feature.chromosome] === 'undefined')
     {
@@ -74,9 +68,6 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     //Add the index to the chromosome list
     this._features.list[feature.chromosome].push(obj_feature);
   }
-
-  //Update the tooltip text
-  this._features.name.tooltip.text(jviz.string.spaces(this._features.name.length));
 
   //Set to resize the features
   this._features.resized = false;
