@@ -159,6 +159,9 @@ jviz.modules.karyoviewer = function(opt)
   //Check for undefined orientation
   if(typeof opt.orientation !== 'string'){ opt.orientation = 'portrait'; }
 
+  //Initialize the events
+  this._events = new jviz.commons.events();
+
   //Build the karyotype element
   this.build();
 
