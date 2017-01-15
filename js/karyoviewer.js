@@ -146,7 +146,6 @@ jviz.modules.karyoviewer = function(opt)
   this._label.tooltip = {};
   this._label.tooltip.margin = 2; //Label tooltip margin
   this._label.tooltip.el = new jviz.canvas.tooltip({ text: '' }); //Features label tooltip element
-  this._label.tooltip.length = 0; //Tooltip text max length
 
   //Chromosomes hover
   this._hover = {};
