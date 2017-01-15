@@ -72,17 +72,29 @@ jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
   //Update the actual feature
   this._features.name.actual = feature.name;
 
+  //Initialize the tooltip coordinates
+  var coordinates = { posx: 0, posy: 0 };
+
   //Check the orientation
   if(this.isLandscape() === true)
   {
-    //Move the tooltip
-    this._features.name.tooltip.move({ posx: feature.posx + feature.width / 2, posy: feature.posy + feature.height });
+    //Set the x coordinate for landscape orientation
+    coordinates.posx = feature.posx + feature.width / 2;
+
+    //Set the y coordinate for landscape orientation
+    coordinates.posy = feature.posy + feature.height;
   }
   else
   {
-    //Move the tooltip
-    this._features.name.tooltip.move({ posx: feature.posx + feature.width, posy: feature.posy + feature.height / 2 });
+    //Set the x coordinate for portrait orientation
+    coordinates.posx = feature.posx + feature.width;
+
+    //Set the y coordinate for protrait orientation
+    coordinates.posy = feature.posy + feature.height / 2;
   }
+
+  //Move the tooltip
+  this._features.name.tooltip.move(coordinates);
 
   //Set the tooltip text
   this._features.name.tooltip.text(feature.name, false);
