@@ -130,13 +130,23 @@ jviz.modules.karyoviewer = function(opt)
   this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
   this._features.counter.margin = 3; //Counter margin
 
-  //Features name
-  this._features.name = {};
-  this._features.name.layer = 3; //Features name layer
-  this._features.name.length = 0; //Features name max length
-  this._features.name.tooltip = new jviz.canvas.tooltip({ text: '' }); //Features name tooltip element
-  this._features.name.actual = ''; //Actual feature
-  this._features.name.margin = 3; //Features name margin
+  //Check the label options
+  if(typeof opt.label !== 'object'){ opt.label = {}; }
+
+  //Features label
+  this._label = {};
+  this._label.layer = 3; //Features name layer
+  this._label.offset = (typeof opt.label.offset === 'number') ? Math.abs(opt.label.offset) : 3; //Features label offset
+  this._label.position = -100; //Actual feature label position
+  this._label.features = []; //Actual features list
+  this._label.active = false; //Label is active
+  this._label.visible = (typeof opt.label.visible === 'boolean') ? opt.label.visible : true; //Label is visible
+
+  //Features label tooltip
+  this._label.tooltip = {};
+  this._label.tooltip.margin = 2; //Label tooltip margin
+  this._label.tooltip.el = new jviz.canvas.tooltip({ text: '' }); //Features label tooltip element
+  this._label.tooltip.length = 0; //Tooltip text max length
 
   //Chromosomes hover
   this._hover = {};
