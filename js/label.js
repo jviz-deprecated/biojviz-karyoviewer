@@ -42,8 +42,6 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
   //Initialize the tooltip coordinates
   var coordinates = { posx: 0, posy: 0 };
 
-  //
-
   //Check the orientation
   if(this.isLandscape() === true)
   {
@@ -68,11 +66,14 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
     this._label.position = coordinates.posy;
   }
 
+  //Get the features names
+  var names = this._label.features.map(function(el){ return el.name; });
+
+  //Add the features names
+  this._label.tooltip.el.text(names);
+
   //Move the tooltip
   this._label.tooltip.el.move(coordinates);
-
-  //Set the tooltip text
-  this._label.tooltip.el.text(feature.name, false);
 
   //Set the tooltip color
   this._label.tooltip.el.color(feature.color);
