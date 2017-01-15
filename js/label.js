@@ -49,7 +49,7 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
     coordinates.posx = feature.posx + feature.width / 2;
 
     //Set the y coordinate for landscape orientation
-    coordinates.posy = feature.posy + feature.height;
+    coordinates.posy = feature.posy + feature.height + this._label.tooltip.margin;
 
     //Save the label position
     this._label.position = coordinates.posx;
@@ -57,7 +57,7 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
   else
   {
     //Set the x coordinate for portrait orientation
-    coordinates.posx = feature.posx + feature.width;
+    coordinates.posx = feature.posx + feature.width + this._label.tooltip.margin;
 
     //Set the y coordinate for protrait orientation
     coordinates.posy = feature.posy + feature.height / 2;
