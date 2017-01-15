@@ -109,7 +109,7 @@ jviz.modules.karyoviewer.prototype.chromosomesResize = function()
     //Check for landscape orientation
     if(this.isLandscape() === true)
     {
-      //Calculate the chromosome width for landspace orientation
+      //Calculate the chromosome width for landscape orientation
       chr.width = draw.width * (chr.length / this._chromosomes.max);
 
       //Calculate hte chromosome height for landscape orientation
