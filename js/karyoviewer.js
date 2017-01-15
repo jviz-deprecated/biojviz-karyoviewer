@@ -137,7 +137,7 @@ jviz.modules.karyoviewer = function(opt)
   this._label = {};
   this._label.layer = 3; //Features name layer
   this._label.offset = (typeof opt.label.offset === 'number') ? Math.abs(opt.label.offset) : 3; //Features label offset
-  this._label.position = -100; //Actual feature label position
+  this._label.position = 0; //Actual feature label position
   this._label.features = []; //Actual features list
   this._label.active = false; //Label is active
   this._label.visible = (typeof opt.label.visible === 'boolean') ? opt.label.visible : true; //Label is visible
