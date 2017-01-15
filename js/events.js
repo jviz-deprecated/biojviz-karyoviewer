@@ -2,10 +2,7 @@
 jviz.modules.karyoviewer.prototype.on = function(name, listener)
 {
   //Register the event
-  this._events.add(name, listener);
-
-  //Continue
-  return this;
+  return this._events.add(name, listener);
 };
 
 //Add the events
@@ -36,14 +33,38 @@ jviz.modules.karyoviewer.prototype.events = function()
 //Click down event
 jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
 {
+  //Check if label is active
+  if(this._label.active === true && this._label.visible === true)
+  {
+    //Check the number of features
+    if(this._label.features.length === 1)
+    {
+      //Get the feature
+      var feature = this._label.features[0];
 
+      //Emit the event and exit
+      return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
+    }
+
+    //Exit
+    return;
+  }
+
+  //Check if is hover a chromosome
+  var chr = this.chromosomeByPosition(x, y);
+
+  //Check for no chromosome
+  if(chr === false){ return; }
+
+  //Emit the click on a chromosome
+  return this._events.emit('click:chromosome', chr.name, chr.index);
 };
 
 //Move event
 jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
 {
   //Draw the label
-  this.labelDraw();
+  this.labelDraw(x, y);
 };
 
 //Up event
