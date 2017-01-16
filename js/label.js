@@ -117,6 +117,28 @@ jviz.modules.karyoviewer.prototype.labelClick = function(x, y)
     return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
   }
 
+  //Check if has clicked on the label tooltip
+  if(this.overRect(this._label.over, x, y) === false){ return; }
+
+  //Get the number of features
+  var features_num = this._label.features.length;
+
+  //Get the features height
+  var features_height = (this._label.over.height - 2 * this._label.tooltip.el._rectangle.margin) / features_num;
+
+  //Find the position
+  for(var i = 0; i < features_num; i++)
+  {
+    //Check the y coordinate
+    if(this._label.over.posy + this._label.tooltip.el._rectangle.margin + (i + 1) * features_height < y){ continue; }
+
+    //Get the feature
+    var feature = this._label.features[i];
+
+    //Emit the click event and exit
+    return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
+  }
+
   //Exit
   return;
 };
