@@ -50,11 +50,11 @@ jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
 //Move event
 jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
 {
-  //Check the counter
-  //if(++this._over.move.counter !== this._over.move.limit){ return; }
+  //Check the move
+  if(this._over.move === false){ this._over.move = true; return; }
 
-  //Reset the move counter
-  this._over.move.counter = 0;
+  //Change the move
+  this._over.move = false;
 
   //Get the actual chromosome
   this._over.chromosome.actual = this.overChromosome(x, y);
