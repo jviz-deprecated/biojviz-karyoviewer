@@ -325,31 +325,5 @@ jviz.modules.karyoviewer.prototype.chromosomeByName = function(name)
   if(typeof index === 'undefined'){ return false; }
 
   //Return the chromosome object
-  return this.chromosomeByIndex(index);
-};
-
-//Get a chromosome by position
-jviz.modules.karyoviewer.prototype.chromosomeByPosition = function(x, y)
-{
-  //Read all the chromosomes
-  for(var i = 0; i < this._chromosomes.list.length; i++)
-  {
-    //Check the x coordinate
-    if(x < this._chromosomes.list[i].posx){ return false; }
-
-    //Check the y coordinate
-    if(y < this._chromosomes.list[i].posy){ return false; }
-
-    //Check the x coordinate
-    if(this._chromosomes.list[i].posx + this._chromosomes.list[i].width < x){ continue; }
-
-    //Check the y coordinate
-    if(this._chromosomes.list[i].posy + this._chromosomes.list[i].height < y){ continue; }
-
-    //Return the chromosome
-    return this._chromosomes.list[i];
-  }
-
-  //Default, return false
-  return false;
+  return this._chromosomes.list[index];
 };
