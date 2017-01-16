@@ -36,22 +36,9 @@ jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
   //Check if label is active
   if(this._label.active === true && this._label.visible === true)
   {
-    //Check the number of features
-    if(this._label.features.length === 1)
-    {
-      //Get the feature
-      var feature = this._label.features[0];
-
-      //Emit the event and exit
-      return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
-    }
-
-    //Exit
-    return;
+    //Check if user has clicked on a label
+    return this.labelClick(x, y);
   }
-
-  //Check if is hover a chromosome
-  var chr = this.chromosomeByPosition(x, y);
 
   //Check for no chromosome
   if(chr === false){ return; }
@@ -63,6 +50,15 @@ jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
 //Move event
 jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
 {
+  //Check the counter
+  //if(++this._over.move.counter !== this._over.move.limit){ return; }
+
+  //Reset the move counter
+  this._over.move.counter = 0;
+
+  //Get the actual chromosome
+  this._over.chromosome.actual = this.overChromosome(x, y);
+
   //Draw the label
   this.labelDraw(x, y);
 };
