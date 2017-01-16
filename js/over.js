@@ -85,13 +85,13 @@ jviz.modules.karyoviewer.prototype.overLabel = function(x, y)
   if(this.isLandscape() === true)
   {
     //Check the x position
-    if(Math.abs(x - this._label.position) <= this._label.offset){ return true; }
+    if(Math.abs(x - this._label.position) < this._label.offset){ return true; }
   }
   //Check the position for portrait
   else
   {
     //Check the y position
-    if(Math.abs(y - this._label.position) <= this._label.offset){ return true; }
+    if(Math.abs(y - this._label.position) < this._label.offset){ return true; }
   }
 
   //Default, return false
