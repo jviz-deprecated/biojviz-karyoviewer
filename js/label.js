@@ -152,6 +152,9 @@ jviz.modules.karyoviewer.prototype.labelClear = function()
   //Set label as inactive
   this._label.active = false;
 
+  //Reset the cursor
+  jviz.cursor.remove('pointer');
+
   //Continue
   return this;
 };
