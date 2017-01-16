@@ -157,11 +157,7 @@ jviz.modules.karyoviewer = function(opt)
 
   //Over
   this._over = {};
-
-  //Limit the move event
-  this._over.move = {};
-  this._over.move.counter = 0; //Move counter
-  this._over.move.limit = 3; //Move limit
+  this._over.move = false; //Capture the move event
 
   //Over a chromosome
   this._over.chromosome = {};
