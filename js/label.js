@@ -100,6 +100,9 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
     this._label.over.posy = this._label.tooltip.el._rectangle.posy;
   }
 
+  //Set the cursor
+  jviz.cursor.set('pointer');
+
   //Exit
   return;
 };
