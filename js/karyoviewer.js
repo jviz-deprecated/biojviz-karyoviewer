@@ -141,20 +141,31 @@ jviz.modules.karyoviewer = function(opt)
   this._label.features = []; //Actual features list
   this._label.active = false; //Label is active
   this._label.visible = (typeof opt.label.visible === 'boolean') ? opt.label.visible : true; //Label is visible
+  this._label.chromosome = ''; //Actual label chromosome
 
   //Features label tooltip
   this._label.tooltip = {};
   this._label.tooltip.margin = 0; //Label tooltip margin
   this._label.tooltip.el = new jviz.canvas.tooltip({ text: '' }); //Features label tooltip element
 
-  //Chromosomes hover
-  this._hover = {};
-  this._hover.index = -1; //Hover chromosome index
-  this._hover.margin = { top: 10, bottom: 20, left: 10, right: 10 }; //Hover margin
-  this._hover.color = jviz.colors.white.hex; //Hover background color
-  this._hover.opacity = 1.0; //Hover background color opacity
-  this._hover.radius = 10; //Hover radius
-  this._hover.layer = 0; //Hover layer
+  //Label over
+  this._label.over = {};
+  this._label.over.posx = 0; //Label real position x
+  this._label.over.posy = 0; //Label over position y
+  this._label.over.width = 0; //Label over width
+  this._label.over.height = 0; //Label over height
+
+  //Over
+  this._over = {};
+
+  //Limit the move event
+  this._over.move = {};
+  this._over.move.counter = 0; //Move counter
+  this._over.move.limit = 3; //Move limit
+
+  //Over a chromosome
+  this._over.chromosome = {};
+  this._over.chromosome.actual = false; //Actual chromosome name
 
   //Check for undefined orientation
   if(typeof opt.orientation !== 'string'){ opt.orientation = 'portrait'; }
