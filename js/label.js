@@ -35,7 +35,7 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
     coordinates.posy = feature.posy + feature.height + this._label.tooltip.margin;
 
     //Save the label position
-    this._label.position = coordinates.posx;
+    this._label.position = x;
   }
   else
   {
@@ -46,7 +46,7 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
     coordinates.posy = feature.posy + feature.height / 2;
 
     //Save the label position
-    this._label.position = coordinates.posy;
+    this._label.position = y;
   }
 
   //Get the features names
