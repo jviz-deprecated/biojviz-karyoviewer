@@ -1,11 +1,11 @@
 //Check if a coordinate is over a rectangle
-jviz.modules.karyoviewer.prototype.overRect = function(x, y, rect)
+jviz.modules.karyoviewer.prototype.overRect = function(rect, x, y)
 {
   //Check the x coordinate
   if(x < rect.posx || rect.posx + rect.width < x){ return false; }
 
   //Check the y coordinate
-  if(y < rect.posy || rect.posy + rect.height < x){ return false; }
+  if(y < rect.posy || rect.posy + rect.height < y){ return false; }
 
   //Default, return true
   return true;
@@ -78,12 +78,8 @@ jviz.modules.karyoviewer.prototype.overLabel = function(x, y)
   //Check if label is active
   if(this._label.active === false){ return false; }
 
-  //Check if is over a chromosome
-  if(this._over.chromosome.actual === false)
-  {
-    //Check if is over the tooltip rectangle
-    return this.overRect(this._label.over, x, y);
-  }
+  //Check if is over the tooltip rectangle
+  if(this.overRect(this._label.over, x, y) === true){ return true; }
 
   //Check the position for landscape
   if(this.isLandscape() === true)
