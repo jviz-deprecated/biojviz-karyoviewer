@@ -64,6 +64,13 @@ jviz.modules.karyoviewer.prototype.eventMove = function(x, y)
 
   //Draw the label
   this.labelDraw(x, y);
+
+  //Check the cursor
+  //if(this._over.chromosome.actual === false){ return jviz.cursor.remove('pointer'); }
+  if(this._over.chromosome.actual === false){ return; }
+
+  //Add the pointer cursor
+  //jviz.cursor.set('pointer');
 };
 
 //Up event
