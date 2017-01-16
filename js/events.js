@@ -41,7 +41,7 @@ jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
   }
 
   //Check for no chromosome
-  if(chr === false){ return; }
+  if(this._over.chromosome.actual === false){ return; }
 
   //Emit the click on a chromosome
   return this._events.emit('click:chromosome', chr.name, chr.index);
