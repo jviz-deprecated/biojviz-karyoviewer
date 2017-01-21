@@ -320,3 +320,29 @@ jviz.modules.karyoviewer.prototype.chromosomesDraw = function()
   //Continue
   return this;
 };
+
+//Update the chromosomes info
+jviz.modules.karyoviewer.prototype.chromosomesMap = function(fn)
+{
+  //Check the function
+  if(typeof fn !== 'function'){ return this; }
+
+  //Read all the chromosomes objects
+  for(var i = 0; i < this._chromosomes.list.length; i++)
+  {
+    //Get the chromosome
+    var chr = this._chromosomes.list[i];
+
+    //Update the chromosome
+    var new_chr = fn(chr, i);
+
+    //Check the new chromosome
+    if(typeof new_chr !== 'object'){ continue; }
+
+    //Update the chromosome
+    this._chromosomes.list[i] = Object.assign(chr, new_chr);
+  }
+
+  //Return this
+  return this;
+};
