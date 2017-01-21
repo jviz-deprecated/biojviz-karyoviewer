@@ -182,7 +182,7 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     this._features.counter.list[chr.name].position(counter.position);
 
     //Set the number of features
-    this._features.counter.list[chr.name].text(this._features.draw[chr.name].length + '');
+    this._features.counter.list[chr.name].text(this._features.list[chr.name].length + '');
   }
 
   //Set features resized
@@ -205,7 +205,7 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     var chr = this._chromosomes.list[i];
 
     //Get the features for this chromosome
-    var features = this._features.draw[chr.name];
+    var features = this._features.chromosomes[chr.name];
 
     //Check for undefined
     if(typeof features !== 'object'){ continue; }
