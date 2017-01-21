@@ -44,7 +44,7 @@ jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
   if(this._over.chromosome.actual === false){ return; }
 
   //Get the actual chromosome
-  var chr = this.chromosomeByName(this._over.chromosome.actual);
+  var chr = this._chromosomes.list[i];
 
   //Emit the click on a chromosome
   return this._events.emit('click:chromosome', chr.name, chr.index);
