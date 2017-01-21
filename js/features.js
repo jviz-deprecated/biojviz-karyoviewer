@@ -248,3 +248,42 @@ jviz.modules.karyoviewer.prototype.featuresMap = function(fn)
   //Return this and exit
   return this;
 };
+
+//Update the feature color
+jviz.modules.karyoviewer.prototype.featuresColor = function(fn)
+{
+  //Check the function
+  if(typeof fn !== 'function'){ return this; }
+
+  //Read all the chromosomes
+  for(var chr in this._features.draw)
+  {
+    //Get the list of draw objects
+    var list = this._features.draw[chr];
+
+    //Read the full list
+    for(var i = 0; i < list.length; i++)
+    {
+      //Get the draw object
+      var draw = list[i];
+
+      //Get the feature of this draw object
+      var feature = this._features.list[draw.index];
+
+      //Get the color
+      var color = fn(feature, draw.color, this._features.color);
+
+      //Check for undefined string
+      if(typeof color !== 'string'){ continue; }
+
+      //Update the object color
+      list[i].color = color;
+    }
+
+    //Save the new list
+    this._features.draw[chr] = list;
+  }
+
+  //Continue
+  return this;
+};
