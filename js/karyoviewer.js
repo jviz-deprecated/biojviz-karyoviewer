@@ -82,7 +82,6 @@ jviz.modules.karyoviewer = function(opt)
   this._chromosomes.height = 20; //Chromosome default height
   this._chromosomes.layer = 1; //Chromosome layer
   this._chromosomes.list = []; //Chromosomes list
-  this._chromosomes.draw = []; //Chromosomes draw object list
   this._chromosomes.max = 0; //Chromosome max length
   this._chromosomes.num = 0; //Number of chromosomes
   this._chromosomes.color = jviz.colors.blue2.hex; //Chromosome color
@@ -117,7 +116,7 @@ jviz.modules.karyoviewer = function(opt)
   //Features object
   this._features = {};
   this._features.list = []; //List of features
-  this._features.draw = {}; //Features draw definitions
+  this._features.chromosomes = {}; //Features by chromosome
   this._features.layer = 2; //Features layer
   this._features.color = (typeof opt.features.color === 'string') ? opt.features.color : jviz.colors.red.hex; //Features default color
   this._features.opacity = 0.8; //Features opacity
@@ -125,7 +124,7 @@ jviz.modules.karyoviewer = function(opt)
 
   //Features counter
   this._features.counter = {};
-  this._features.counter.list = {}; //Features counter
+  this._features.counter.list = []; //Features counter
   this._features.counter.opacity = 1.0; //Features counter opacity
   this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
   this._features.counter.margin = 3; //Counter margin
