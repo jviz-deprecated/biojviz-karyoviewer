@@ -114,7 +114,7 @@ jviz.modules.karyoviewer.prototype.chromosomesResize = function()
   for(var i = 0; i < this._chromosomes.list.length; i++)
   {
     //Get the chromosome info
-    var chr_info = this._chromosomes.list[i];
+    var chr = this._chromosomes.list[i];
 
     //Get the chromosome draw object
     var chr_draw = this._chromosomes.draw[i];
