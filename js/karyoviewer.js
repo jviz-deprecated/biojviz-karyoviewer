@@ -117,7 +117,8 @@ jviz.modules.karyoviewer = function(opt)
 
   //Features object
   this._features = {};
-  this._features.list = {}; //List of features
+  this._features.list = []; //List of features
+  this._features.draw = {}; //Features draw definitions
   this._features.layer = 2; //Features layer
   this._features.color = (typeof opt.features.color === 'string') ? opt.features.color : jviz.colors.red.hex; //Features default color
   this._features.opacity = 0.8; //Features opacity
