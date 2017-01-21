@@ -22,7 +22,7 @@ jviz.modules.karyoviewer.prototype.features = function(list)
   //Read all the features
   for(var i = 0; i < list.length; i++)
   {
-    //Clone the feature 
+    //Clone the feature
     var feature = Object.assign({}, list[i]);
 
     //Check the chromosome
@@ -220,5 +220,31 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
   }
 
   //Exit
+  return this;
+};
+
+//Update the features info
+jviz.modules.karyoviewer.prototype.featuresMap = function(fn)
+{
+  //Check the function
+  if(typeof fn !== 'function'){ return this; }
+
+  //Read all the features
+  for(var i = 0; i < this._features.list.length; i++)
+  {
+    //Get the feature
+    var feature = this._features.list[i];
+
+    //Parse the feature
+    var new_feature = fn(feature, index);
+
+    //Check for undefined new feature
+    if(typeof new_feature !== 'object'){ continue; }
+
+    //Update the original feature
+    this._features.list[i] = Object.assign(feature, new_feature);
+  }
+
+  //Return this and exit
   return this;
 };
