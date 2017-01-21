@@ -196,6 +196,9 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     //Get the features for this chromosome
     var features = this._features.draw[chr.name];
 
+    //Check for undefined
+    if(typeof features !== 'object'){ continue; } 
+
     //Red all features
     for(var j = 0; j < features.length; j++)
     {
