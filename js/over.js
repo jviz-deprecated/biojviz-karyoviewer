@@ -44,7 +44,7 @@ jviz.modules.karyoviewer.prototype.overFeatures = function(chromosome, x, y, mar
   if(typeof margin !== 'number'){ var margin = 0; }
 
   //Get the features on this chromosome
-  var features = this.featuresByChromosome(chromosome);
+  var features = this._features.draw[chromosome];
 
   //Output features
   var out = [];
