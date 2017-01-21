@@ -168,10 +168,10 @@ jviz.modules.karyoviewer.prototype.chromosomesResize = function()
     else
     {
       //Calculate the name position x for portrait
-      chr_name.posx = chr._posx + chr._width / 2;
+      chr_name._posx = chr._posx + chr._width / 2;
 
       //Calculate the name position y for portrait
-      chr_name.posy = margin.top + draw.height + margin.bottom / 2 - this._chromosomes.name.margin;
+      chr_name._posy = margin.top + draw.height + margin.bottom / 2 - this._chromosomes.name.margin;
     }
 
     //Save the name object
