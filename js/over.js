@@ -18,19 +18,19 @@ jviz.modules.karyoviewer.prototype.overChromosome = function(x, y)
   for(var i = 0; i < this._chromosomes.list.length; i++)
   {
     //Check the x coordinate
-    if(x < this._chromosomes.list[i].posx){ return false; }
+    if(x < this._chromosomes.draw[i].posx){ return false; }
 
     //Check the y coordinate
-    if(y < this._chromosomes.list[i].posy){ return false; }
+    if(y < this._chromosomes.draw[i].posy){ return false; }
 
     //Check the x coordinate
-    if(this._chromosomes.list[i].posx + this._chromosomes.list[i].width < x){ continue; }
+    if(this._chromosomes.draw[i].posx + this._chromosomes.draw[i].width < x){ continue; }
 
     //Check the y coordinate
-    if(this._chromosomes.list[i].posy + this._chromosomes.list[i].height < y){ continue; }
+    if(this._chromosomes.draw[i].posy + this._chromosomes.draw[i].height < y){ continue; }
 
-    //Return the chromosome name
-    return this._chromosomes.list[i].name;
+    //Return the chromosome index
+    return this._chromosomes.draw[i].index;
   }
 
   //Default, return false
