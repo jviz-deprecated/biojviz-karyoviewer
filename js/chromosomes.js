@@ -63,7 +63,7 @@ jviz.modules.karyoviewer.prototype.chromosomes = function(list, isExample)
       chr.centromere_start = parseInt(chr.centromere_start);
 
       //Parse the centromere end position
-      chr.centromere_end = parseInt(centromere_end);
+      chr.centromere_end = parseInt(chr.centromere_end);
 
       //Calculate the centromere length
       chr.centromere_length = Math.abs(chr.centromere_end - chr.centromere_start);
