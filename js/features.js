@@ -2,71 +2,68 @@
 jviz.modules.karyoviewer.prototype.features = function(list)
 {
   //Check the features list
-  if(typeof list === 'undefined'){ return this; }
+  if(typeof list === 'undefined'){ return this._features.list; }
 
   //Check for array
   if(jviz.is.array(list) === false){ list = [ list ]; }
 
   //Reset the features list
-  this._features.list = {};
+  this._features.list = [];
+
+  //Initialize the features draw definitions
+  this._features.draw = {};
 
   //Reset the features counter list
   this._features.counter.list = {};
 
+  //Features counter
+  var index = 0;
+
   //Read all the features
   for(var i = 0; i < list.length; i++)
   {
-    //Get the feature
-    var feature = list[i];
+    //Clone the feature 
+    var feature = Object.assign({}, list[i]);
 
-    //Initialize the new feature object
-    var obj_feature = { posx: 0, posy: 0, width: 0, height: 0 };
+    //Check the chromosome
+    if(typeof feature.chromosome !== 'string'){ console.error('Undefined chromosome on feature ' + i); continue; }
 
-    //Save the feature name
-    obj_feature.name = feature.name;
+    //Check the feature start position
+    if(typeof feature.start === 'undefined'){ console.error('Undefined start on feature ' + i); continue; }
 
-    //Save the feature chromosome
-    obj_feature.chromosome = feature.chromosome;
+    //Check the feature name
+    if(typeof feature.name !== 'string'){ console.error('Undefined name on feature ' + i); continue; }
 
-    //Save the feature start point
-    obj_feature.start = parseInt(feature.start);
+    //Parse the feature start position
+    feature.start = parseInt(feature.start);
 
     //Save the feature end point
-    obj_feature.end = (typeof feature.end === 'undefined') ? obj_feature.start : parseInt(feature.end);
+    feature.end = (typeof feature.end === 'undefined') ? feature.start : parseInt(feature.end);
 
     //Save the feature length
-    obj_feature.length = Math.abs(obj_feature.end - obj_feature.start) + 1;
+    feature.length = Math.abs(feature.end - feature.start) + 1;
 
-    //Save the feature index
-    obj_feature.index = i;
-
-    //Save the feature start position
-    //obj.start = draw.height * (feature.start / this._chromosomes.max);
-
-    //Save the feature end position
-    //obj.end = draw.height * (feature.end / this._chromosomes.max);
-
-    //feature width
-    //obj.width = this._chromosomes.width;
-
-    //feature height
-    //obj.height = Math.max(Math.abs(obj.end - obj.start), 1);
-
-    //Add the feature color
-    obj_feature.color = (typeof feature.color === 'string') ? feature.color : this._features.color;
+    //Save this feature
+    this._features.list.push(feature);
 
     //Check if chromosome exists
-    if(typeof this._features.list[feature.chromosome] === 'undefined')
+    if(typeof this._features.draw[feature.chromosome] === 'undefined')
     {
       //Initialize this chromosome
-      this._features.list[feature.chromosome] = [];
+      this._features.draw[feature.chromosome] = [];
 
       //Add the features counter
       this._features.counter.list[feature.chromosome] = new jviz.canvas.tooltip({ color: this._features.color });
     }
 
-    //Add the index to the chromosome list
-    this._features.list[feature.chromosome].push(obj_feature);
+    //Initialize the feature object
+    var obj = { posx: 0, posy: 0, width: 0, height: 0, index: index, color: this._features.color };
+
+    //Create the feature draw object for this chromosome
+    this._features.draw[feature.chromosome].push(obj);
+
+    //Increment the features counter
+    index = index + 1;
   }
 
   //Set to resize the features
@@ -92,25 +89,28 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     var chr = this._chromosomes.list[i];
 
     //Check features on this chromosome
-    if(typeof this._features.list[chr.name] === 'undefined'){ continue; }
+    if(typeof this._features.draw[chr.name] === 'undefined'){ continue; }
 
     //Red all features
-    for(var j = 0; j < this._features.list[chr.name].length; j++)
+    for(var j = 0; j < this._features.draw[chr.name].length; j++)
     {
-      //Get the feature object
-      var feature = this._features.list[chr.name][j];
+      //Get the feature draw object
+      var feature = this._features.draw[chr.name][j];
+
+      //Get the feature
+      var feature_info = this._features.list[feature.index];
 
       //Check for landscape
       if(this.isLandscape() === true)
       {
         //Save the feature width
-        feature.width = Math.max(draw.width * feature.length / this._chromosomes.max, 1);
+        feature.width = Math.max(draw.width * feature_info.length / this._chromosomes.max, 1);
 
         //Save the feature height
         feature.height = this._chromosomes.height;
 
         //Save the feature position x
-        feature.posx = chr.posx + draw.width * Math.min(feature.start, feature.end) / this._chromosomes.max;
+        feature.posx = chr.posx + draw.width * Math.min(feature_info.start, feature_info.end) / this._chromosomes.max;
 
         //Save the feature position y
         feature.posy = chr.posy;
@@ -123,17 +123,17 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
         feature.width = this._chromosomes.width;
 
         //Save the feature height for portrait
-        feature.height = Math.max(draw.height * feature.length / this._chromosomes.max, 1);
+        feature.height = Math.max(draw.height * feature_info.length / this._chromosomes.max, 1);
 
         //Save the feature position x for portrait
         feature.posx = chr.posx;
 
         //Save the feature position y for portrait
-        feature.posy = chr.posy + draw.height * Math.min(feature.start, feature.end) / this._chromosomes.max;
+        feature.posy = chr.posy + draw.height * Math.min(feature_info.start, feature_info.end) / this._chromosomes.max;
       }
 
       //Save the feature object
-      this._features.list[chr.name][j] = feature;
+      this._features.draw[chr.name][j] = feature;
     }
 
     //Initialize the counter positions object
@@ -188,14 +188,13 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
   //Get the canvas
   var canvas = this._canvas.el.layer(this._features.layer);
 
-  //Read all the chromosomes
   for(var i = 0; i < this._chromosomes.list.length; i++)
   {
     //Get the chromosome
     var chr = this._chromosomes.list[i];
 
-    //Get the features list
-    var features = this.featuresByChromosome(chr.name);
+    //Get the features for this chromosome
+    var features = this._features.draw[chr.name];
 
     //Red all features
     for(var j = 0; j < features.length; j++)
@@ -222,14 +221,4 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
 
   //Exit
   return this;
-};
-
-//Get features by chromosome name
-jviz.modules.karyoviewer.prototype.featuresByChromosome = function(name)
-{
-  //Check for no features on this chromosome
-  if(typeof this._features.list[name] === 'undefined'){ return []; }
-
-  //Return the features  for this chromosome
-  return this._features.list[name];
 };
