@@ -85,8 +85,11 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
   //Read all the chromosomes
   for(var i = 0; i < this._chromosomes.list.length; i++)
   {
-    //Get the chromosome
+    //Get the chromosome info
     var chr = this._chromosomes.list[i];
+
+    //Get the chromosome draw
+    var chr_draw = this._chromosomes.draw[i];
 
     //Check features on this chromosome
     if(typeof this._features.draw[chr.name] === 'undefined'){ continue; }
@@ -94,46 +97,46 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     //Red all features
     for(var j = 0; j < this._features.draw[chr.name].length; j++)
     {
-      //Get the feature draw object
-      var feature = this._features.draw[chr.name][j];
-
       //Get the feature
-      var feature_info = this._features.list[feature.index];
+      var feature = this._features.list[feature.index];
+
+      //Get the feature draw object
+      var feature_draw = this._features.draw[chr.name][j];
 
       //Check for landscape
       if(this.isLandscape() === true)
       {
         //Save the feature width
-        feature.width = Math.max(draw.width * feature_info.length / this._chromosomes.max, 1);
+        feature_draw.width = Math.max(draw.width * feature.length / this._chromosomes.max, 1);
 
         //Save the feature height
-        feature.height = this._chromosomes.height;
+        feature_draw.height = this._chromosomes.height;
 
         //Save the feature position x
-        feature.posx = chr.posx + draw.width * Math.min(feature_info.start, feature_info.end) / this._chromosomes.max;
+        feature_draw.posx = chr_draw.posx + draw.width * Math.min(feature.start, feature.end) / this._chromosomes.max;
 
         //Save the feature position y
-        feature.posy = chr.posy;
+        feature_draw.posy = chr_draw.posy;
       }
 
       //Check for portrait
       else
       {
         //Save the feature width for portrait
-        feature.width = this._chromosomes.width;
+        feature_draw.width = this._chromosomes.width;
 
         //Save the feature height for portrait
-        feature.height = Math.max(draw.height * feature_info.length / this._chromosomes.max, 1);
+        feature_draw.height = Math.max(draw.height * feature.length / this._chromosomes.max, 1);
 
         //Save the feature position x for portrait
-        feature.posx = chr.posx;
+        feature_draw.posx = chr_draw.posx;
 
         //Save the feature position y for portrait
-        feature.posy = chr.posy + draw.height * Math.min(feature_info.start, feature_info.end) / this._chromosomes.max;
+        feature_draw.posy = chr_draw.posy + draw.height * Math.min(feature.start, feature.end) / this._chromosomes.max;
       }
 
       //Save the feature object
-      this._features.draw[chr.name][j] = feature;
+      this._features.draw[chr.name][j] = feature_draw;
     }
 
     //Initialize the counter positions object
@@ -143,10 +146,10 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     if(this.isLandscape() === true)
     {
       //Calculate the position x
-      counter.posx = chr.posx + chr.width + this._features.counter.margin;
+      counter.posx = chr_draw.posx + chr_draw.width + this._features.counter.margin;
 
       //Calculate the position y
-      counter.posy = chr.posy + chr.height / 2;
+      counter.posy = chr_draw.posy + chr_draw.height / 2;
 
       //Set the tooltip position
       counter.position = 'right';
@@ -156,10 +159,10 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     else
     {
       //Calculate the tooltip position x
-      counter.posx = chr.posx + chr.width / 2;
+      counter.posx = chr_draw.posx + chr_draw.width / 2;
 
       //Calculate the tooltip position y
-      counter.posy = chr.posy - this._features.counter.margin;
+      counter.posy = chr_draw.posy - this._features.counter.margin;
 
       //Set the tooltip position
       counter.position = 'top';
@@ -197,7 +200,7 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     var features = this._features.draw[chr.name];
 
     //Check for undefined
-    if(typeof features !== 'object'){ continue; } 
+    if(typeof features !== 'object'){ continue; }
 
     //Red all features
     for(var j = 0; j < features.length; j++)
