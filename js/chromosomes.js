@@ -142,7 +142,7 @@ jviz.modules.karyoviewer.prototype.chromosomesResize = function()
       chr._posx = margin.left + i * this._block.width;
 
       //Calculate the chromosome position y for portrait orientation
-      chr._posy = margin.top + draw.height - chr_draw.height;
+      chr._posy = margin.top + draw.height - chr._height;
 
       //Get the chromosome radius
       chr._radius = this._chromosomes.radius.portrait;
