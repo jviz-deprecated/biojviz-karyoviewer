@@ -14,7 +14,7 @@ jviz.modules.karyoviewer.prototype.features = function(list)
   this._features.chromosomes = {};
 
   //Reset the features counter list
-  this._features.counter.list = [];
+  this._features.counter.list = {};
 
   //Features counter
   var index = 0;
@@ -67,7 +67,7 @@ jviz.modules.karyoviewer.prototype.features = function(list)
     this._features.chromosomes[feature.chromosome].push(index);
 
     //Add the features counter
-    //this._features.counter.list[index] = new jviz.canvas.tooltip({ color: this._features.color });
+    this._features.counter.list[feature.chromosome] = new jviz.canvas.tooltip({ color: this._features.color });
 
     //Increment the features counter
     index = index + 1;
@@ -95,11 +95,14 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     //Get the chromosome info
     var chr = this._chromosomes.list[i];
 
+    //Get the features
+    var features = this._features.chromosomes[chr.name];
+
     //Check features on this chromosome
-    if(typeof this._features.chromosomes[chr.name] === 'undefined'){ continue; }
+    if(typeof features === 'undefined'){ continue; }
 
     //Red all features
-    for(var j in this._features.chromosomes[chr.name])
+    for(var j in features)
     {
       //Get the feature
       var feature = this._features.list[j];
@@ -143,9 +146,6 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
       this._features.list[j] = feature;
     }
 
-
-    continue;
-
     //Initialize the counter positions object
     var counter = { posx: 0, posy: 0, position: 'top' };
 
@@ -182,7 +182,7 @@ jviz.modules.karyoviewer.prototype.featuresResize = function()
     this._features.counter.list[chr.name].position(counter.position);
 
     //Set the number of features
-    this._features.counter.list[chr.name].text(this._features.list[chr.name].length + '');
+    this._features.counter.list[chr.name].text(features.length + '');
   }
 
   //Set features resized
@@ -230,7 +230,7 @@ jviz.modules.karyoviewer.prototype.featuresDraw = function()
     if(features.length === 0){ continue; }
 
     //Draw the counter tooltip
-    //this._features.counter.list[chr.name].draw(canvas);
+    this._features.counter.list[chr.name].draw(canvas);
   }
 
   //Exit
