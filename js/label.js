@@ -13,8 +13,11 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
   //Check if is over a chromosome
   if(this._over.chromosome.actual === false){ return; }
 
+  //Get the actual chromosome name
+  var name = this._chromosomes.list[this._over.chromosome.actual].name;
+
   //Get the features
-  this._label.features = this.overFeatures(this._over.chromosome.actual, x, y, this._label.offset);
+  this._label.features = this.overFeatures(name, x, y, this._label.offset);
 
   //Check the features list
   if(this._label.features.length === 0){ return; }
@@ -29,10 +32,10 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
   if(this.isLandscape() === true)
   {
     //Set the x coordinate for landscape orientation
-    coordinates.posx = feature.posx + feature.width / 2;
+    coordinates.posx = feature._posx + feature._width / 2;
 
     //Set the y coordinate for landscape orientation
-    coordinates.posy = feature.posy + feature.height + this._label.tooltip.margin;
+    coordinates.posy = feature._posy + feature._height + this._label.tooltip.margin;
 
     //Save the label position
     this._label.position = x;
@@ -40,14 +43,17 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
   else
   {
     //Set the x coordinate for portrait orientation
-    coordinates.posx = feature.posx + feature.width + this._label.tooltip.margin;
+    coordinates.posx = feature._posx + feature._width + this._label.tooltip.margin;
 
     //Set the y coordinate for protrait orientation
-    coordinates.posy = feature.posy + feature.height / 2;
+    coordinates.posy = feature._posy + feature._height / 2;
 
     //Save the label position
     this._label.position = y;
   }
+
+  //Save this
+  var self = this;
 
   //Get the features names
   var names = this._label.features.map(function(el){ return el.name; });
@@ -59,7 +65,7 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
   this._label.tooltip.el.move(coordinates);
 
   //Set the tooltip color
-  this._label.tooltip.el.color(feature.color);
+  this._label.tooltip.el.color(feature._color);
 
   //Draw the tooltip
   this._label.tooltip.el.draw(this._canvas.el.layer(this._label.layer));
@@ -68,7 +74,7 @@ jviz.modules.karyoviewer.prototype.labelDraw = function(x, y)
   this._label.active = true;
 
   //Save the label chromosome
-  this._label.chromosome = this._over.chromosome.actual;
+  //this._label.chromosome = this._over.chromosome.actual;
 
   //Check the orientation
   if(this.isLandscape() === true)
