@@ -44,10 +44,10 @@ jviz.modules.karyoviewer.prototype.eventDown = function(x, y)
   if(this._over.chromosome.actual === false){ return; }
 
   //Get the actual chromosome
-  var chr = this._chromosomes.list[i];
+  var chr = this._chromosomes.list[this._over.chromosome.actual];
 
   //Emit the click on a chromosome
-  return this._events.emit('click:chromosome', chr.name, chr.index);
+  return this._events.emit('click:chromosome', chr.name, this._over.chromosome.actual);
 };
 
 //Move event
