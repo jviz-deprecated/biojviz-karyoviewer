@@ -1,0 +1,151 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+<script>
+
+//Karyoviewer element
+var jviz_karyoviewer = { is: 'jviz-karyoviewer' };
+
+//Properties
+jviz_karyoviewer.properties = {};
+jviz_karyoviewer.properties.karyoviewerWidth = { type: String, reflectToAttribute: true, value: '100%', observer: 'update_width' };
+jviz_karyoviewer.properties.karyoviewerHeight = { type: String, reflectToAttribute: true, value: '200px', observer: 'update_height' };
+jviz_karyoviewer.properties.karyoviewerTitle = { type: String, reflectToAttribute: true };
+jviz_karyoviewer.properties.karyoviewerOrientation = { };
+
+//Created 
+jviz_karyoviewer.created = function()
+{
+  //Orientation
+  this._orientation = {};
+  this._orientation.actual = ''; //Actual orientation name
+  this._orientation.default = 'portrait'; //Default orientation
+  this._orientation.values = [ 'portrait', 'landscape' ]; //Orientation values
+
+  //Block configuration
+  this._block = {};
+  this._block.width = 0; //Block width
+  this._block.height = 0; //Block height
+  this._block.draw = { width: 0, height: 0 }; //Block draw zone
+  this._block.margin = { top: 30, bottom: 30, left: 0, right: 0 }; //Block margins
+  this._block.resized = false; //Block is resized
+  
+  //Block default values
+  this._block.default = {};
+  
+  //Default values for protrait
+  this._block.default.portrait = {};
+  this._block.default.portrait.draw_width = 15; //Default portrait draw width
+  this._block.default.portrait.draw_height = 70; //Default portrait draw height
+  this._block.default.portrait.margin_top = 30; //Default portrait margin top
+  this._block.default.portrait.margin_bottom = 30; //Default portrait margin bottom
+  
+  //Default values for landscape
+  this._block.default.landscape = {};
+  this._block.default.landscape.draw_width = 0; //Default landscape draw width
+  this._block.default.landscape.draw_height = 20; //Default landscape draw height
+  this._block.default.landscape.margin_top = 30; //Default landscape margin top
+  this._block.default.landscape.margin_bottom = 30; //Default landscape margin bottom
+  this._block.default.landscape.margin_left = 50; //Default landscape margin left
+  this._block.default.landscape.margin_right = 50; //Default landscape margin right
+
+  //Canvas object
+  this._canvas = {};
+  this._canvas.height = 0; //Canvas height
+  this._canvas.layers = 4; //Number of layers
+  this._canvas.margin = { top: 0, bottom: 0, left: 0, right: 0 };
+
+  //Chromosomes info
+  this._chromosomes = {};
+  this._chromosomes.width = 15; //Chromosome default width
+  this._chromosomes.height = 20; //Chromosome default height
+  this._chromosomes.layer = 1; //Chromosome layer
+  this._chromosomes.list = []; //Chromosomes list
+  this._chromosomes.max = 0; //Chromosome max length
+  this._chromosomes.num = 0; //Number of chromosomes
+  this._chromosomes.color = jviz.colors('blue', 2); //Chromosome color
+  this._chromosomes.opacity = 0.6; //Chromosome opacity
+  this._chromosomes.resized = false; //Chromosome data is resized
+
+  //Chromosome radius
+  this._chromosomes.radius = {};
+  this._chromosomes.radius.portrait = 6; //Chromosome radius for portrait
+  this._chromosomes.radius.landscape = 10; //Chromosome radius for landscape
+
+  //Chromosome name
+  this._chromosomes.name = {};
+  this._chromosomes.name.list = []; //List of chromosomes names
+  this._chromosomes.name.visible = true; //Chromosome name is visible
+  this._chromosomes.name.margin = 7; //Chromosome name margin
+
+  //Chromosome name text
+  this._chromosomes.name.text = {};
+  this._chromosomes.name.text.font = jviz.font; //Chromosome name text font
+  this._chromosomes.name.text.size = '12px'; //Chromosome name text size
+  this._chromosomes.name.text.align = 'center'; //Chromosome name text align
+
+  //Centromere
+  this._chromosomes.centromere = {};
+  this._chromosomes.centromere.list = []; //List of centromere positions
+  this._chromosomes.centromere.opacity = 0.9; //Centromere opacity
+
+  //Features object
+  this._features = {};
+  this._features.list = []; //List of features
+  this._features.chromosomes = {}; //Features by chromosome
+  this._features.layer = 2; //Features layer
+  this._features.color = jviz.colors('red'); //Features default color
+  this._features.opacity = 0.8; //Features opacity
+  this._features.resized = false; //Features data is resized
+
+  //Features counter
+  this._features.counter = {};
+  this._features.counter.list = []; //Features counter
+  this._features.counter.opacity = 1.0; //Features counter opacity
+  this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
+  this._features.counter.margin = 3; //Counter margin
+
+  //Features label
+  this._label = {};
+  this._label.layer = 3; //Features name layer
+  this._label.offset = (typeof opt.label.offset === 'number') ? Math.abs(opt.label.offset) : 3; //Features label offset
+  this._label.position = 0; //Actual feature label position
+  this._label.features = []; //Actual features list
+  this._label.active = false; //Label is active
+  this._label.visible = (typeof opt.label.visible === 'boolean') ? opt.label.visible : true; //Label is visible
+  this._label.chromosome = ''; //Actual label chromosome
+
+  //Features label tooltip
+  this._label.tooltip = {};
+  this._label.tooltip.margin = 0; //Label tooltip margin
+  this._label.tooltip.el = new jviz.canvas.tooltip({ text: '' }); //Features label tooltip element
+
+  //Label over
+  this._label.over = {};
+  this._label.over.posx = 0; //Label real position x
+  this._label.over.posy = 0; //Label over position y
+  this._label.over.width = 0; //Label over width
+  this._label.over.height = 0; //Label over height
+
+  //Over
+  this._over = {};
+  this._over.move = false; //Capture the move event
+
+  //Over a chromosome
+  this._over.chromosome = {};
+  this._over.chromosome.actual = false; //Actual chromosome name
+
+  //Initialize the events
+  this._events = new jviz.commons.events();
+};
+
+//Ready handler
+jviz_karyoviewer.ready = function()
+{
+
+};
+
+//
+</script>
