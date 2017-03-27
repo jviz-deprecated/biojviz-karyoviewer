@@ -1,0 +1,36 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+<script>
+
+//Resize event
+jviz_karyoviewer.resize = function()
+{
+  //Set the canvas width
+  //this._canvas.el.width(this._width);
+
+  //Resize the canvas
+  this._canvas.el.resize();
+
+  //Save the full width
+  this._width = this._canvas.el.width();
+
+  //Save the full height
+  //this._height = this._canvas.el.height();
+
+  //Set to resize the block object
+  this._block.resized = false;
+
+  //Set to resize the chromosomes data
+  this._chromosomes.resized = false;
+
+  //Set to resize the features data
+  this._features.resized = false;
+
+  //Exit
+  return this;
+};
+
+</script>
