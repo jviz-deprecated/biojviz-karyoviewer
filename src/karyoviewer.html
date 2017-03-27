@@ -36,7 +36,7 @@ jviz_karyoviewer.created = function()
   //Block default values
   this._block.default = {};
   
-  //Default values for protrait
+  //Default values for portrait
   this._block.default.portrait = {};
   this._block.default.portrait.draw_width = 15; //Default portrait draw width
   this._block.default.portrait.draw_height = 70; //Default portrait draw height
@@ -133,6 +133,10 @@ jviz_karyoviewer.created = function()
   this._over = {};
   this._over.move = false; //Capture the move event
 
+  //Over a block
+  this._over.block = {};
+  this._over.block.actual = false; //Actual block number
+
   //Over a chromosome
   this._over.chromosome = {};
   this._over.chromosome.actual = false; //Actual chromosome name
@@ -167,6 +171,9 @@ jviz_karyoviewer.ready = function()
 
   //Add the mouse up event
   jviz.dom.mouse_up(this.$.canvas, function(e, x, y){ return self.__event_up(x, y); });
+
+  //Mouse leave event
+  jviz.dom.mouse_leave(this.$.canvas, function(e, x, y){ return self.__event_leave(x, y); });
 
   //Add the resize event
   jviz.dom.resize(function()
