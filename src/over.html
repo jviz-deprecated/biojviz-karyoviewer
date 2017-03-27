@@ -56,14 +56,17 @@ jviz_karyoviewer.__over_features = function(chr, x, y, margin)
   //Get the features on this chromosome
   var features = this._features.chromosomes[chr];
 
+  //Check the features
+  if(typeof features !== 'object'){ return; }
+
   //Output features
   var out = [];
 
   //Read all the features
-  for(var i in features)
+  for(var i = 0; i < features.length; i++)
   {
     //Get the feature
-    var feature = this._features.list[i];
+    var feature = this._features.list[features[i]];
 
     //Check the feature x coordinate
     if(x + margin < feature._posx){ break; }
