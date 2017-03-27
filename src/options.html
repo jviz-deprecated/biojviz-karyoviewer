@@ -8,7 +8,21 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 //Set the karyoviewer options
 jviz_karyoviewer.options = function(opt)
 {
+  //Check the object
+  if(typeof opt !== 'object'){ return; }
 
+  //Check the shadow options
+  if(typeof opt.shadow === 'object')
+  {
+    //Check the visible option
+    if(typeof opt.shadow.active === 'boolean'){ this._shadow.active = opt.shadow.active; }
+
+    //Check the color option
+    if(typeof opt.shadow.color === 'string'){ this._shadow.color = opt.shadow.color; }
+
+    //Check the opacity option
+    if(typeof opt.shadow.opacity === 'number'){this._shadow.opacity = opt.shadow.opacity; } 
+  }
 };
 
 </script>
