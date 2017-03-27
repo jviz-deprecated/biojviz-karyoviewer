@@ -23,6 +23,22 @@ jviz_karyoviewer.options = function(opt)
     //Check the opacity option
     if(typeof opt.shadow.opacity === 'number'){this._shadow.opacity = opt.shadow.opacity; }
   }
+
+  //Check the features options
+  if(typeof opt.features === 'object')
+  {
+    //Check if the counter is visible
+    if(typeof opt.features.counter === 'boolean'){ this._features.counter.visible = opt.features.counter; }
+
+    //Check the default features color
+    if(typeof opt.features.color === 'string'){ this._features.color = opt.features.color; }
+  }
+
+  //Resize the element
+  this.__event_resize();
+
+  //Draw again
+  this.draw();
 };
 
 </script>
