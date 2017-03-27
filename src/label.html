@@ -66,16 +66,16 @@ jviz_karyoviewer.__label_draw = function(x, y)
   var names = this._label.features.map(function(el){ return el.name; });
 
   //Add the features names
-  this._label.tooltip.el.text(names);
+  this._label.tooltip.el.set_text(names);
 
   //Move the tooltip
   this._label.tooltip.el.move(coordinates);
 
   //Set the tooltip color
-  this._label.tooltip.el.color(feature._color);
+  this._label.tooltip.el.set_color(feature._color);
 
   //Draw the tooltip
-  this._label.tooltip.el.draw(this._canvas.el.layer(this._label.layer));
+  this._label.tooltip.el.draw(this.$.canvas.get_layers()[this._label.layer]);
 
   //Set label active as true
   this._label.active = true;
@@ -163,7 +163,7 @@ jviz_karyoviewer.__label_click = function(x, y)
 jviz_karyoviewer.__label_clear = function()
 {
   //Clear the canvas layer
-  this._canvas.el.layer(this._label.layer).Clear();
+  this.$.canvas.get_layers()[this._label.layer].clear();
 
   //Set label as inactive
   this._label.active = false;
