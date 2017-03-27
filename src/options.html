@@ -32,7 +32,13 @@ jviz_karyoviewer.options = function(opt)
 
     //Check the default features color
     if(typeof opt.features.color === 'string'){ this._features.color = opt.features.color; }
+
+    //Check if features are clickable
+    if(typeof opt.features.clickable === 'boolean'){ this._features.clickable = opt.features.clickable; }
   }
+
+  //Check if label is visible
+  if(typeof opt.label === 'boolean'){ this._label.visible = opt.label; }
 
   //Resize the element
   this.__event_resize();
