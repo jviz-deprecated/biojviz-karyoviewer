@@ -19,7 +19,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
       :host { display: block; }
     </style>
     <!-- Karyoviewer panel -->
-    <jviz-panel panel-title="{{ karyoviewerTitle }}">
+    <jviz-panel panel-title="{{ karyoviewerTitle }}" panel-detail="{{ karyoviewerDetail }}">
       <jviz-panel-head></jviz-panel-head>
       <jviz-panel-body>
         <jviz-canvas id="canvas" canvas-width="100%" canvas-height="{{ karyoviewerHeight }}"></jviz-canvas>
@@ -36,6 +36,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 <link rel="import" href="src/events.html">
 <link rel="import" href="src/features.html">
 <link rel="import" href="src/label.html">
+<link rel="import" href="src/options.html">
 <link rel="import" href="src/orientation.html">
 <link rel="import" href="src/over.html">
 
