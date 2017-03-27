@@ -1,0 +1,70 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+<script>
+
+//Draw the shadow 
+jviz_karyoviewer.__shadow_draw = function()
+{
+  //Check for no block to draw
+  if(this._shadow.actual === this._over.block.actual){ return; }
+
+  //Save this chromosome
+  this._shadow.actual = this._over.block.actual;
+
+  //Get the canvas
+  var canvas = this.$.canvas.get_layers()[this._shadow.layer];
+
+  //Clear the block
+  canvas.clear();
+
+  //Check for no block to draw
+  if(this._shadow.actual === false){ return; }
+
+  //Check if is landscape
+  if(this.is_landscape() === true)
+  {
+    //Get the block position x for landscape
+    var shadow_posx = this._shadow.offset;
+
+    //Get the block position y for landscape
+    var shadow_posy = this._shadow.offset + this._shadow.actual * height;
+  }
+  else
+  {
+    //Get the block position x for portrait
+    var shadow_posx = this._shadow.offset + this._shadow.actual * this._block.width;
+
+    //Get the block position y for portrait
+    var shadow_posy = this._shadow.offset;
+  }
+
+  //Get the block width
+  var shadow_width = this._block.width - this._shadow.offset * 2;
+
+  //Get the block height
+  var shadow_height = this._block.height - this._shadow.offset * 2;
+
+  //Draw the rectangle block
+  canvas.rect({ x: shadow_posx, y: shadow_posy, width: shadow_width, height: shadow_height, radius: this._shadow.radius });
+
+  //Fill the block
+  canvas.fill({ color: this._shadow.color, opacity: this._shadow.opacity });
+
+  //Continue
+  return;
+};
+
+//Clear the shadow
+jviz_karyoviewer.__shadow_clear = function()
+{
+  //Cleat the block layer
+  this.$.canvas.get_layers()[this._shadow.layer].clear(); 
+  
+  //Set the actual shadow chromosome to null 
+  this._shadow.actual = false;
+};
+
+</script>
