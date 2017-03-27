@@ -12,31 +12,6 @@ jviz_karyoviewer.on = function(name, listener)
   return this._events.add(name, listener);
 };
 
-//Add the events
-jviz_karyoviewer.__events = function()
-{
-  //Get the last layer ID
-  var id = this._canvas.el.layerID(this._canvas.layers - 1);
-
-  //Save this
-  var self = this;
-
-  //Add the mouse down event
-  jviz.commons.mouse.down(id, function(e, x, y){ return self.__event_down(x, y); });
-
-  //Add the mouse move event
-  jviz.commons.mouse.move(id, function(e, x, y){ return self.__event_move(x, y); });
-
-  //Add the mouse up event
-  jviz.commons.mouse.up(id, function(e, x, y){ return self.__event_up(x, y); });
-
-  //Add the resize event
-  jviz.dom.resize(function(){ return self.__event_resize().draw(); });
-
-  //Return this
-  return this;
-};
-
 //Resize event
 jviz_karyoviewer.__event_resize = function()
 {
@@ -60,9 +35,6 @@ jviz_karyoviewer.__event_resize = function()
 
   //Set to resize the features data
   this._features.resized = false;
-
-  //Exit
-  return this;
 };
 
 //Click down event
