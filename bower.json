@@ -8,7 +8,8 @@
     "jviz": "https://github.com/jviz/jviz.git#dev",
     "jviz-styles": "https://github.com/jviz/jviz-styles.git#dev",
     "jviz-canvas": "https://github.com/jviz/jviz-canvas.git#dev",
-    "jviz-panel": "https://github.com/jviz/jviz-panel.git#dev"
+    "jviz-panel": "https://github.com/jviz/jviz-panel.git#dev",
+    "jviz-tooltip": "https://github.com/jviz/jviz-tooltip.git#dev"
   },
 	"license": "MIT",
   "authors": [ "Josemi Juanes <josemijuanes@gmail.com>" ],
