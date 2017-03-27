@@ -51,7 +51,7 @@ jviz_karyoviewer.__event_leave = function(x, y)
 jviz_karyoviewer.__event_down = function(x, y)
 {
   //Check if label is active
-  if(this._label.active === true && this._label.visible === true)
+  if(this._label.active === true && this._label.visible === true && this._features.clickable === true)
   {
     //Check if user has clicked on a label
     return this.__label_click(x, y);
