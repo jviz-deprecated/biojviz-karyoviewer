@@ -8,6 +8,9 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 //Draw the shadow 
 jviz_karyoviewer.__shadow_draw = function()
 {
+  //Check if shadow is visible
+  if(this._shadow.visible !== true){ return; }
+
   //Check for no block to draw
   if(this._shadow.actual === this._over.block.actual){ return; }
 
