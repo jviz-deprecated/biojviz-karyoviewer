@@ -43,8 +43,8 @@ jviz_karyoviewer.__event_leave = function(x, y)
   //Reset the actual block
   this._over.block.actual = false;
 
-  //Clear the block
-  this.__block_clear();
+  //Clear the shadow
+  this.__shadow_clear();
 };
 
 //Click down event
@@ -85,8 +85,8 @@ jviz_karyoviewer.__event_move = function(x, y)
   //Draw the label
   this.__label_draw(x, y);
 
-  //Draw the block
-  this.__block_draw();
+  //Draw the shadow
+  this.__shadow_draw();
 
   //Check the cursor
   //if(this._over.chromosome.actual === false){ return jviz.cursor.remove('pointer'); }
