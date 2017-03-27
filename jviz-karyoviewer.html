@@ -1,0 +1,44 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+
+<!-- Import components -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../jviz/jviz.html">
+<link rel="import" href="../jviz-styles/jviz-styles.html">
+<link rel="import" href="../jviz-panel/jviz-panel.html">
+<link rel="import" href="../jviz-canvas/jviz-canvas.html">
+
+<!-- Karyoviewer module -->
+<dom-module id="jviz-karyoviewer">
+  <template>
+    <style>
+      /* Host style */
+      :host { display: block; }
+    </style>
+    <!-- Karyoviewer panel -->
+    <jviz-panel panel-title="{{ karyoviewerTitle }}">
+      <jviz-panel-head></jviz-panel-head>
+      <jviz-panel-body>
+        <jviz-canvas canvas-width="100%" canvas-height="{{ karyoviewerHeight }}"></jviz-canvas>
+      </jviz-panel-body>
+    </jviz-panel>
+  </template>
+</dom-module>
+
+<!-- Import logic -->
+<link rel="import" href="src/karyoviewer.html">
+<link rel="import" href="src/block.html">
+<link rel="import" href="src/chromosomes.html">
+<link rel="import" href="src/draw.html">
+<link rel="import" href="src/events.html">
+<link rel="import" href="src/features.html">
+<link rel="import" href="src/label.html">
+<link rel="import" href="src/orientation.html">
+<link rel="import" href="src/over.html">
+<link rel="import" href="src/resize.html">
+
+<!-- Initialize the karyoviewer component -->
+<script> Polymer(jviz_karyoviewer); </script>
