@@ -144,8 +144,30 @@ jviz_karyoviewer.created = function()
 //Ready handler
 jviz_karyoviewer.ready = function()
 {
-  //Register the events
-  this.__events();
+  //Save this
+  var self = this;
+
+  //Add the mouse down event
+  jviz.commons.mouse.down(this.$.canvas, function(e, x, y){ return self.__event_down(x, y); });
+
+  //Add the mouse move event
+  jviz.commons.mouse.move(this.$.canvas, function(e, x, y){ return self.__event_move(x, y); });
+
+  //Add the mouse up event
+  jviz.commons.mouse.up(this.$.canvas, function(e, x, y){ return self.__event_up(x, y); });
+
+  //Add the resize event
+  jviz.dom.resize(function()
+  {
+    //Resize the element
+    self.__event_resize();
+
+    //Draw the chromosomes
+    self.draw();
+  });
+
+  //Resize the first time
+  this.__event_resize();
 
   //Parse the orientation
   this.update_orientation(this.karyoviewerOrientation);
