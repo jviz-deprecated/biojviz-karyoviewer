@@ -146,6 +146,12 @@ jviz_karyoviewer.ready = function()
   //Save this
   var self = this;
 
+  //Set the number of layers
+  this.$.canvas.set_layers(this._canvas.layers);
+
+  //Set the canvas margin
+  this.$.canvas.set_margin(this._canvas.margin);
+
   //Add the mouse down event
   jviz.dom.mouse_down(this.$.canvas, function(e, x, y){ return self.__event_down(x, y); });
 
