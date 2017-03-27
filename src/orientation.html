@@ -25,7 +25,7 @@ jviz_karyoviewer.update_orientation = function(value)
   this._orientation.actual = (this._orientation.values.indexOf(value) === -1) ? this._orientation.default : value;
 
   //Resize the canvas
-  this.resize();
+  this.__event_resize();
 
   //Check the orientation
   if(this.is_landscape() === true)
