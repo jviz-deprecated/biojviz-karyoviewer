@@ -59,7 +59,7 @@ jviz_karyoviewer.__block_resize = function()
   this._height = (this.is_landscape() === true) ? this._block.height * num : this._block.height;
 
   //Set the canvas height
-  this._canvas.el.height(this._height);
+  this.karyoviewerHeight = this._height;
 
   //Set block resized
   this._block.resized = true;
