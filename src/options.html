@@ -40,6 +40,16 @@ jviz_karyoviewer.options = function(opt)
   //Check if label is visible
   if(typeof opt.label === 'boolean'){ this._label.visible = opt.label; }
 
+  //Check the chromosomes options
+  if(typeof opt.chromosomes === 'object')
+  {
+    //Check the chromosomes color
+    if(typeof opt.chromosomes.color === 'string'){ this._chromosomes.color = opt.chromosomes.color; }
+
+    //Check the chromosomes opacity
+    if(typeof opt.chromosomes.opacity === 'number'){ this._chromosomes.opacity = opt.chromosomes.opacity; } 
+  }
+
   //Resize the element
   this.__event_resize();
 
