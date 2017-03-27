@@ -1,0 +1,67 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+<script>
+
+//Manage the orientation
+jviz_karyoviewer.set_orientation = function(value)
+{
+  //convert to lower case
+  value = value.toLowerCase();
+
+  //Save the orientation
+  this._orientation.actual = (this._orientation.values.indexOf(value) === -1) ? this._orientation.default : value;
+
+  //Resize the canvas
+  this.resize();
+
+  //Check the orientation
+  if(this.is_landscape() === true)
+  {
+    //Set the label tooltip position
+    this._label.tooltip.el.position('bottom');
+  }
+  else
+  {
+    //Set the label tooltip position
+    this._label.tooltip.el.position('right');
+  }
+
+  //Continue
+  return this;
+};
+
+//Get the actual orientation value 
+jviz_karyoviewer.get_orientation = function(){ return this._orientation.value; };
+
+//Check if is landscape
+jviz_karyoviewer.is_landscape = function()
+{
+  //Check if the actual orientation is landscape
+  return this._orientation.actual === 'landscape';
+};
+
+//Set landscape orientation
+jviz_karyoviewer.set_landscape = function()
+{
+  //Set landscape orientation
+  return this.set_orientation('landscape');
+};
+
+//Check if orientation is protrait
+jviz_karyoviewer.is_portrait = function()
+{
+  //Check if actual orientation is portrait
+  return this._orientation.actual === 'portrait';
+};
+
+//Set portrait orientation
+jviz_karyoviewer.set_portrait = function()
+{
+  //Set portrait orientation
+  return this.set_orientation('portrait');
+};
+
+</script>
