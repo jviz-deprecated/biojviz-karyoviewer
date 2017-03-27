@@ -13,7 +13,7 @@ jviz_karyoviewer.properties = {};
 jviz_karyoviewer.properties.karyoviewerWidth = { type: String, reflectToAttribute: true, value: '100%', observer: 'update_width' };
 jviz_karyoviewer.properties.karyoviewerHeight = { type: String, reflectToAttribute: true, value: '200px', observer: 'update_height' };
 jviz_karyoviewer.properties.karyoviewerTitle = { type: String, reflectToAttribute: true };
-jviz_karyoviewer.properties.karyoviewerOrientation = { };
+jviz_karyoviewer.properties.karyoviewerOrientation = { type: String, reflectToAttribute: true, value: 'portrait', observer: 'update_orientation' };
 
 //Created 
 jviz_karyoviewer.created = function()
@@ -104,23 +104,23 @@ jviz_karyoviewer.created = function()
   this._features.counter = {};
   this._features.counter.list = []; //Features counter
   this._features.counter.opacity = 1.0; //Features counter opacity
-  this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
+  //this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
   this._features.counter.margin = 3; //Counter margin
 
   //Features label
   this._label = {};
   this._label.layer = 3; //Features name layer
-  this._label.offset = (typeof opt.label.offset === 'number') ? Math.abs(opt.label.offset) : 3; //Features label offset
+  //this._label.offset = (typeof opt.label.offset === 'number') ? Math.abs(opt.label.offset) : 3; //Features label offset
   this._label.position = 0; //Actual feature label position
   this._label.features = []; //Actual features list
   this._label.active = false; //Label is active
-  this._label.visible = (typeof opt.label.visible === 'boolean') ? opt.label.visible : true; //Label is visible
+  //this._label.visible = (typeof opt.label.visible === 'boolean') ? opt.label.visible : true; //Label is visible
   this._label.chromosome = ''; //Actual label chromosome
 
   //Features label tooltip
   this._label.tooltip = {};
   this._label.tooltip.margin = 0; //Label tooltip margin
-  this._label.tooltip.el = new jviz.canvas.tooltip({ text: '' }); //Features label tooltip element
+  //this._label.tooltip.el = new jviz.canvas.tooltip({ text: '' }); //Features label tooltip element
 
   //Label over
   this._label.over = {};
@@ -144,7 +144,11 @@ jviz_karyoviewer.created = function()
 //Ready handler
 jviz_karyoviewer.ready = function()
 {
+  //Register the events
+  this.__events();
 
+  //Parse the orientation
+  this.update_orientation(this.karyoviewerOrientation);
 };
 
 //
