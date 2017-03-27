@@ -18,9 +18,26 @@ jviz_karyoviewer.__over_rect = function(rect, x, y)
   return true;
 };
 
+//Get the block where the coordinates are over
+jviz_karyoviewer.__over_block = function(x, y)
+{
+  //Check if is landscape
+  if(this.is_landscape() === true)
+  {
+    //Return the block number
+    return parseInt(y / this._block.height);
+  }
+  else
+  {
+    //Get the block number
+    return parseInt(x / this._block.width);
+  }
+};
+
 //Get the chromosome where the coordinates are over
 jviz_karyoviewer.__over_chromosome = function(x, y)
 {
+  /*
   //Read all the chromosomes
   for(var i = 0; i < this._chromosomes.list.length; i++)
   {
@@ -42,6 +59,22 @@ jviz_karyoviewer.__over_chromosome = function(x, y)
 
   //Default, return false
   return false;
+  */
+
+  //Check for no block
+  if(this._over.block.actual === false){ return false; }
+
+  //Get the chromosome
+  var chr = this._chromosomes.list[this._over.block.actual];
+
+  //Check the x and the coordinate
+  if(x < chr._posx || y < chr._posy){ return false; }
+
+  //Check the x coordinate
+  if(chr._posx + chr._width < x || chr._posy + chr._height < y){ return false; }
+
+  //Return the chromosome index
+  return chr._index;
 };
 
 //Check if is over a feature
@@ -96,6 +129,9 @@ jviz_karyoviewer.__over_label = function(x, y)
 
   //Check if is over the tooltip rectangle
   if(this.__over_rect(this._label.over, x, y) === true){ return true; }
+
+  //Check if is over a chromosome
+  if(this._over.chromosome.actual === false){ return false; } 
 
   //Check the position for landscape
   if(this.is_landscape() === true)
