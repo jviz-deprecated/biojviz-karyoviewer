@@ -9,7 +9,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 jviz_karyoviewer.draw = function()
 {
   //Set panel loading as true
-  if(this._panel.visible){ this._panel.el.loading(true); }
+  //if(this._panel.visible){ this._panel.el.loading(true); }
 
   //Check if block is resized
   if(this._block.resized === false){ this.__block_resize(); }
@@ -21,7 +21,7 @@ jviz_karyoviewer.draw = function()
   if(this._features.resized === false){ this.__features_resize(); }
 
   //Clear all layers
-  this._canvas.el.clear();
+  this.$.canvas.clear();
 
   //Reset the label
   this._label.active = false;
@@ -33,7 +33,7 @@ jviz_karyoviewer.draw = function()
   this.__features_draw();
 
   //Set panel loading as false
-  if(this._panel.visible){ this._panel.el.loading(false); }
+  //if(this._panel.visible){ this._panel.el.loading(false); }
 
   //Continue
   return this;
