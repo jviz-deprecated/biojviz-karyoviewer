@@ -31,9 +31,37 @@ jviz_karyoviewer.__events = function()
   jviz.commons.mouse.up(id, function(e, x, y){ return self.__event_up(x, y); });
 
   //Add the resize event
-  jviz.dom.resize(function(){ return self.resize().draw(); });
+  jviz.dom.resize(function(){ return self.__event_resize().draw(); });
 
   //Return this
+  return this;
+};
+
+//Resize event
+jviz_karyoviewer.__event_resize = function()
+{
+  //Set the canvas width
+  //this._canvas.el.width(this._width);
+
+  //Resize the canvas
+  this._canvas.el.resize();
+
+  //Save the full width
+  this._width = this._canvas.el.width();
+
+  //Save the full height
+  //this._height = this._canvas.el.height();
+
+  //Set to resize the block object
+  this._block.resized = false;
+
+  //Set to resize the chromosomes data
+  this._chromosomes.resized = false;
+
+  //Set to resize the features data
+  this._features.resized = false;
+
+  //Exit
   return this;
 };
 
