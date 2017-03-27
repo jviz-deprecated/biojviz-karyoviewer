@@ -279,7 +279,7 @@ jviz_karyoviewer.__chromosomes_resize = function()
 jviz_karyoviewer.__chromosomes_draw = function()
 {
   //Get the chromosome layer
-  var canvas = this._canvas.el.layer(this._chromosomes.layer);
+  var canvas = this.$.canvas.get_layers()[this._chromosomes.layer];
 
   //Draw all the chromosomes
   for(var i = 0; i < this._chromosomes.list.length; i++)
@@ -288,16 +288,16 @@ jviz_karyoviewer.__chromosomes_draw = function()
     var chr = this._chromosomes.list[i];
 
     //Draw the chromosome
-    canvas.Rect({ x: chr._posx, y: chr._posy, width: chr._width, height: chr._height, radius: chr._radius });
+    canvas.rect({ x: chr._posx, y: chr._posy, width: chr._width, height: chr._height, radius: chr._radius });
 
     //Set the chromosome fill
-    canvas.Fill({ color: this._chromosomes.color, opacity: this._chromosomes.opacity });
+    canvas.fill({ color: this._chromosomes.color, opacity: this._chromosomes.opacity });
 
     //Get the chromosome name info
     var chr_name = this._chromosomes.name.list[i];
 
     //Draw the name text
-    canvas.Text(jviz.object.extend(this._chromosomes.name.text, { text: chr.name, x: chr_name._posx, y: chr_name._posy }));
+    canvas.text(jviz.object.extend(this._chromosomes.name.text, { text: chr.name, x: chr_name._posx, y: chr_name._posy }));
 
     //Check if has centromere
     if(chr._centromere !== true){ continue; }
@@ -306,13 +306,13 @@ jviz_karyoviewer.__chromosomes_draw = function()
     var chr_cent = this._chromosomes.centromere.list[i];
 
     //Clear the centromere region
-    canvas.Clear({ x: chr_cent._posx, y: chr_cent._posy, width: chr_cent._width, height: chr_cent._height });
+    canvas.clear({ x: chr_cent._posx, y: chr_cent._posy, width: chr_cent._width, height: chr_cent._height });
 
     //Draw the centromere lines
-    canvas.Line(chr_cent._points);
+    canvas.line(chr_cent._points);
 
     //Fill the centromere
-    canvas.Fill({ color: this._chromosomes.color, opacity: this._chromosomes.centromere.opacity });
+    canvas.fill({ color: this._chromosomes.color, opacity: this._chromosomes.centromere.opacity });
   }
 
   //Continue
