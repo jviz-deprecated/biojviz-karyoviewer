@@ -28,7 +28,7 @@ jviz_karyoviewer.__over_chromosome = function(x, y)
     if(x < this._chromosomes.list[i]._posx){ return false; }
 
     //Check the y coordinate
-    if(y < this._chromosomes.list[i]._posy){ return false; }
+    if(y < this._chromosomes.list[i]._posy){ continue; }
 
     //Check the x coordinate
     if(this._chromosomes.list[i]._posx + this._chromosomes.list[i]._width < x){ continue; }
