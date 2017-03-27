@@ -68,4 +68,63 @@ jviz_karyoviewer.__block_resize = function()
   return this;
 };
 
+//Draw the block over
+jviz_karyoviewer.__block_draw = function()
+{
+  //Check for no block to draw
+  if(this._block.actual === this._over.block.actual){ return; }
+
+  //Save this block
+  this._block.actual = this._over.block.actual;
+
+  //Get the canvas
+  var canvas = this.$.canvas.get_layers()[this._block.layer];
+
+  //Clear the block
+  canvas.clear();
+
+  //Check for no block to draw
+  if(this._block.actual === false){ return; }
+
+  //Check if is landscape
+  if(this.is_landscape() === true)
+  {
+    //Get the block position x for landscape
+    var block_posx = this._block.offset;
+
+    //Get the block position y for landscape
+    var block_posy = this._block.offset + this._block.actual * height;
+  }
+  else
+  {
+    //Get the block position x for portrait
+    var block_posx = this._block.offset + this._block.actual * this._block.width;
+
+    //Get the block position y for portrait
+    var block_posy = this._block.offset;
+  }
+
+  //Get the block width
+  var block_width = this._block.width - this._block.offset * 2;
+
+  //Get the block height
+  var block_height = this._block.height - this._block.offset * 2;
+
+  //Draw the rectangle block
+  canvas.rect({ x: block_posx, y: block_posy, width: block_width, height: block_height, radius: this._block.radius });
+
+  //Fill the block
+  canvas.fill({ color: this._block.color, opacity: this._block.opacity });
+
+  //Continue
+  return;
+};
+
+//Clear the block
+jviz_karyoviewer.__block_clear = function()
+{
+  //Cleat the block layer
+  this.$.canvas.get_layers()[this._block.layer].clear();
+};
+
 </script>
