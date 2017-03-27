@@ -103,17 +103,17 @@ jviz_karyoviewer.created = function()
   this._features.counter = {};
   this._features.counter.list = []; //Features counter
   this._features.counter.opacity = 1.0; //Features counter opacity
-  //this._features.counter.visible = (typeof opt.features.count === 'boolean') ? opt.features.count : true; //Features counter is visible
+  this._features.counter.visible = true; //Features counter is visible
   this._features.counter.margin = 3; //Counter margin
 
   //Features label
   this._label = {};
   this._label.layer = 3; //Features name layer
-  //this._label.offset = (typeof opt.label.offset === 'number') ? Math.abs(opt.label.offset) : 3; //Features label offset
+  this._label.offset = 5; //Features label offset
   this._label.position = 0; //Actual feature label position
   this._label.features = []; //Actual features list
   this._label.active = false; //Label is active
-  //this._label.visible = (typeof opt.label.visible === 'boolean') ? opt.label.visible : true; //Label is visible
+  this._label.visible = true; //Label is visible
   this._label.chromosome = ''; //Actual label chromosome
 
   //Features label tooltip
