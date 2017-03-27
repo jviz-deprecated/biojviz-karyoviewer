@@ -32,6 +32,12 @@ jviz_karyoviewer.created = function()
   this._block.draw = { width: 0, height: 0 }; //Block draw zone
   this._block.margin = { top: 30, bottom: 30, left: 0, right: 0 }; //Block margins
   this._block.resized = false; //Block is resized
+  this._block.actual = false; //Actual displayed block
+  this._block.offset = 5; //Block draw offset
+  this._block.radius = 5; //Block radius
+  this._block.color = jviz.colors('white'); //Block color
+  this._block.opacity = 0.5; //Block opacity
+  this._block.layer = 0; //Canvas layer
   
   //Block default values
   this._block.default = {};
