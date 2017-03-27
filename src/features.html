@@ -189,10 +189,10 @@ jviz_karyoviewer.__features_resize = function()
     this._features.counter.list[chr.name].move(counter);
 
     //Set the tooltip position
-    this._features.counter.list[chr.name].position(counter.position);
+    this._features.counter.list[chr.name].set_position(counter.position);
 
     //Set the number of features
-    this._features.counter.list[chr.name].text(features.length + '');
+    this._features.counter.list[chr.name].set_text(features.length + '');
   }
 
   //Set features resized
