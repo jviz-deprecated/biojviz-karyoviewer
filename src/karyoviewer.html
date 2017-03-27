@@ -32,12 +32,6 @@ jviz_karyoviewer.created = function()
   this._block.draw = { width: 0, height: 0 }; //Block draw zone
   this._block.margin = { top: 30, bottom: 30, left: 0, right: 0 }; //Block margins
   this._block.resized = false; //Block is resized
-  this._block.actual = false; //Actual displayed block
-  this._block.offset = 5; //Block draw offset
-  this._block.radius = 5; //Block radius
-  this._block.color = jviz.colors('white'); //Block color
-  this._block.opacity = 0.5; //Block opacity
-  this._block.layer = 0; //Canvas layer
   
   //Block default values
   this._block.default = {};
@@ -96,6 +90,16 @@ jviz_karyoviewer.created = function()
   this._chromosomes.centromere = {};
   this._chromosomes.centromere.list = []; //List of centromere positions
   this._chromosomes.centromere.opacity = 0.9; //Centromere opacity
+
+  //Chromosomes shadow
+  this._shadow = {};
+  this._shadow.layer = 0; //Chromosomes shadow layer
+  this._shadow.color = jviz.colors('white'); //Chromosomes shadow color
+  this._shadow.active = true; //Chromosomes shadow active
+  this._shadow.offset = 5; //Chromosomes shadow offset
+  this._shadow.radius = 5; //Chromosomes shadow radius
+  this._shadow.opacity = 0.7; //Chromosomes shadow opacity
+  this._shadow.actual = false; //Actual chromosome with shadow
 
   //Features object
   this._features = {};
