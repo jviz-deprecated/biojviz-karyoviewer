@@ -43,14 +43,14 @@ jviz_karyoviewer.__event_resize = function()
   //Set the canvas width
   //this._canvas.el.width(this._width);
 
-  //Resize the canvas
-  this._canvas.el.resize();
+  //Resize the canvas element
+  this.$.canvas.resize();
 
   //Save the full width
-  this._width = this._canvas.el.width();
+  this._width = jviz.dom.width(this.$.canvas);
 
   //Save the full height
-  //this._height = this._canvas.el.height();
+  //this._height = jviz.dom.height(this.$.canvas);
 
   //Set to resize the block object
   this._block.resized = false;
