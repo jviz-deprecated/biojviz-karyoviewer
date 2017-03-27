@@ -57,14 +57,26 @@ jviz_karyoviewer.__event_down = function(x, y)
     return this.__label_click(x, y);
   }
 
+  /*
   //Check for no chromosome
-  if(this._over.chromosome.actual === false){ return; }
+  if(this._over.chromosome.actual !== false){ return; }
 
   //Get the actual chromosome
   var chr = this._chromosomes.list[this._over.chromosome.actual];
 
   //Emit the click on a chromosome
   return this._events.emit('click:chromosome', chr.name, this._over.chromosome.actual);
+  */
+
+  //Check for chromosome
+  if(this._over.block.actual !== false)
+  {
+    //Get the actual chromosome
+    var chr = this._chromosomes.list[this._over.block.actual];
+
+    //Emit the click on a chromosome
+    return this._events.emit('click:chromosome', chr.name, this._over.block.actual);
+  }
 };
 
 //Move event
