@@ -148,13 +148,13 @@ jviz_karyoviewer.ready = function()
   var self = this;
 
   //Add the mouse down event
-  jviz.commons.mouse.down(this.$.canvas, function(e, x, y){ return self.__event_down(x, y); });
+  jviz.dom.mouse_down(this.$.canvas, function(e, x, y){ return self.__event_down(x, y); });
 
   //Add the mouse move event
-  jviz.commons.mouse.move(this.$.canvas, function(e, x, y){ return self.__event_move(x, y); });
+  jviz.dom.mouse_move(this.$.canvas, function(e, x, y){ return self.__event_move(x, y); });
 
   //Add the mouse up event
-  jviz.commons.mouse.up(this.$.canvas, function(e, x, y){ return self.__event_up(x, y); });
+  jviz.dom.mouse_up(this.$.canvas, function(e, x, y){ return self.__event_up(x, y); });
 
   //Add the resize event
   jviz.dom.resize(function()
