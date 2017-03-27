@@ -15,13 +15,13 @@ jviz_karyoviewer.options = function(opt)
   if(typeof opt.shadow === 'object')
   {
     //Check the visible option
-    if(typeof opt.shadow.active === 'boolean'){ this._shadow.active = opt.shadow.active; }
+    if(typeof opt.shadow.visible === 'boolean'){ this._shadow.visible = opt.shadow.visible; }
 
     //Check the color option
     if(typeof opt.shadow.color === 'string'){ this._shadow.color = opt.shadow.color; }
 
     //Check the opacity option
-    if(typeof opt.shadow.opacity === 'number'){this._shadow.opacity = opt.shadow.opacity; } 
+    if(typeof opt.shadow.opacity === 'number'){this._shadow.opacity = opt.shadow.opacity; }
   }
 };
 
