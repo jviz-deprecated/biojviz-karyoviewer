@@ -13,6 +13,7 @@ jviz_karyoviewer.properties = {};
 jviz_karyoviewer.properties.karyoviewerWidth = { type: String, reflectToAttribute: true, value: '100%', observer: 'update_width' };
 jviz_karyoviewer.properties.karyoviewerHeight = { type: String, reflectToAttribute: true, value: '200px', observer: 'update_height' };
 jviz_karyoviewer.properties.karyoviewerTitle = { type: String, reflectToAttribute: true };
+jviz_karyoviewer.properties.karyoviewerDetail = { type: String, reflectToAttribute: true };
 jviz_karyoviewer.properties.karyoviewerOrientation = { type: String, reflectToAttribute: true, value: 'portrait', observer: 'update_orientation' };
 
 //Created 
@@ -178,5 +179,16 @@ jviz_karyoviewer.ready = function()
   this.update_orientation(this.karyoviewerOrientation);
 };
 
-//
+//Set the karyoviewer title
+jviz_karyoviewer.set_title = function(value){ this.karyoviewerTitle = value; };
+
+//Get the karyoviewer title
+jviz_karyoviewer.get_title = function(){ return this.karyoviewerTitle; };
+
+//Set the karyoviewer detail
+jviz_karyoviewer.set_detail = function(value){ this.karyoviewerDetail = value; };
+
+//Get the karyoviewer detail
+jviz_karyoviewer.get_detail = function(){ return this.karyoviewerDetail; };
+
 </script>
