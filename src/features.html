@@ -33,8 +33,8 @@ jviz_karyoviewer.set_features = function(list)
   for(var i = 0; i < list.length; i++)
   {
     //Clone the feature
-    //var feature = Object.assign({}, list[i]);
-    var feature = list[i];
+    var feature = Object.assign({}, list[i]);
+    //var feature = list[i];
 
     //Check the chromosome
     if(typeof feature.chromosome !== 'string'){ console.error('Undefined chromosome on feature ' + i); continue; }
@@ -112,10 +112,10 @@ jviz_karyoviewer.__features_resize = function()
     if(typeof features === 'undefined'){ continue; }
 
     //Red all features
-    for(var j in features)
+    for(var j = 0; j < features.length; j++)
     {
       //Get the feature
-      var feature = this._features.list[j];
+      var feature = this._features.list[features[j]];
 
       //Check for landscape
       if(this.is_landscape() === true)
@@ -153,7 +153,7 @@ jviz_karyoviewer.__features_resize = function()
       feature._chromosome = i;
 
       //Save the feature object
-      this._features.list[j] = feature;
+      this._features.list[features[j]] = feature;
     }
 
     //Initialize the counter positions object
@@ -221,10 +221,10 @@ jviz_karyoviewer.__features_draw = function()
     if(typeof features !== 'object'){ continue; }
 
     //Red all features
-    for(var j in features)
+    for(var j = 0; j < features.length; j++)
     {
       //Get this feature
-      var feature = this._features.list[j];
+      var feature = this._features.list[features[j]];
 
       //Draw the feature
       canvas.rect({ x: feature._posx, y: feature._posy, width: feature._width, height: feature._height });
