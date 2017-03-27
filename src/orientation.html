@@ -8,6 +8,16 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 //Manage the orientation
 jviz_karyoviewer.set_orientation = function(value)
 {
+  //Update the orientation value
+  this.karyoviewerOrientation = value;
+};
+
+//Get the actual orientation value 
+jviz_karyoviewer.get_orientation = function(){ return this._orientation.value; };
+
+//Update the orientation value
+jviz_karyoviewer.update_orientation = function(value)
+{
   //convert to lower case
   value = value.toLowerCase();
 
@@ -28,13 +38,7 @@ jviz_karyoviewer.set_orientation = function(value)
     //Set the label tooltip position
     this._label.tooltip.el.position('right');
   }
-
-  //Continue
-  return this;
 };
-
-//Get the actual orientation value 
-jviz_karyoviewer.get_orientation = function(){ return this._orientation.value; };
 
 //Check if is landscape
 jviz_karyoviewer.is_landscape = function()
