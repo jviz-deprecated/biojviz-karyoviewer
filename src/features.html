@@ -205,8 +205,8 @@ jviz_karyoviewer.__features_resize = function()
 //Draw the features
 jviz_karyoviewer.__features_draw = function()
 {
-  //Get the canvas
-  var canvas = this._canvas.el.layer(this._features.layer);
+  //Get the canvas layer
+  var canvas = this.$.canvas.get_layers()[this._features.layer];
 
   //Read all the chromosomes
   for(var i = 0; i < this._chromosomes.list.length; i++)
@@ -227,10 +227,10 @@ jviz_karyoviewer.__features_draw = function()
       var feature = this._features.list[j];
 
       //Draw the feature
-      canvas.Rect({ x: feature._posx, y: feature._posy, width: feature._width, height: feature._height });
+      canvas.rect({ x: feature._posx, y: feature._posy, width: feature._width, height: feature._height });
 
       //feature fill
-      canvas.Fill({ color: feature._color, opacity: this._features.opacity });
+      canvas.fill({ color: feature._color, opacity: this._features.opacity });
     }
 
     //Check for drawing the features counter
