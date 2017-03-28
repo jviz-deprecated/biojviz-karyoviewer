@@ -63,7 +63,15 @@ jviz_karyoviewer.__label_draw = function(x, y)
   var self = this;
 
   //Get the features names
-  var names = this._label.features.map(function(el){ return el.name; });
+  //var names = this._label.features.map(function(el){ return el.name; });
+  var names = this._label.features.map(function(el, index)
+  {
+    //Div contnet
+    var div = '<' + 'div style="">' + el.name + '</' + 'div>';
+
+    //Return the element
+    return div;
+  });
 
   /*
   //Add the features names
@@ -83,7 +91,7 @@ jviz_karyoviewer.__label_draw = function(x, y)
   this.$.tooltip.show();
 
   //Set the tooltip content
-  this.$.tooltip.set_content(names.join('<br>'));
+  this.$.tooltip.set_content(names.join(''));
 
   //Set the tooltip coordinates
   this.$.tooltip.move(coordinates.posx, coordinates.posy - this._label.offset);
@@ -95,7 +103,14 @@ jviz_karyoviewer.__label_draw = function(x, y)
   this._label.active = true;
 
   //Save the label chromosome
-  //this._label.chromosome = this._over.chromosome.actual;
+  this._label.chromosome = this._over.chromosome.actual;
+
+  //Add the events
+  Array.prototype.slice.call(this.$.tooltip.$.box.getElementsByTagName('div')).forEach(function(el, index)
+  {
+    //Add the onclick event
+    jviz.dom.mouse_down(el, function(){ return self.__label_feature(index); });
+  });
 
   /*
   //Check the orientation
@@ -143,10 +158,13 @@ jviz_karyoviewer.__label_click = function(x, y)
   if(this._label.features.length === 1)
   {
     //Get the feature
-    var feature = this._label.features[0];
+    //var feature = this._label.features[0];
 
     //Emit the event and exit
-    return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
+    //return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
+
+    //Emit the event
+    return this.__label_feature(0);
   }
 
   //Check if has clicked on the label tooltip
@@ -165,14 +183,27 @@ jviz_karyoviewer.__label_click = function(x, y)
     if(this._label.over.posy + this._label.tooltip.el._rectangle.margin + (i + 1) * features_height < y){ continue; }
 
     //Get the feature
-    var feature = this._label.features[i];
+    //var feature = this._label.features[i];
 
     //Emit the click event and exit
-    return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
+    //return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
+
+    //Emit the event for this feature and exit
+    return this.__label_feature(i);
   }
 
   //Exit
   return;
+};
+
+//Open a feature
+jviz_karyoviewer.__label_feature = function(index)
+{
+  //Get the feature
+  var feature = this._label.features[index];
+
+  //Emit the event and exit
+  return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
 };
 
 //Clear the label
