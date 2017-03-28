@@ -65,6 +65,7 @@ jviz_karyoviewer.__label_draw = function(x, y)
   //Get the features names
   var names = this._label.features.map(function(el){ return el.name; });
 
+  /*
   //Add the features names
   this._label.tooltip.el.set_text(names);
 
@@ -76,6 +77,19 @@ jviz_karyoviewer.__label_draw = function(x, y)
 
   //Draw the tooltip
   this._label.tooltip.el.draw(this.$.canvas.get_layers()[this._label.layer]);
+  */
+
+  //Show the tooltip
+  this.$.tooltip.show();
+
+  //Set the tooltip content
+  this.$.tooltip.set_content(names.join('<br>'));
+
+  //Set the tooltip coordinates
+  this.$.tooltip.move(coordinates.posx, coordinates.posy - this._label.offset);
+
+  //Set the tooltip color
+  this.$.tooltip.set_color('red');
 
   //Set label active as true
   this._label.active = true;
@@ -83,6 +97,7 @@ jviz_karyoviewer.__label_draw = function(x, y)
   //Save the label chromosome
   //this._label.chromosome = this._over.chromosome.actual;
 
+  /*
   //Check the orientation
   if(this.is_landscape() === true)
   {
@@ -112,6 +127,7 @@ jviz_karyoviewer.__label_draw = function(x, y)
     //Add the label over position y
     this._label.over.posy = this._label.tooltip.el._rectangle.posy;
   }
+  */
 
   //Set the cursor
   jviz.cursor.set('pointer');
@@ -163,16 +179,16 @@ jviz_karyoviewer.__label_click = function(x, y)
 jviz_karyoviewer.__label_clear = function()
 {
   //Clear the canvas layer
-  this.$.canvas.get_layers()[this._label.layer].clear();
+  //this.$.canvas.get_layers()[this._label.layer].clear();
+
+  //Hide the tooltip
+  this.$.tooltip.hide();
 
   //Set label as inactive
   this._label.active = false;
 
   //Reset the cursor
   jviz.cursor.remove('pointer');
-
-  //Continue
-  return this;
 };
 
 </script>
