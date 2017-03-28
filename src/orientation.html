@@ -31,12 +31,14 @@ jviz_karyoviewer.update_orientation = function(value)
   if(this.is_landscape() === true)
   {
     //Set the label tooltip position
-    this._label.tooltip.el.set_position('bottom');
+    //this._label.tooltip.el.set_position('bottom');
+    this.$.tooltip.set_position('bottom');
   }
   else
   {
     //Set the label tooltip position
-    this._label.tooltip.el.set_position('right');
+    //this._label.tooltip.el.set_position('right');
+    this.$.tooltip.set_position('right');
   }
 
   //Draw
