@@ -10,6 +10,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 <link rel="import" href="../jviz-styles/jviz-styles.html">
 <link rel="import" href="../jviz-panel/jviz-panel.html">
 <link rel="import" href="../jviz-canvas/jviz-canvas.html">
+<link rel="import" href="../jviz-tooltip/jviz-tooltip.html">
 
 <!-- Karyoviewer module -->
 <dom-module id="jviz-karyoviewer">
@@ -21,7 +22,10 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     <!-- Karyoviewer panel -->
     <jviz-panel panel-title="{{ karyoviewerTitle }}" panel-detail="{{ karyoviewerDetail }}">
       <jviz-panel-head></jviz-panel-head>
-      <jviz-panel-body>
+      <jviz-panel-body style="position:relative;">
+        <!-- Tooltip element -->
+        <jviz-tooltip id="tooltip" tooltip-hide></jviz-tooltip>
+        <!-- Multicanvas -->
         <jviz-canvas id="canvas"></jviz-canvas>
       </jviz-panel-body>
     </jviz-panel>
