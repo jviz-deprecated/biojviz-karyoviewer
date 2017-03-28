@@ -128,7 +128,10 @@ jviz_karyoviewer.__over_label = function(x, y)
   if(this._label.active === false){ return false; }
 
   //Check if is over the tooltip rectangle
-  if(this.__over_rect(this._label.over, x, y) === true){ return true; }
+  //if(this.__over_rect(this._label.over, x, y) === true){ return true; }
+
+  //Check if is over the tooltip
+  if(this.$.tooltip.is_over() === true){ return true; }
 
   //Check if is over a chromosome
   if(this._over.chromosome.actual === false){ return false; }
