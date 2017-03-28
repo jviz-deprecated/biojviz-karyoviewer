@@ -11,6 +11,9 @@ jviz_karyoviewer.__shadow_draw = function()
   //Check if shadow is visible
   if(this._shadow.visible !== true){ return; }
 
+  //Check if the label is active
+  if(this._label.active === true){ return; }
+
   //Check for no block to draw
   if(this._shadow.actual === this._over.block.actual){ return; }
 
