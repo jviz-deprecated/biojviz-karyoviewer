@@ -43,7 +43,7 @@ jviz_karyoviewer.__label_draw = function(x, y)
     coordinates.posx = feature._posx;
 
     //Set the y coordinate for landscape orientation
-    coordinates.posy = feature._posy + feature._height + this._label.tooltip.margin;
+    coordinates.posy = feature._posy + feature._height;
 
     //Save the label position
     this._label.position = x;
@@ -51,7 +51,7 @@ jviz_karyoviewer.__label_draw = function(x, y)
   else
   {
     //Set the x coordinate for portrait orientation
-    coordinates.posx = feature._posx + feature._width + this._label.tooltip.margin;
+    coordinates.posx = feature._posx + feature._width;
 
     //Set the y coordinate for protrait orientation
     coordinates.posy = feature._posy + feature._height / 2;
@@ -95,7 +95,7 @@ jviz_karyoviewer.__label_draw = function(x, y)
   this.$.tooltip.set_content(names.join(''));
 
   //Set the tooltip coordinates
-  this.$.tooltip.move(coordinates.posx, coordinates.posy - this._label.tooltip.margin);
+  this.$.tooltip.move(coordinates.posx, coordinates.posy);
 
   //Set the tooltip color
   this.$.tooltip.set_color('red');
