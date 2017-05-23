@@ -4,39 +4,34 @@ Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
 The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
 -->
 <script>
+  //Draw
+  jviz_karyoviewer.draw = function()
+  {
+    //Set panel loading as true
+    //if(this._panel.visible){ this._panel.el.loading(true); }
 
-//Draw
-jviz_karyoviewer.draw = function()
-{
-  //Set panel loading as true
-  //if(this._panel.visible){ this._panel.el.loading(true); }
+    //Check if block is resized
+    if(this._block.resized === false){ this._block_resize(); }
 
-  //Check if block is resized
-  if(this._block.resized === false){ this.__block_resize(); }
+    //Check for chromosomes data not resized
+    if(this._chromosomes.resized === false){ this._chromosomes_resize(); }
 
-  //Check for chromosomes data not resized
-  if(this._chromosomes.resized === false){ this.__chromosomes_resize(); }
+    //Check for features data no resized
+    if(this._features.resized === false){ this._features_resize(); }
 
-  //Check for features data no resized
-  if(this._features.resized === false){ this.__features_resize(); }
+    //Clear all layers
+    this.$.canvas.clear();
 
-  //Clear all layers
-  this.$.canvas.clear();
+    //Reset the label
+    this._label.active = false;
 
-  //Reset the label
-  this._label.active = false;
+    //Draw the chromosomes
+    this._chromosomes_draw();
 
-  //Draw the chromosomes
-  this.__chromosomes_draw();
+    //Draw the features
+    this._features_draw();
 
-  //Draw the features
-  this.__features_draw();
-
-  //Set panel loading as false
-  //if(this._panel.visible){ this._panel.el.loading(false); }
-
-  //Continue
-  return this;
-};
-
+    //Continue
+    return this;
+  };
 </script>
