@@ -4,73 +4,61 @@ Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
 The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
 -->
 <script>
-
-//Manage the orientation
-jviz_karyoviewer.set_orientation = function(value)
-{
   //Update the orientation value
-  this.karyoviewerOrientation = value;
-};
-
-//Get the actual orientation value 
-jviz_karyoviewer.get_orientation = function(){ return this._orientation.value; };
-
-//Update the orientation value
-jviz_karyoviewer.update_orientation = function(value)
-{
-  //convert to lower case
-  value = value.toLowerCase();
-
-  //Save the orientation
-  this._orientation.actual = (this._orientation.values.indexOf(value) === -1) ? this._orientation.default : value;
-
-  //Resize the canvas
-  this.__event_resize();
-
-  //Check the orientation
-  if(this.is_landscape() === true)
+  biojviz_karyoviewer._update_orientation = function(value)
   {
-    //Set the label tooltip position
-    //this._label.tooltip.el.set_position('bottom');
-    this.$.tooltip.set_position('bottom');
-  }
-  else
+    //convert to lower case
+    //value = value.toLowerCase();
+
+    //Save the orientation
+    //this._orientation.actual = (this._orientation.values.indexOf(value) === -1) ? this._orientation.default : value;
+
+    //Resize the canvas
+    this.__event_resize();
+
+    //Check the orientation
+    if(this.is_landscape() === true)
+    {
+      //Set the label tooltip position
+      //this._label.tooltip.el.set_position('bottom');
+      this.$.tooltip.set_position('bottom');
+    }
+    else
+    {
+      //Set the label tooltip position
+      //this._label.tooltip.el.set_position('right');
+      this.$.tooltip.set_position('right');
+    }
+
+    //Draw
+    this.draw();
+  };
+
+  //Check if is landscape
+  biojviz_karyoviewer.is_landscape = function()
   {
-    //Set the label tooltip position
-    //this._label.tooltip.el.set_position('right');
-    this.$.tooltip.set_position('right');
-  }
+    //Check if the actual orientation is landscape
+    return this.orientation.toLowerCase() === 'landscape';
+  };
 
-  //Draw
-  this.draw();
-};
-
-//Check if is landscape
-jviz_karyoviewer.is_landscape = function()
-{
-  //Check if the actual orientation is landscape
-  return this._orientation.actual === 'landscape';
-};
-
-//Set landscape orientation
-jviz_karyoviewer.set_landscape = function()
-{
   //Set landscape orientation
-  return this.set_orientation('landscape');
-};
+  biojviz_karyoviewer.set_landscape = function()
+  {
+    //Set landscape orientation
+    this.orientation = 'landscape';
+  };
 
-//Check if orientation is protrait
-jviz_karyoviewer.is_portrait = function()
-{
-  //Check if actual orientation is portrait
-  return this._orientation.actual === 'portrait';
-};
+  //Check if orientation is protrait
+  biojviz_karyoviewer.is_portrait = function()
+  {
+    //Check if actual orientation is portrait
+    return this.orientation.toLowerCase() === 'portrait';
+  };
 
-//Set portrait orientation
-jviz_karyoviewer.set_portrait = function()
-{
   //Set portrait orientation
-  return this.set_orientation('portrait');
-};
-
+  biojviz_karyoviewer.set_portrait = function()
+  {
+    //Set portrait orientation
+    this.orientation = 'portrait';
+  };
 </script>
