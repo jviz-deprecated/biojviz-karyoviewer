@@ -1,7 +1,7 @@
 {
-	"name": "biojviz-karyoviewer",
-	"description": "Biojviz Karyotype Viewer webcomponent",
-	"ignore": [ "**/.*", "node_modules", "bower_components", "build" ],
+  "name": "biojviz-karyoviewer",
+  "description": "Biojviz Karyotype Viewer webcomponent",
+  "ignore": [ "**/.*", "node_modules", "bower_components", "build" ],
   "dependencies":
   {
     "polymer": "Polymer/polymer#^1.4.0",
@@ -12,7 +12,7 @@
     "jviz-tooltip": "jviz/jviz-tooltip#dev",
     "biojviz": "jviz/biojviz#dev"
   },
-	"license": "MIT",
+  "license": "MIT",
   "authors": [ "Josemi Juanes <josemijuanes@gmail.com>" ],
   "keywords": [ "biojviz", "biojviz-components", "viewer", "karyotype", "bioinformatics" ]
 }
