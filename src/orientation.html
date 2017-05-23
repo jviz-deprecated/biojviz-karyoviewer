@@ -7,28 +7,11 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   //Update the orientation value
   biojviz_karyoviewer._update_orientation = function()
   {
-    //convert to lower case
-    //value = value.toLowerCase();
-
-    //Save the orientation
-    //this._orientation.actual = (this._orientation.values.indexOf(value) === -1) ? this._orientation.default : value;
-
-    //Resize the canvas
-    this.__event_resize();
+    //Resize the element
+    this.resize();
 
     //Check the orientation
-    if(this.is_landscape() === true)
-    {
-      //Set the label tooltip position
-      //this._label.tooltip.el.set_position('bottom');
-      this.$.tooltip.position = 'bottom';
-    }
-    else
-    {
-      //Set the label tooltip position
-      //this._label.tooltip.el.set_position('right');
-      this.$.tooltip.position = 'right';
-    }
+    this.$.tooltip.position = (this.orientation === 'landscape') ? 'bottom' : 'right';
 
     //Draw
     this.draw();
@@ -41,24 +24,10 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     return this.orientation.toLowerCase() === 'landscape';
   };
 
-  //Set landscape orientation
-  biojviz_karyoviewer.set_landscape = function()
-  {
-    //Set landscape orientation
-    this.orientation = 'landscape';
-  };
-
-  //Check if orientation is protrait
+  //Check if orientation is portrait
   biojviz_karyoviewer.is_portrait = function()
   {
     //Check if actual orientation is portrait
     return this.orientation.toLowerCase() === 'portrait';
-  };
-
-  //Set portrait orientation
-  biojviz_karyoviewer.set_portrait = function()
-  {
-    //Set portrait orientation
-    this.orientation = 'portrait';
   };
 </script>
