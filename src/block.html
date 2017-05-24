@@ -4,33 +4,6 @@ Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
 The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
 -->
 <script>
-  //Block configuration
-  biojviz_karyoviewer._block = {};
-  biojviz_karyoviewer._block.width = 0; //Block width
-  biojviz_karyoviewer._block.height = 0; //Block height
-  biojviz_karyoviewer._block.draw = { width: 0, height: 0 }; //Block draw zone
-  biojviz_karyoviewer._block.margin = { top: 30, bottom: 30, left: 0, right: 0 }; //Block margins
-  biojviz_karyoviewer._block.resized = false; //Block is resized
-
-  //Block default values
-  biojviz_karyoviewer._block.default = {};
-
-  //Default values for portrait
-  biojviz_karyoviewer._block.default.portrait = {};
-  biojviz_karyoviewer._block.default.portrait.draw_width = 15; //Default portrait draw width
-  biojviz_karyoviewer._block.default.portrait.draw_height = 70; //Default portrait draw height
-  biojviz_karyoviewer._block.default.portrait.margin_top = 30; //Default portrait margin top
-  biojviz_karyoviewer._block.default.portrait.margin_bottom = 30; //Default portrait margin bottom
-
-  //Default values for landscape
-  biojviz_karyoviewer._block.default.landscape = {};
-  biojviz_karyoviewer._block.default.landscape.draw_width = 0; //Default landscape draw width
-  biojviz_karyoviewer._block.default.landscape.draw_height = 35; //Default landscape draw height
-  biojviz_karyoviewer._block.default.landscape.margin_top = 30; //Default landscape margin top
-  biojviz_karyoviewer._block.default.landscape.margin_bottom = 30; //Default landscape margin bottom
-  biojviz_karyoviewer._block.default.landscape.margin_left = 50; //Default landscape margin left
-  biojviz_karyoviewer._block.default.landscape.margin_right = 50; //Default landscape margin right
-
   //Resize the block object
   biojviz_karyoviewer._block_resize = function()
   {
