@@ -67,7 +67,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
       var chr = this._chromosomes.list[this._over.block.actual];
 
       //Emit the click on a chromosome
-      //return this._events.emit('click:chromosome', chr.name, this._over.block.actual);
+      this.fire('clicked-chromosome', { name: chr.name, index: this._over.block.actual });
     }
   };
 
