@@ -16,8 +16,11 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
       //Get the default values for landscape
       var def = this._block.default.landscape;
 
+      //Get the default margin value
+      var margin = (this._height - def.draw_height * num) / (2 * num);
+
       //Set the margins
-      this._block.margin = { top: def.margin_top, bottom: def.margin_bottom, left: def.margin_left, right: def.margin_right };
+      this._block.margin = { top: margin, bottom: margin, left: def.margin_left, right: def.margin_right };
 
       //Get the block draw width
       this._block.draw.width = this._width - this._block.margin.left - this._block.margin.right;
@@ -32,20 +35,17 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
       //Get the default values for portrait
       var def = this._block.default.portrait;
 
+      //Get the default margin value
+      var margin = (this._width - def.draw_width * num) / (2 * num);
+
       //Set the margins
-      this._block.margin = { top: def.margin_top, bottom: def.margin_bottom };
-
-      //Set the margin left
-      this._block.margin.left = (this._width - def.draw_width * num) / (2 * num);
-
-      //Set the margin right
-      this._block.margin.right = (this._width - def.draw_width * num) / (2 * num);
+      this._block.margin = { top: def.margin_top, bottom: def.margin_bottom, left: margin, right: margin };
 
       //Get the block draw width
       this._block.draw.width = def.draw_width;
 
       //Get the block draw height
-      this._block.draw.height = def.draw_height;
+      this._block.draw.height = this._height - this._block.margin.top - this.block.margin.bottom;
     }
 
     //Get the block width
