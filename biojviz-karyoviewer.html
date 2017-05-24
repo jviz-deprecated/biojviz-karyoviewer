@@ -1,0 +1,194 @@
+<!--
+@license
+Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
+The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
+-->
+
+<!-- Import components -->
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../jviz/jviz.html">
+<link rel="import" href="../jviz-styles/jviz-styles.html">
+<link rel="import" href="../jviz-canvas/jviz-canvas.html">
+<link rel="import" href="../jviz-tooltip/jviz-tooltip.html">
+
+<!-- Import biojviz elements -->
+<link rel="import" href="../biojviz/biojviz.html">
+
+<!-- Karyoviewer module -->
+<dom-module id="biojviz-karyoviewer">
+  <template>
+    <style>
+      :host
+      {
+        display: block;
+      }
+    </style>
+    <!-- Tooltip element -->
+    <jviz-tooltip id="tooltip"></jviz-tooltip>
+    <!-- Multicanvas -->
+    <jviz-canvas id="canvas" layers="4"></jviz-canvas>
+  </template>
+</dom-module>
+
+<!-- Karyoviewer logic -->
+<script>
+  //Initialize the karyoviewer element
+  var biojviz_karyoviewer = { is: 'biojviz-karyoviewer' };
+
+  //Initialize the properties
+  biojviz_karyoviewer.properties = {};
+  biojviz_karyoviewer.properties._width = { type: Number, value: 0 };
+  biojviz_karyoviewer.properties._height = { type: Number, value: 0 };
+  biojviz_karyoviewer.properties._resized_chromosomes = { type: Boolean, value: false };
+  biojviz_karyoviewer.properties._resized_features = { type: Boolean, value: false };
+
+  //Public attributes
+  biojviz_karyoviewer.properties.width = { type: String, reflectToAttribute: true, value: '100%', observer: '_update_width' };
+  biojviz_karyoviewer.properties.height = { type: String, reflectToAttribute: true, value: '200px', observer: '_update_height' };
+  biojviz_karyoviewer.properties.orientation = {type: String, reflectToAttribute: true, value: 'portrait', observer: '_update_orientation' };
+
+  //Public properties
+  biojviz_karyoviewer.properties.chromosomes = { type: Array, value: [] };
+  biojviz_karyoviewer.properties.features = { type: Array, value: [] };
+
+  //Attached method
+  biojviz_karyoviewer.attached = function()
+  {
+    //Save this
+    var self = this;
+
+    //Set the canvas width
+    this.$.canvas.width = this.width;
+
+    //Set the canvas height
+    this.$.canvas.height = this.height;
+
+    //Set the number of layers
+    //this.$.canvas.layers = 4;
+
+    //Add the resize event
+    jviz.dom.resize(function()
+    {
+      //Resize the element
+      self.resize();
+
+      //Draw the chromosomes
+      self.draw();
+    });
+
+    //Resize the element
+    this.resize();
+
+    //Reload the element
+    this.reload();
+  };
+
+  //Resize method
+  biojviz_karyoviewer.resize = function()
+  {
+    //Resize the canvas element
+    this.$.canvas.resize();
+
+    //Save the full width
+    this._width = jviz.dom.width(this.$.canvas);
+
+    //Save the full height
+    //this._height = jviz.dom.height(this.$.canvas);
+
+    //Set to resize the block object
+    //this._block.resized = false;
+
+    //Set to resize the chromosomes data
+    this._resized_chromosomes = false;
+
+    //Set to resize the features data
+    this._resized_features = false;
+  };
+
+  //Draw the data
+  biojviz_karyoviewer.draw = function()
+  {
+    //Set panel loading as true
+    //if(this._panel.visible){ this._panel.el.loading(true); }
+
+    //Check if block is resized
+    //if(this._block.resized === false){ this._block_resize(); }
+
+    //Check for chromosomes data not resized
+    //if(this._resized_chromosomes === false){ this._chromosomes.resize(); }
+
+    //Check for features data no resized
+    //if(this._resized_features === false){ this._features.resize(); }
+
+    //Clear all layers
+    this.$.canvas.clear();
+
+    //Reset the label
+    //this._label.active = false;
+
+    //Draw the chromosomes
+    //this._chromosomes.draw();
+
+    //Draw the features
+    //this._features.draw();
+
+    //Continue
+    return this;
+  };
+
+  //Reload method
+  biojviz_karyoviewer.reload = function()
+  {
+    //Draw the data
+    this.draw();
+  };
+
+  //Reset method
+  biojviz_karyoviewer.reset = function()
+  {
+    //Reset the chromosomes
+    this.chromosomes = [];
+
+    //Reset the features
+    this.features = [];
+
+    //Reload the element
+    this.reload();
+  };
+
+  //Update the element width
+  biojviz_karyoviewer._update_width = function()
+  {
+    //Update the canvas width
+    this.$.canvas.width = this.width;
+
+    //Resize the element
+    this.resize();
+  };
+
+  //Update the element height
+  biojviz_karyoviewer._update_height = function()
+  {
+    //Update the canvas height
+    this.$.canvas.height = this.height;
+
+    //Resize the element
+    this.resize();
+  };
+
+  //Update the orientation value
+  biojviz_karyoviewer._update_orientation = function()
+  {
+    //Resize the element
+    this.resize();
+
+    //Check the orientation
+    this.$.tooltip.position = (this.orientation === 'landscape') ? 'bottom' : 'right';
+
+    //Draw
+    this.draw();
+  };
+
+  //Register the karyoviewer element
+  Polymer(biojviz_karyoviewer);
+</script>
