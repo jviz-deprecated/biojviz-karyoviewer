@@ -4,351 +4,319 @@ Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
 The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
 -->
 <script>
-
-//Get the chromosomes list
-jviz_karyoviewer.get_chromosomes = function(){ return this._chromosomes.list; };
-
-//Add a chromosomes list
-jviz_karyoviewer.set_chromosomes = function(list, isExample)
-{
-  //Check the list
-  if(typeof list === 'undefined'){ return this._chromosomes.list; }
-
-  //Check the is exemple option
-  if(typeof isExample !== 'boolean'){ var isExample = false; }
-
-  //Check for array
-  if(jviz.is.array(list) === false){ list = [ list ]; }
-
-  //Initialize the chromosomes list
-  this._chromosomes.list = [];
-
-  //Reset the centromere list
-  this._chromosomes.centromere.list = [];
-
-  //Reset the chromosomes name list
-  this._chromosomes.name.list = [];
-
-  //Reset the chromosomes max value
-  this._chromosomes.max = 0;
-
-  //Check the list length
-  if(list.length === 0){ return this.draw(); }
-
-  //Index counter
-  var index = 0;
-
-  //Read all the chromosomes on the list
-  for(var i = 0; i < list.length; i++)
+  //Add a chromosomes list
+  biojviz_karyoviewer._update_chromosomes = function(list)
   {
-    //Clone the chromosome object
-    //var chr = Object.assign({}, list[i]);
-    var chr = list[i];
+    //Check the list
+    if(typeof list === 'undefined'){ return this._chromosomes.list; }
 
-    //Check for undefined chromosome name
-    if(typeof chr.name === 'undefined'){ console.error('Undefined name at chromosome ' + i); continue; }
+    console.log('Update chromosomes');
 
-    //Check for undefined chromosome length
-    if(typeof chr.length === 'undefined'){ console.error('Undefined length at chromosome ' + i); continue; }
+    //Check for array
+    if(jviz.is.array(list) === false){ list = [ list ]; }
 
-    //Parse the chromosome name
-    chr.name = chr.name.toString();
+    //Initialize the chromosomes list
+    this._chromosomes.list = [];
 
-    //Parse the chromosome length
-    chr.length = parseInt(chr.length);
+    //Reset the centromere list
+    this._chromosomes.centromere.list = [];
 
-    //Add the draw definitions
-    chr = Object.assign(chr, { _posx: 0, _posy: 0, _width: 0, _height: 0, _index: index, _centromere: false });
+    //Reset the chromosomes name list
+    this._chromosomes.name.list = [];
 
-    //Check the max value
-    this._chromosomes.max = Math.max(this._chromosomes.max, chr.length);
+    //Reset the chromosomes max value
+    this._chromosomes.max = 0;
 
-    //Check for centromere
-    if(typeof chr.centromere_start !== 'undefined' && typeof chr.centromere_end !== 'undefined')
+    //Check the list length
+    if(list.length === 0){ return this.draw(); }
+
+    //Index counter
+    var index = 0;
+
+    //Read all the chromosomes on the list
+    for(var i = 0; i < list.length; i++)
     {
-      //Parse the centromere start position
-      chr.centromere_start = parseInt(chr.centromere_start);
+      //Clone the chromosome object
+      //var chr = Object.assign({}, list[i]);
+      var chr = list[i];
 
-      //Parse the centromere end position
-      chr.centromere_end = parseInt(chr.centromere_end);
+      //Check for undefined chromosome name
+      if(typeof chr.name === 'undefined'){ console.error('Undefined name at chromosome ' + i); continue; }
 
-      //Calculate the centromere length
-      chr.centromere_length = Math.abs(chr.centromere_end - chr.centromere_start);
+      //Check for undefined chromosome length
+      if(typeof chr.length === 'undefined'){ console.error('Undefined length at chromosome ' + i); continue; }
 
-      //Set that has centromere
-      chr._centromere = true;
+      //Parse the chromosome name
+      chr.name = chr.name.toString();
+
+      //Parse the chromosome length
+      chr.length = parseInt(chr.length);
+
+      //Add the draw definitions
+      chr = Object.assign(chr, { _posx: 0, _posy: 0, _width: 0, _height: 0, _index: index, _centromere: false });
+
+      //Check the max value
+      this._chromosomes.max = Math.max(this._chromosomes.max, chr.length);
+
+      //Check for centromere
+      if(typeof chr.centromere_start !== 'undefined' && typeof chr.centromere_end !== 'undefined')
+      {
+        //Parse the centromere start position
+        chr.centromere_start = parseInt(chr.centromere_start);
+
+        //Parse the centromere end position
+        chr.centromere_end = parseInt(chr.centromere_end);
+
+        //Calculate the centromere length
+        chr.centromere_length = Math.abs(chr.centromere_end - chr.centromere_start);
+
+        //Set that has centromere
+        chr._centromere = true;
+      }
+
+      //Save the chromosome object
+      this._chromosomes.list.push(chr);
+
+      //Save the chromosome name object
+      this._chromosomes.name.list.push({ _posx: 0, _posy: 0 });
+
+      //Save the centromere object
+      this._chromosomes.centromere.list.push({ _posx: 0, _posy: 0, _width: 0, _height: 0, _points: [] });
+
+      //Increment the index
+      index = index + 1;
     }
 
-    //Save the chromosome object
-    this._chromosomes.list.push(chr);
+    //Save the number of chromosomes
+    this._chromosomes.num = this._chromosomes.list.length;
 
-    //Save the chromosome name object
-    this._chromosomes.name.list.push({ _posx: 0, _posy: 0 });
+    //Set chromosomes data is not resized
+    this._chromosomes.resized = false;
 
-    //Save the centromere object
-    this._chromosomes.centromere.list.push({ _posx: 0, _posy: 0, _width: 0, _height: 0, _points: [] });
+    //Set blocks object not resized
+    this._block.resized = false;
 
-    //Increment the index
-    index = index + 1;
-  }
+    //Continue
+    return this;
+  };
 
-  //Save the number of chromosomes
-  this._chromosomes.num = this._chromosomes.list.length;
-
-  //Set chromosomes data is not resized
-  this._chromosomes.resized = false;
-
-  //Set blocks object not resized
-  this._block.resized = false;
-
-  //Continue
-  return this;
-};
-
-//Resize the chromosomes
-jviz_karyoviewer.__chromosomes_resize = function()
-{
-  //Get the draw info
-  var draw = this._block.draw;
-
-  //Get margins
-  var margin = this._block.margin;
-
-  //Draw all the chromosomes
-  for(var i = 0; i < this._chromosomes.list.length; i++)
+  //Resize the chromosomes
+  biojviz_karyoviewer._chromosomes_resize = function()
   {
-    //Get the chromosome info
-    var chr = this._chromosomes.list[i];
+    //Get the draw info
+    var draw = this._block.draw;
 
-    //Check for landscape orientation
-    if(this.is_landscape() === true)
+    //Get margins
+    var margin = this._block.margin;
+
+    //Draw all the chromosomes
+    for(var i = 0; i < this._chromosomes.list.length; i++)
     {
-      //Calculate the chromosome width for landscape orientation
-      chr._width = draw.width * (chr.length / this._chromosomes.max);
+      //Get the chromosome info
+      var chr = this._chromosomes.list[i];
 
-      //Calculate hte chromosome height for landscape orientation
-      chr._height = this._chromosomes.height;
+      //Check for landscape orientation
+      if(this.is_landscape() === true)
+      {
+        //Calculate the chromosome width for landscape orientation
+        chr._width = draw.width * (chr.length / this._chromosomes.max);
 
-      //Calculate the chromosome position x for landscape orientation
-      chr._posx = margin.left;
+        //Calculate hte chromosome height for landscape orientation
+        chr._height = this._chromosomes.height;
 
-      //Calculate the chromosome position y for landscape orientation
-      chr._posy = margin.top + i * this._block.height;
+        //Calculate the chromosome position x for landscape orientation
+        chr._posx = margin.left;
 
-      //Get the chromosome radius
-      chr._radius = this._chromosomes.radius.landscape;
+        //Calculate the chromosome position y for landscape orientation
+        chr._posy = margin.top + i * this._block.height;
+
+        //Get the chromosome radius
+        chr._radius = this._chromosomes.radius.landscape;
+      }
+
+      //Calculate for portrait
+      else
+      {
+        //Calculate the chromosome width for portrait orientation
+        chr._width = this._chromosomes.width;
+
+        //Calculate the chromosome height for portrait orientation
+        chr._height = draw.height * (chr.length / this._chromosomes.max);
+
+        //Calculate the chromosome position x for portrait orientation
+        chr._posx = margin.left + i * this._block.width;
+
+        //Calculate the chromosome position y for portrait orientation
+        chr._posy = margin.top + draw.height - chr._height;
+
+        //Get the chromosome radius
+        chr._radius = this._chromosomes.radius.portrait;
+      }
+
+      //Save the chromosome values
+      this._chromosomes.list[i] = chr;
+
+      //Get the chromosome name object
+      var chr_name = this._chromosomes.name.list[i];
+
+      //Calculate for landscape
+      if(this.is_landscape() === true)
+      {
+        //Calculate the name position x for landscape
+        chr_name._posx = margin.left / 2;
+
+        //Calculate the name position y for landscape
+        chr_name._posy = chr._posy + chr._height / 2 - this._chromosomes.name.margin;
+      }
+
+      //Calculate for portrait
+      else
+      {
+        //Calculate the name position x for portrait
+        chr_name._posx = chr._posx + chr._width / 2;
+
+        //Calculate the name position y for portrait
+        chr_name._posy = margin.top + draw.height + margin.bottom / 2 - this._chromosomes.name.margin;
+      }
+
+      //Save the name object
+      this._chromosomes.name.list[i] = chr_name;
+
+      //Check for centromere
+      if(chr._centromere === false){ continue; }
+
+      //Get the centromere object
+      var chr_cent = this._chromosomes.centromere.list[i];
+
+      //Check for landscape orientation
+      if(this.is_landscape() === true)
+      {
+        //Calculate the centromere width for landscape orientation
+        chr_cent._width = draw.width * chr.centromere_length / this._chromosomes.max;
+
+        //Calculate the centromere height for landscape orientation
+        chr_cent._height = this._chromosomes.height;
+
+        //Calculate the centromere position x for landscape orientation
+        chr_cent._posx = chr._posx + draw.width * chr.centromere_start / this._chromosomes.max;
+
+        //Calculate the centromere position y for landscape orientation
+        chr_cent._posy = chr._posy;
+      }
+
+      //Calculate for portrait orientation
+      else
+      {
+        //Calculate the centromere width for portrait orientation
+        chr_cent._width = this._chromosomes.width;
+
+        //Calculate the centromere height for portrait orientation
+        chr_cent._height = draw.height * chr.centromere_length / this._chromosomes.max;
+
+        //Calculate the centromere position x for portrait orientation
+        chr_cent._posx = chr._posx;
+
+        //Calculate the centromere position y for portrait orientation
+        chr_cent._posy = chr._posy + draw.height * chr.centromere_start / this._chromosomes.max;
+      }
+
+      //Reset the centromere points
+      chr_cent._points = [];
+
+      //Add the top point
+      chr_cent._points.push([chr_cent._posx, chr_cent._posy]);
+
+      //Add the middle point
+      chr_cent._points.push([chr_cent._posx + chr_cent._width / 2, chr_cent._posy + chr_cent._height / 2]);
+
+      //Add the end point
+      if(this.is_landscape() === true)
+      {
+        //Add the end point for landscape
+        chr_cent._points.push([chr_cent._posx + chr_cent._width, chr_cent._posy]);
+      }
+      else
+      {
+        //Add the end point for portrait
+        chr_cent._points.push([chr_cent._posx, chr_cent._posy + chr_cent._height]);
+      }
+
+      //Add the end right
+      chr_cent._points.push([chr_cent._posx + chr_cent._width, chr_cent._posy + chr_cent._height]);
+
+      //Add the middle right
+      chr_cent._points.push([chr_cent._posx + chr_cent._width / 2, chr_cent._posy + chr_cent._height / 2]);
+
+      //Add the top right
+      if(this.is_landscape() === true)
+      {
+        //Add the top right point for landscape
+        chr_cent._points.push([chr_cent._posx, chr_cent._posy + chr_cent._height]);
+      }
+      else
+      {
+        //Add the top right point for portrait
+        chr_cent._points.push([chr_cent._posx + chr_cent._width, chr_cent._posy]);
+      }
+
+      //Save the centromere object
+      this._chromosomes.centromere.list[i] = chr_cent;
     }
 
-    //Calculate for portrait
-    else
-    {
-      //Calculate the chromosome width for portrait orientation
-      chr._width = this._chromosomes.width;
+    //Set chromosomes data resized
+    this._chromosomes.resized = true;
 
-      //Calculate the chromosome height for portrait orientation
-      chr._height = draw.height * (chr.length / this._chromosomes.max);
+    //Resize the features
+    this._features.resized = false;
 
-      //Calculate the chromosome position x for portrait orientation
-      chr._posx = margin.left + i * this._block.width;
+    //Exit
+    return this;
+  };
 
-      //Calculate the chromosome position y for portrait orientation
-      chr._posy = margin.top + draw.height - chr._height;
-
-      //Get the chromosome radius
-      chr._radius = this._chromosomes.radius.portrait;
-    }
-
-    //Save the chromosome values
-    this._chromosomes.list[i] = chr;
-
-    //Get the chromosome name object
-    var chr_name = this._chromosomes.name.list[i];
-
-    //Calculate for landscape
-    if(this.is_landscape() === true)
-    {
-      //Calculate the name position x for landscape
-      chr_name._posx = margin.left / 2;
-
-      //Calculate the name position y for landscape
-      chr_name._posy = chr._posy + chr._height / 2 - this._chromosomes.name.margin;
-    }
-
-    //Calculate for portrait
-    else
-    {
-      //Calculate the name position x for portrait
-      chr_name._posx = chr._posx + chr._width / 2;
-
-      //Calculate the name position y for portrait
-      chr_name._posy = margin.top + draw.height + margin.bottom / 2 - this._chromosomes.name.margin;
-    }
-
-    //Save the name object
-    this._chromosomes.name.list[i] = chr_name;
-
-    //Check for centromere
-    if(chr._centromere === false){ continue; }
-
-    //Get the centromere object
-    var chr_cent = this._chromosomes.centromere.list[i];
-
-    //Check for landscape orientation
-    if(this.is_landscape() === true)
-    {
-      //Calculate the centromere width for landscape orientation
-      chr_cent._width = draw.width * chr.centromere_length / this._chromosomes.max;
-
-      //Calculate the centromere height for landscape orientation
-      chr_cent._height = this._chromosomes.height;
-
-      //Calculate the centromere position x for landscape orientation
-      chr_cent._posx = chr._posx + draw.width * chr.centromere_start / this._chromosomes.max;
-
-      //Calculate the centromere position y for landscape orientation
-      chr_cent._posy = chr._posy;
-    }
-
-    //Calculate for portrait orientation
-    else
-    {
-      //Calculate the centromere width for portrait orientation
-      chr_cent._width = this._chromosomes.width;
-
-      //Calculate the centromere height for portrait orientation
-      chr_cent._height = draw.height * chr.centromere_length / this._chromosomes.max;
-
-      //Calculate the centromere position x for portrait orientation
-      chr_cent._posx = chr._posx;
-
-      //Calculate the centromere position y for portrait orientation
-      chr_cent._posy = chr._posy + draw.height * chr.centromere_start / this._chromosomes.max;
-    }
-
-    //Reset the centromere points
-    chr_cent._points = [];
-
-    //Add the top point
-    chr_cent._points.push([chr_cent._posx, chr_cent._posy]);
-
-    //Add the middle point
-    chr_cent._points.push([chr_cent._posx + chr_cent._width / 2, chr_cent._posy + chr_cent._height / 2]);
-
-    //Add the end point
-    if(this.is_landscape() === true)
-    {
-      //Add the end point for landscape
-      chr_cent._points.push([chr_cent._posx + chr_cent._width, chr_cent._posy]);
-    }
-    else
-    {
-      //Add the end point for portrait
-      chr_cent._points.push([chr_cent._posx, chr_cent._posy + chr_cent._height]);
-    }
-
-    //Add the end right
-    chr_cent._points.push([chr_cent._posx + chr_cent._width, chr_cent._posy + chr_cent._height]);
-
-    //Add the middle right
-    chr_cent._points.push([chr_cent._posx + chr_cent._width / 2, chr_cent._posy + chr_cent._height / 2]);
-
-    //Add the top right
-    if(this.is_landscape() === true)
-    {
-      //Add the top right point for landscape
-      chr_cent._points.push([chr_cent._posx, chr_cent._posy + chr_cent._height]);
-    }
-    else
-    {
-      //Add the top right point for portrait
-      chr_cent._points.push([chr_cent._posx + chr_cent._width, chr_cent._posy]);
-    }
-
-    //Save the centromere object
-    this._chromosomes.centromere.list[i] = chr_cent;
-  }
-
-  //Set chromosomes data resized
-  this._chromosomes.resized = true;
-
-  //Exit
-  return this;
-};
-
-//Draw the chromosomes
-jviz_karyoviewer.__chromosomes_draw = function()
-{
-  //Get the chromosome layer
-  var canvas = this.$.canvas.get_layers()[this._chromosomes.layer];
-
-  //Draw all the chromosomes
-  for(var i = 0; i < this._chromosomes.list.length; i++)
+  //Draw the chromosomes
+  biojviz_karyoviewer._chromosomes_draw = function()
   {
-    //Get the chromosome info
-    var chr = this._chromosomes.list[i];
+    //Display in console
+    console.log('Draw ' + this._chromosomes.list.length + ' chromosomes');
 
-    //Draw the chromosome
-    canvas.rect({ x: chr._posx, y: chr._posy, width: chr._width, height: chr._height, radius: chr._radius });
+    //Get the chromosome layer
+    var canvas = new jviz.canvas(this.$.canvas.layer(this._chromosomes.layer));
 
-    //Set the chromosome fill
-    canvas.fill({ color: this._chromosomes.color, opacity: this._chromosomes.opacity });
+    //Draw all the chromosomes
+    for(var i = 0; i < this._chromosomes.list.length; i++)
+    {
+      //Get the chromosome info
+      var chr = this._chromosomes.list[i];
 
-    //Get the chromosome name info
-    var chr_name = this._chromosomes.name.list[i];
+      //Draw the chromosome
+      canvas.rect({ x: chr._posx, y: chr._posy, width: chr._width, height: chr._height, radius: chr._radius });
 
-    //Draw the name text
-    canvas.text(jviz.object.extend(this._chromosomes.name.text, { text: chr.name, x: chr_name._posx, y: chr_name._posy }));
+      //Set the chromosome fill
+      canvas.fill({ color: this._chromosomes.color, opacity: this._chromosomes.opacity });
 
-    //Check if has centromere
-    if(chr._centromere !== true){ continue; }
+      //Get the chromosome name info
+      var chr_name = this._chromosomes.name.list[i];
 
-    //Get the centromere object
-    var chr_cent = this._chromosomes.centromere.list[i];
+      //Draw the name text
+      canvas.text(jviz.object.extend(this._chromosomes.name.text, { text: chr.name, x: chr_name._posx, y: chr_name._posy }));
 
-    //Clear the centromere region
-    canvas.clear({ x: chr_cent._posx, y: chr_cent._posy, width: chr_cent._width, height: chr_cent._height });
+      //Check if has centromere
+      if(chr._centromere !== true){ continue; }
 
-    //Draw the centromere lines
-    canvas.line(chr_cent._points);
+      //Get the centromere object
+      var chr_cent = this._chromosomes.centromere.list[i];
 
-    //Fill the centromere
-    canvas.fill({ color: this._chromosomes.color, opacity: this._chromosomes.centromere.opacity });
-  }
+      //Clear the centromere region
+      canvas.clear({ x: chr_cent._posx, y: chr_cent._posy, width: chr_cent._width, height: chr_cent._height });
 
-  //Continue
-  return this;
-};
+      //Draw the centromere lines
+      canvas.line(chr_cent._points);
 
-//Update the chromosomes info
-jviz_karyoviewer.map_chromosomes = function(fn)
-{
-  //Check the function
-  if(typeof fn !== 'function'){ return this; }
+      //Fill the centromere
+      canvas.fill({ color: this._chromosomes.color, opacity: this._chromosomes.centromere.opacity });
+    }
 
-  //Read all the chromosomes objects
-  for(var i = 0; i < this._chromosomes.list.length; i++)
-  {
-    //Get the chromosome
-    var chr = this._chromosomes.list[i];
-
-    //Update the chromosome
-    var new_chr = fn(chr, i);
-
-    //Check the new chromosome
-    if(typeof new_chr !== 'object'){ continue; }
-
-    //Update the chromosome
-    this._chromosomes.list[i] = Object.assign(chr, new_chr);
-  }
-
-  //Set for resize the chromosomes
-  this._chromosomes.resized = false;
-
-  //Set for resize the features
-  this._features.resized = false;
-
-  //Return this
-  return this;
-};
-
+    //Continue
+    return this;
+  };
 </script>
