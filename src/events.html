@@ -4,114 +4,105 @@ Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
 The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
 -->
 <script>
-
-//Register events
-jviz_karyoviewer.on = function(name, listener)
-{
-  //Register the event
-  return this._events.add(name, listener);
-};
-
-//Resize event
-jviz_karyoviewer.__event_resize = function()
-{
-  //Set the canvas width
-  //this._canvas.el.width(this._width);
-
-  //Resize the canvas element
-  this.$.canvas.resize();
-
-  //Save the full width
-  this._width = jviz.dom.width(this.$.canvas);
-
-  //Save the full height
-  //this._height = jviz.dom.height(this.$.canvas);
-
-  //Set to resize the block object
-  this._block.resized = false;
-
-  //Set to resize the chromosomes data
-  this._chromosomes.resized = false;
-
-  //Set to resize the features data
-  this._features.resized = false;
-};
-
-//Leave event
-jviz_karyoviewer.__event_leave = function(x, y)
-{
-  //Reset the actual block
-  this._over.block.actual = false;
-
-  //Clear the shadow
-  //this.__shadow_clear();
-};
-
-//Click down event
-jviz_karyoviewer.__event_down = function(x, y)
-{
-  //Check if label is active
-  if(this._label.active === true && this._label.visible === true && this._features.clickable === true)
+  //Resize event
+  biojviz_karyoviewer._event_resize = function()
   {
-    //Check if user has clicked on a label
-    return this.__label_click(x, y);
-  }
+    //Set the canvas width
+    //this._canvas.el.width(this._width);
 
-  /*
-  //Check for no chromosome
-  if(this._over.chromosome.actual !== false){ return; }
+    //Resize the canvas element
+    this.$.canvas.resize();
 
-  //Get the actual chromosome
-  var chr = this._chromosomes.list[this._over.chromosome.actual];
+    //Save the full width
+    this._width = jviz.dom.width(this.$.canvas);
 
-  //Emit the click on a chromosome
-  return this._events.emit('click:chromosome', chr.name, this._over.chromosome.actual);
-  */
+    //Save the full height
+    //this._height = jviz.dom.height(this.$.canvas);
 
-  //Check for chromosome
-  if(this._over.block.actual !== false)
+    //Set to resize the block object
+    this._block.resized = false;
+
+    //Set to resize the chromosomes data
+    this._chromosomes.resized = false;
+
+    //Set to resize the features data
+    this._features.resized = false;
+  };
+
+  //Leave event
+  biojviz_karyoviewer._event_leave = function(x, y)
   {
+    //Reset the actual block
+    this._over.block.actual = false;
+
+    //Clear the shadow
+    //this._shadow_clear();
+  };
+
+  //Click down event
+  biojviz_karyoviewer._event_down = function(x, y)
+  {
+    //Check if label is active
+    if(this._label.active === true && this._label.visible === true && this._features.clickable === true)
+    {
+      //Check if user has clicked on a label
+      return this._label_click(x, y);
+    }
+
+    /*
+    //Check for no chromosome
+    if(this._over.chromosome.actual !== false){ return; }
+
     //Get the actual chromosome
-    var chr = this._chromosomes.list[this._over.block.actual];
+    var chr = this._chromosomes.list[this._over.chromosome.actual];
 
     //Emit the click on a chromosome
-    return this._events.emit('click:chromosome', chr.name, this._over.block.actual);
-  }
-};
+    return this._events.emit('click:chromosome', chr.name, this._over.chromosome.actual);
+    */
 
-//Move event
-jviz_karyoviewer.__event_move = function(x, y)
-{
-  //Check the move
-  if(this._over.move === false){ this._over.move = true; return; }
+    //Check for chromosome
+    if(this._over.block.actual !== false)
+    {
+      //Get the actual chromosome
+      var chr = this._chromosomes.list[this._over.block.actual];
 
-  //Change the move
-  this._over.move = false;
+      //Emit the click on a chromosome
+      //return this._events.emit('click:chromosome', chr.name, this._over.block.actual);
+    }
+  };
 
-  //Get the actual block
-  this._over.block.actual = this.__over_block(x, y);
+  //Move event
+  biojviz_karyoviewer._event_move = function(x, y)
+  {
+    //Check the move
+    if(this._over.move === false){ this._over.move = true; return; }
 
-  //Get the actual chromosome
-  this._over.chromosome.actual = this.__over_chromosome(x, y);
+    //Change the move
+    this._over.move = false;
 
-  //Draw the label
-  this.__label_draw(x, y);
+    //Get the actual block
+    this._over.block.actual = this._over_block(x, y);
 
-  //Draw the shadow
-  this.__shadow_draw();
+    //Get the actual chromosome
+    this._over.chromosome.actual = this._over_chromosome(x, y);
 
-  //Check the cursor
-  //if(this._over.chromosome.actual === false){ return jviz.cursor.remove('pointer'); }
-  //if(this._over.chromosome.actual === false){ return; }
+    //Draw the label
+    this._label_draw(x, y);
 
-  //Add the pointer cursor
-  //jviz.cursor.set('pointer');
-};
+    //Draw the shadow
+    this._shadow_draw();
 
-//Up event
-jviz_karyoviewer.__event_up = function(x, y)
-{
+    //Check the cursor
+    //if(this._over.chromosome.actual === false){ return jviz.cursor.remove('pointer'); }
+    //if(this._over.chromosome.actual === false){ return; }
 
-};
+    //Add the pointer cursor
+    //jviz.cursor.set('pointer');
+  };
 
+  //Up event
+  biojviz_karyoviewer._event_up = function(x, y)
+  {
+
+  };
 </script>
