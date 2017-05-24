@@ -41,7 +41,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 
   //Public attributes
   biojviz_karyoviewer.properties.width = { type: String, reflectToAttribute: true, value: '100%', observer: '_update_width' };
-  biojviz_karyoviewer.properties.height = { type: String, reflectToAttribute: true, value: '200px', observer: '_update_height' };
+  biojviz_karyoviewer.properties.height = { type: String, reflectToAttribute: true, value: '130px', observer: '_update_height' };
   biojviz_karyoviewer.properties.orientation = {type: String, reflectToAttribute: true, value: 'portrait', observer: '_update_orientation' };
 
   //Public properties
@@ -235,7 +235,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     this._width = jviz.dom.width(this.$.canvas);
 
     //Save the full height
-    //this._height = jviz.dom.height(this.$.canvas);
+    this._height = jviz.dom.height(this.$.canvas);
 
     //Set to resize the block object
     this._block.resized = false;
