@@ -109,7 +109,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     Array.prototype.slice.call(this.$.tooltip.$.box.getElementsByTagName('div')).forEach(function(el, index)
     {
       //Add the onclick event
-      jviz.dom.mouse_down(el, function(){ return self.__label_feature(index); });
+      jviz.dom.mouse_down(el, function(){ return self._label_feature(index); });
     });
   
     /*
@@ -203,7 +203,7 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     var feature = this._label.features[index];
   
     //Emit the event and exit
-    return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
+    //return this._events.emit('click:feature', feature.name, feature.start, feature.end, feature.index);
   };
   
   //Clear the label
