@@ -91,13 +91,13 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     this.$.tooltip.show();
   
     //Set the tooltip content
-    this.$.tooltip.set_content(names.join(''));
+    this.$.tooltip.content(names.join(''));
   
     //Set the tooltip coordinates
     this.$.tooltip.move(coordinates.posx, coordinates.posy);
   
     //Set the tooltip color
-    this.$.tooltip.set_color('red');
+    this.$.tooltip.color = 'red';
   
     //Set label active as true
     this._label.active = true;
