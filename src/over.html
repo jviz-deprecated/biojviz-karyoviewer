@@ -4,153 +4,151 @@ Copyright (c) 2016 The Jviz Project Authors. All rights reserved.
 The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob/dev/LICENSE
 -->
 <script>
-
-//Check if a coordinate is over a rectangle
-jviz_karyoviewer.__over_rect = function(rect, x, y)
-{
-  //Check the x coordinate
-  if(x < rect.posx || rect.posx + rect.width < x){ return false; }
-
-  //Check the y coordinate
-  if(y < rect.posy || rect.posy + rect.height < y){ return false; }
-
-  //Default, return true
-  return true;
-};
-
-//Get the block where the coordinates are over
-jviz_karyoviewer.__over_block = function(x, y)
-{
-  //Check if is landscape
-  if(this.is_landscape() === true)
-  {
-    //Return the block number
-    return parseInt(y / this._block.height);
-  }
-  else
-  {
-    //Get the block number
-    return parseInt(x / this._block.width);
-  }
-};
-
-//Get the chromosome where the coordinates are over
-jviz_karyoviewer.__over_chromosome = function(x, y)
-{
-  /*
-  //Read all the chromosomes
-  for(var i = 0; i < this._chromosomes.list.length; i++)
+  //Check if a coordinate is over a rectangle
+  biojviz_karyoviewer._over_rect = function(rect, x, y)
   {
     //Check the x coordinate
-    if(x < this._chromosomes.list[i]._posx){ return false; }
-
+    if(x < rect.posx || rect.posx + rect.width < x){ return false; }
+  
     //Check the y coordinate
-    if(y < this._chromosomes.list[i]._posy){ continue; }
-
+    if(y < rect.posy || rect.posy + rect.height < y){ return false; }
+  
+    //Default, return true
+    return true;
+  };
+  
+  //Get the block where the coordinates are over
+  biojviz_karyoviewer._over_block = function(x, y)
+  {
+    //Check if is landscape
+    if(this.is_landscape() === true)
+    {
+      //Return the block number
+      return parseInt(y / this._block.height);
+    }
+    else
+    {
+      //Get the block number
+      return parseInt(x / this._block.width);
+    }
+  };
+  
+  //Get the chromosome where the coordinates are over
+  biojviz_karyoviewer._over_chromosome = function(x, y)
+  {
+    /*
+    //Read all the chromosomes
+    for(var i = 0; i < this._chromosomes.list.length; i++)
+    {
+      //Check the x coordinate
+      if(x < this._chromosomes.list[i]._posx){ return false; }
+  
+      //Check the y coordinate
+      if(y < this._chromosomes.list[i]._posy){ continue; }
+  
+      //Check the x coordinate
+      if(this._chromosomes.list[i]._posx + this._chromosomes.list[i]._width < x){ continue; }
+  
+      //Check the y coordinate
+      if(this._chromosomes.list[i]._posy + this._chromosomes.list[i]._height < y){ continue; }
+  
+      //Return the chromosome index
+      return this._chromosomes.list[i]._index;
+    }
+  
+    //Default, return false
+    return false;
+    */
+  
+    //Check for no block
+    if(this._over.block.actual === false){ return false; }
+  
+    //Get the chromosome
+    var chr = this._chromosomes.list[this._over.block.actual];
+  
+    //Check the x and the coordinate
+    if(x < chr._posx || y < chr._posy){ return false; }
+  
     //Check the x coordinate
-    if(this._chromosomes.list[i]._posx + this._chromosomes.list[i]._width < x){ continue; }
-
-    //Check the y coordinate
-    if(this._chromosomes.list[i]._posy + this._chromosomes.list[i]._height < y){ continue; }
-
+    if(chr._posx + chr._width < x || chr._posy + chr._height < y){ return false; }
+  
     //Return the chromosome index
-    return this._chromosomes.list[i]._index;
-  }
-
-  //Default, return false
-  return false;
-  */
-
-  //Check for no block
-  if(this._over.block.actual === false){ return false; }
-
-  //Get the chromosome
-  var chr = this._chromosomes.list[this._over.block.actual];
-
-  //Check the x and the coordinate
-  if(x < chr._posx || y < chr._posy){ return false; }
-
-  //Check the x coordinate
-  if(chr._posx + chr._width < x || chr._posy + chr._height < y){ return false; }
-
-  //Return the chromosome index
-  return chr._index;
-};
-
-//Check if is over a feature
-jviz_karyoviewer.__over_features = function(chr, x, y, margin)
-{
-  //Check the margin
-  if(typeof margin !== 'number'){ var margin = 0; }
-
-  //Check for undefined features on this chromosome
-  if(typeof this._features.chromosomes[chr] !== 'object'){ return []; }
-
-  //Get the features on this chromosome
-  var features = this._features.chromosomes[chr];
-
-  //Check the features
-  if(typeof features !== 'object'){ return; }
-
-  //Output features
-  var out = [];
-
-  //Read all the features
-  for(var i = 0; i < features.length; i++)
+    return chr._index;
+  };
+  
+  //Check if is over a feature
+  biojviz_karyoviewer._over_features = function(chr, x, y, margin)
   {
-    //Get the feature
-    var feature = this._features.list[features[i]];
-
-    //Check the feature x coordinate
-    if(x + margin < feature._posx){ break; }
-
-    //Check the feature y coordinate
-    if(y + margin < feature._posy){ break; }
-
-    //Check the feature x coordinate
-    if(feature._posx + feature._width < x - margin){ continue; }
-
-    //Check the feature y coordinate
-    if(feature._posy + feature._height < y - margin){ continue; }
-
-    //Save the feature object
-    out.push(feature);
-  }
-
-  //Return the features list
-  return out;
-};
-
-//Check if coordinates are over a label
-jviz_karyoviewer.__over_label = function(x, y)
-{
-  //Check if label is active
-  if(this._label.active === false){ return false; }
-
-  //Check if is over the tooltip rectangle
-  //if(this.__over_rect(this._label.over, x, y) === true){ return true; }
-
-  //Check if is over the tooltip
-  if(this.$.tooltip.is_over() === true){ return true; }
-
-  //Check if is over a chromosome
-  if(this._over.chromosome.actual === false){ return false; }
-
-  //Check the position for landscape
-  if(this.is_landscape() === true)
+    //Check the margin
+    if(typeof margin !== 'number'){ var margin = 0; }
+  
+    //Check for undefined features on this chromosome
+    if(typeof this._features.chromosomes[chr] !== 'object'){ return []; }
+  
+    //Get the features on this chromosome
+    var features = this._features.chromosomes[chr];
+  
+    //Check the features
+    if(typeof features !== 'object'){ return; }
+  
+    //Output features
+    var out = [];
+  
+    //Read all the features
+    for(var i = 0; i < features.length; i++)
+    {
+      //Get the feature
+      var feature = this._features.list[features[i]];
+  
+      //Check the feature x coordinate
+      if(x + margin < feature._posx){ break; }
+  
+      //Check the feature y coordinate
+      if(y + margin < feature._posy){ break; }
+  
+      //Check the feature x coordinate
+      if(feature._posx + feature._width < x - margin){ continue; }
+  
+      //Check the feature y coordinate
+      if(feature._posy + feature._height < y - margin){ continue; }
+  
+      //Save the feature object
+      out.push(feature);
+    }
+  
+    //Return the features list
+    return out;
+  };
+  
+  //Check if coordinates are over a label
+  biojviz_karyoviewer._over_label = function(x, y)
   {
-    //Check the x position
-    if(Math.abs(x - this._label.position) < this._label.offset){ return true; }
-  }
-  //Check the position for portrait
-  else
-  {
-    //Check the y position
-    if(Math.abs(y - this._label.position) < this._label.offset){ return true; }
-  }
-
-  //Default, return false
-  return false;
-};
-
+    //Check if label is active
+    if(this._label.active === false){ return false; }
+  
+    //Check if is over the tooltip rectangle
+    //if(this.__over_rect(this._label.over, x, y) === true){ return true; }
+  
+    //Check if is over the tooltip
+    if(this.$.tooltip.is_over() === true){ return true; }
+  
+    //Check if is over a chromosome
+    if(this._over.chromosome.actual === false){ return false; }
+  
+    //Check the position for landscape
+    if(this.is_landscape() === true)
+    {
+      //Check the x position
+      if(Math.abs(x - this._label.position) < this._label.offset){ return true; }
+    }
+    //Check the position for portrait
+    else
+    {
+      //Check the y position
+      if(Math.abs(y - this._label.position) < this._label.offset){ return true; }
+    }
+  
+    //Default, return false
+    return false;
+  };
 </script>
