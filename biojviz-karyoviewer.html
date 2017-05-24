@@ -197,6 +197,18 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     //Set the number of layers
     //this.$.canvas.layers = 4;
 
+    //Add the mouse down event
+    jviz.dom.mouse_down(this.$.canvas, function(e, x, y){ return self._event_down(x, y); });
+
+    //Add the mouse move event
+    jviz.dom.mouse_move(this.$.canvas, function(e, x, y){ return self._event_move(x, y); });
+
+    //Add the mouse up event
+    jviz.dom.mouse_up(this.$.canvas, function(e, x, y){ return self._event_up(x, y); });
+
+    //Mouse leave event
+    jviz.dom.mouse_leave(this.$.canvas, function(e, x, y){ return self._event_leave(x, y); });
+
     //Add the resize event
     jviz.dom.resize(function()
     {
