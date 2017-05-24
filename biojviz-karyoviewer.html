@@ -199,16 +199,16 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     //this.$.canvas.layers = 4;
 
     //Add the mouse down event
-    jviz.dom.mouse_down(this.$.canvas, function(e, x, y){ return self._event_down(x, y); });
+    jviz.dom.mouse_down(this.$.canvas, function(e, x, y){ return self._on_down(x, y); });
 
     //Add the mouse move event
-    jviz.dom.mouse_move(this.$.canvas, function(e, x, y){ return self._event_move(x, y); });
+    jviz.dom.mouse_move(this.$.canvas, function(e, x, y){ return self._on_move(x, y); });
 
     //Add the mouse up event
-    jviz.dom.mouse_up(this.$.canvas, function(e, x, y){ return self._event_up(x, y); });
+    //jviz.dom.mouse_up(this.$.canvas, function(e, x, y){ return self._on_up(x, y); });
 
     //Mouse leave event
-    jviz.dom.mouse_leave(this.$.canvas, function(e, x, y){ return self._event_leave(x, y); });
+    jviz.dom.mouse_leave(this.$.canvas, function(e, x, y){ return self._on_leave(x, y); });
 
     //Add the resize event
     jviz.dom.resize(function()
@@ -295,6 +295,77 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
     this.resize();
   };
 
+  //Leave event
+  biojviz_karyoviewer._on_leave = function(x, y)
+  {
+    //Reset the actual block
+    this._over.block.actual = false;
+
+    //Clear the shadow
+    //this._shadow_clear();
+  };
+
+  //Click down event
+  biojviz_karyoviewer._on_down = function(x, y)
+  {
+    //Check if label is active
+    if(this._label.active === true && this._label.visible === true && this._features.clickable === true)
+    {
+      //Check if user has clicked on a label
+      return this._label_click(x, y);
+    }
+
+    /*
+     //Check for no chromosome
+     if(this._over.chromosome.actual !== false){ return; }
+
+     //Get the actual chromosome
+     var chr = this._chromosomes.list[this._over.chromosome.actual];
+
+     //Emit the click on a chromosome
+     return this._events.emit('click:chromosome', chr.name, this._over.chromosome.actual);
+     */
+
+    //Check for chromosome
+    if(this._over.block.actual !== false)
+    {
+      //Get the actual chromosome
+      var chr = this._chromosomes.list[this._over.block.actual];
+
+      //Emit the click on a chromosome
+      this.fire('clicked-chromosome', { name: chr.name, index: this._over.block.actual });
+    }
+  };
+
+  //Move event
+  biojviz_karyoviewer._on_move = function(x, y)
+  {
+    //Check the move
+    if(this._over.move === false){ this._over.move = true; return; }
+
+    //Change the move
+    this._over.move = false;
+
+    //Get the actual block
+    this._over.block.actual = this._over_block(x, y);
+
+    //Get the actual chromosome
+    this._over.chromosome.actual = this._over_chromosome(x, y);
+
+    //Draw the label
+    this._label_draw(x, y);
+
+    //Draw the shadow
+    this._shadow_draw();
+
+    //Check the cursor
+    //if(this._over.chromosome.actual === false){ return jviz.cursor.remove('pointer'); }
+    //if(this._over.chromosome.actual === false){ return; }
+
+    //Add the pointer cursor
+    //jviz.cursor.set('pointer');
+  };
+
   //Register the karyoviewer element
   Polymer(biojviz_karyoviewer);
 </script>
@@ -303,7 +374,6 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
 <link rel="import" href="src/block.html">
 <link rel="import" href="src/chromosomes.html">
 <link rel="import" href="src/draw.html">
-<link rel="import" href="src/events.html">
 <link rel="import" href="src/features.html">
 <link rel="import" href="src/label.html">
 <link rel="import" href="src/orientation.html">
