@@ -306,6 +306,9 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   //Click down event
   biojviz_karyoviewer._on_down = function(x, y)
   {
+    //Check if there is data to show
+    if(this._chromosomes.list.length === 0){ return; }
+    
     //Check if label is active
     if(this._label.active === true && this._label.visible === true && this._features.clickable === true)
     {
@@ -327,6 +330,9 @@ The Jviz Project is under the MIT License. See https://github.com/jviz/jviz/blob
   //Move event
   biojviz_karyoviewer._on_move = function(x, y)
   {
+    //Check if there is data to show
+    if(this._chromosomes.list.length === 0){ return; }
+
     //Check the move
     if(this._over.move === false){ this._over.move = true; return; }
 
